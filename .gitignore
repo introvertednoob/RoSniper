@@ -1,3 +1,5 @@
 *.app
 *.DS_Store
 *.spec
+config.py
+launcher
