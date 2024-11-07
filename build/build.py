@@ -7,8 +7,11 @@ class ansi:
     UNDERLINE = "\033[4m"
     END = "\033[0m"
 
+def clear():
+    os.system("clear || cls")
+
 def build():
-    os.system("clear")
+    clear()
     print("[Option 2 - Build RoSniper]")
     print("Here are the requirements to build RoSniper for macOS:")
     print("    - RoSniper.py in the directory of the build script")
@@ -44,7 +47,7 @@ def build():
     os.system("rm -rf build dist *.spec ./Resources/RoSniper.py")
 
 def transfer_config(confirmation=True):
-    os.system("clear")
+    clear()
     print("[Option 3 - Inject config.py into RoSniper]")
     if not os.path.exists("RoSniper.app"):
         input("RoSniper.app wasn't found. Build it using Option 2. ")
@@ -67,7 +70,7 @@ def transfer_config(confirmation=True):
         input("config.py was injected into RoSniper.app. ")
 
 def transfer_to_applications(confirmation=True):
-    os.system("clear")
+    clear()
     print("[Option 4 - Transfer RoSniper to /Applications]")
     if os.path.exists("/Applications/RoSniper.app"):
         os.system("rm -rf /Applications/RoSniper.app")
@@ -76,7 +79,7 @@ def transfer_to_applications(confirmation=True):
         input("RoSniper.app was moved to the Applications folder. ")
 
 def delete_from_applications():
-    os.system("clear")
+    clear()
     print("[Option 5 - Delete RoSniper from /Applications]")
     if os.path.exists("/Applications/RoSniper.app"):
         os.system("rm -rf /Applications/RoSniper.app")
@@ -85,7 +88,7 @@ def delete_from_applications():
         input("RoSniper.app wasn't found in the Applications folder. ")
 
 while True:
-    os.system("clear")
+    clear()
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
     print(f"{ansi.BROWN}[RoSniper Build Tool]{ansi.END}")
