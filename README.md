@@ -13,6 +13,7 @@ If so, then it will attempt to join that user.
 ## How do I build this from source?
 There is a build script in ./build/ that can be used to build RoSniper for macOS.
 This creates an executable that anyone (even if they don't have Python) can run.
+Clone this repository and run it, or just run the source code itself.
 
 Tested on macOS 15.1/15.2b2 with Python 3.13!
 Windows support coming soon™
