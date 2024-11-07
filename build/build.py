@@ -12,7 +12,7 @@ def clear():
 
 def build():
     clear()
-    print("[Option 2 - Build RoSniper]")
+    print(f"{ansi.BROWN}[Option 2 - Build RoSniper]{ansi.END}")
     print("Here are the requirements to build RoSniper for macOS:")
     print("    - RoSniper.py in the directory of the build script")
     print("    - AppIcon.icns, launcher.py, and Info.plist in ./Resources/")
@@ -48,7 +48,7 @@ def build():
 
 def transfer_config(confirmation=True):
     clear()
-    print("[Option 3 - Inject config.py into RoSniper]")
+    print(f"{ansi.BROWN}[Option 3 - Inject config.py into RoSniper]{ansi.END}")
     if not os.path.exists("RoSniper.app"):
         input("RoSniper.app wasn't found. Build it using Option 2. ")
         return
@@ -71,7 +71,7 @@ def transfer_config(confirmation=True):
 
 def transfer_to_applications(confirmation=True):
     clear()
-    print("[Option 4 - Transfer RoSniper to /Applications]")
+    print(f"{ansi.BROWN}[Option 4 - Transfer RoSniper to /Applications]{ansi.END}")
     if os.path.exists("/Applications/RoSniper.app"):
         os.system("rm -rf /Applications/RoSniper.app")
     os.system("mv RoSniper.app /Applications/")
@@ -80,7 +80,7 @@ def transfer_to_applications(confirmation=True):
 
 def delete_from_applications():
     clear()
-    print("[Option 5 - Delete RoSniper from /Applications]")
+    print(f"{ansi.BROWN}[Option 5 - Delete RoSniper from /Applications]{ansi.END}")
     if os.path.exists("/Applications/RoSniper.app"):
         os.system("rm -rf /Applications/RoSniper.app")
         input("RoSniper.app was deleted from the Applications folder. ")
