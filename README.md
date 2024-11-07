@@ -5,7 +5,7 @@ This has allowed for me to get into people's servers *way faster*. It's helped m
 RoSniper uses Roblox's Presence API to check if they are online.
 If so, then it will attempt to join that user.
 
-# Current Features:
+## Current Features:
 - Snipe users you recently tried to join, for easier access to them
 - Most of the program is customizable using commands or by modifying config.py
 - Check for multiple user statuses at the same time
