@@ -1,5 +1,5 @@
-# Ever wanted to join someone instantly on Roblox?
-This is my attempt at achieving this.
+## Ever wanted to join someone instantly on Roblox? (I have!)
+This has allowed for me to get into people's servers *way faster*. It's helped me get certain items that require you to join famous people. And I'm sharing a (hopefully more polished) version of that program.
 
 # How does RoSniper work?
 RoSniper uses Roblox's Presence API to check if they are online.
