@@ -94,8 +94,7 @@ while True:
     print("  [3] Inject an existing config.py into RoSniper.app")
     print("  [4] Transfer RoSniper to /Applications")
     print("  [5] Delete RoSniper from /Applications")
-    print("  [6] Install Resources/Modules (WIP, GitHub repo is being created soon)")
-    print("  [7] Exit")
+    print("  [6] Exit")
 
     option = input("\nSelect an option: ").strip()
     if not option.isnumeric() and not option in ["1", "2", "3", "4", "5", "6", "7"]:
@@ -118,12 +117,4 @@ while True:
         case 5:
             delete_from_applications()
         case 6:
-            # requests.get("https://raw.githubusercontent.com/rodrigocarvalhaes/RoSniper/main/requirements.txt")
-            print("Installing pyinstaller@6.11.0...")
-            os.system("pip3 install pyinstaller==6.11.0 --quiet")
-            print("Installing pyperclip@1.9.0...")
-            os.system("pip3 install pyperclip==1.9.0 --quiet")
-            print("Installing requests@2.32.3...")
-            os.system("pip3 install requests==2.32.3 --quiet")
-        case 7:
             exit()
