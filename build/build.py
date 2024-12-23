@@ -48,9 +48,32 @@ if platform.system() == "Darwin":
         open("./RoSniper.app/Contents/Info.plist", "w").write(modifiedPLIST)
         os.system("rm -rf build dist *.spec ./Resources/RoSniper.py")
 
+    def transfer_changelog(confirmation=True):
+        clear()
+        print(f"{ansi.BROWN}[Option 3 - Inject changelog into RoSniper]{ansi.END}")
+        if not os.path.exists("RoSniper.app"):
+            input("RoSniper.app wasn't found. Build it using Option 2. ")
+            return
+
+        if os.path.exists("../changelog.txt"):
+            print("changelog.txt was found in the parent directory.")
+            os.system("cp ../changelog.txt RoSniper.app/Contents/Frameworks/")
+        elif os.path.exists("./changelog.txt"):
+            print("changelog.txt was found in this directory.")
+            os.system("cp ../changelog.txt RoSniper.app/Contents/Frameworks/")
+        elif os.path.exists("./Resources/changelog.txt"):
+            print("config.py was found in the Resources folder.")
+            os.system("cp ../changelog.txt RoSniper.app/Contents/Frameworks/")
+        else:
+            input("changelog.txt wasn't found. ")
+            return
+
+        if confirmation == True:
+            input("changelog.txt was injected into RoSniper.app. ")
+
     def transfer_config(confirmation=True):
         clear()
-        print(f"{ansi.BROWN}[Option 3 - Inject config.py into RoSniper]{ansi.END}")
+        print(f"{ansi.BROWN}[Option 4 - Inject config.py into RoSniper]{ansi.END}")
         if not os.path.exists("RoSniper.app"):
             input("RoSniper.app wasn't found. Build it using Option 2. ")
             return
@@ -73,7 +96,7 @@ if platform.system() == "Darwin":
 
     def transfer_to_applications(confirmation=True):
         clear()
-        print(f"{ansi.BROWN}[Option 4 - Transfer RoSniper to /Applications]{ansi.END}")
+        print(f"{ansi.BROWN}[Option 5 - Transfer RoSniper to /Applications]{ansi.END}")
         if os.path.exists("/Applications/RoSniper.app"):
             os.system("rm -rf /Applications/RoSniper.app")
         os.system("mv RoSniper.app /Applications/")
@@ -82,7 +105,7 @@ if platform.system() == "Darwin":
 
     def delete_from_applications():
         clear()
-        print(f"{ansi.BROWN}[Option 5 - Delete RoSniper from /Applications]{ansi.END}")
+        print(f"{ansi.BROWN}[Option 6 - Delete RoSniper from /Applications]{ansi.END}")
         if os.path.exists("/Applications/RoSniper.app"):
             os.system("rm -rf /Applications/RoSniper.app")
             input("RoSniper.app was deleted from the Applications folder. ")
@@ -94,12 +117,13 @@ if platform.system() == "Darwin":
         os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
         print(f"{ansi.BROWN}[RoSniper Build Tool]{ansi.END}")
-        print(f"  {ansi.BOLD}[1] Install RoSniper from source (Options 2, 3, and 4 combined){ansi.END}")
+        print(f"  {ansi.BOLD}[1] Install RoSniper from source (Options 2, 3, 4, and 5 combined){ansi.END}")
         print("  [2] Build RoSniper")
-        print("  [3] Inject an existing config.py into RoSniper.app")
-        print("  [4] Transfer RoSniper to /Applications")
-        print("  [5] Delete RoSniper from /Applications")
-        print("  [6] Exit")
+        print("  [3] Inject an existing changelog.txt into RoSniper.app")
+        print("  [4] Inject an existing config.py into RoSniper.app")
+        print("  [5] Transfer RoSniper to /Applications")
+        print("  [6] Delete RoSniper from /Applications")
+        print("  [7] Exit")
 
         option = input("\nSelect an option: ").strip()
         if not option.isnumeric() and not option in ["1", "2", "3", "4", "5", "6", "7"]:
@@ -111,17 +135,20 @@ if platform.system() == "Darwin":
         match option:
             case 1:
                 build()
+                transfer_changelog(confirmation=False)
                 transfer_config(confirmation=False)
                 transfer_to_applications(confirmation=False)
             case 2:
                 build()
             case 3:
-                transfer_config()
+                transfer_changelog()
             case 4:
-                transfer_to_applications()
+                transfer_config()
             case 5:
-                delete_from_applications()
+                transfer_to_applications()
             case 6:
+                delete_from_applications()
+            case 7:
                 exit()
 elif platform.system() == "Windows":
     input("The build script is not available for Windows at this time. ")
