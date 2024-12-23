@@ -1,3 +1,6 @@
-pyinstaller@6.11.0
-pyperclip@1.9.0
-requests@2.32.3
+# This is only required for building RoSniper.
+pyinstaller==6.11.1
+
+# These modules are required to use RoSniper and build it.
+pyperclip==1.9.0
+requests==2.32.3

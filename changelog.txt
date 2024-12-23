@@ -1,0 +1,65 @@
+Beta changelogs will be consolidated into one big changelog on release.
+
+[BOLD]Version 2025.1_b4[END]
+    - Fixed a bug regarding cookie saving when adding a new account
+        - The bug only occurs when using [UNDERLINE]/add[END] or [UNDERLINE]/addAccount[END]
+
+[BOLD]Version 2024.12_b3:[END]
+    - The total times checked is now shown at the top of the Sniping Status screen
+    - If you decline to join someone's game, you have the option to join the next time they play
+    - Removed any extra delays in the client code
+    - Removed the ansi class in favor of variables
+
+[BOLD]Version 2024.12_b2:[END]
+    - Fix multi-user checking
+        - Fixed a bug where Roblox would spam-open if a user was online
+        - Changed the way Current Users are handled
+    - Display link to join someone even after the original prompt
+    - New screen: Sniping Status
+        - This combines all user statuses in one screen
+        - The "Get ready to join" text has been removed
+    - Merged the fix_recents and check_config functions
+
+[BOLD]Version 2024.12_b1:[END]
+    - Removed delay before starting the sniping client
+    - Removed redundant code from the client function
+    - If you input a blank user anywhere, it is properly handled
+    - Revamped the command system
+        - The command documentation has been improved
+        - Commands are not case-sensitive anymore
+        - Commands show output when ran correctly
+        - If you type a command without arguments, RoSniper will print that
+        - If you type a wrong command, RoSniper will attempt to find a similar command
+    - Revamped the check config function, check_config()
+        - If a value doesn't match the correct type, it is set to default
+    - Revamped the error system
+        - If an error pops up, you will automatically return to the main menu
+        - If an invalid user is in Recent Users, it is now removed
+        - If a specific user cannot be found, RoSniper will print that user specifically
+        - Exceptions print properly, if present.
+    - Removed the commands [UNDERLINE]/clearRecents[END] and [UNDERLINE]/clearRecentUsers[END]
+        - Use [UNDERLINE]/del all[END] instead, it performs the same function
+    - Added command: [UNDERLINE]/set[END]
+        - This performs the same functions as [UNDERLINE]/setRecents[END], but is easier to type
+    - Improved error handling for network requests
+    - If a user is online and goes offline, adjust variables accordingly
+    - Other minor improvements
+
+[BOLD]Version 2024.11.1:[END]
+Minor bugfixes for November's update...
+    - RoSniper now tells you if the user has their joins off/you aren't following them
+    - Fixed a bug where commands with spaces in between them wouldn't execute properly
+
+[BOLD]Version 2024.11:[END]
+First true overhaul since May!
+    - Added a new command: /changelog
+    - Added the ability to snipe multiple users at once
+        - Type a comma in between usernames to snipe multiple users
+        - Recent User IDs are compatible with this as well
+    - If you already have a .ROBLOSECURITY cookie copied, RoSniper will save it automatically
+    - RoSniper now restarts instantly when CTRL+C is pressed
+        - Your cookies aren't checked again to save time
+    - If the user is in Roblox Studio, display the correct status
+    - Improved error handling for network requests
+    - Increased the default delay from 0.0075s -> 0.01s
+    - Other minor improvements
