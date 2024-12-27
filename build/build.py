@@ -153,5 +153,4 @@ if platform.system() == "Darwin":
 elif platform.system() == "Windows":
     input("The build script is not available for Windows at this time. ")
 elif platform.system() == "Linux":
-    print("Linux is not compatiable with RoSniper or this build script.")
-    input("Roblox is also not compatible with Linux. ")
+    input("The build script is not available for Linux at this time. ")

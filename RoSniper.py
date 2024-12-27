@@ -1,11 +1,12 @@
 import os
+import objc
 import time
 import json
 import webbrowser
 import requests
 import pyperclip
 
-version = "2025.1_b4"
+version = "2025.1_rc"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -19,7 +20,7 @@ def clear():
     os.system("clear || cls")
 
 def save():
-    open("config.py", "w").write(json.dumps(config, indent=4))
+    open("config.py", "w", encoding="utf-8").write(json.dumps(config, indent=4))
 
 def check_config():
     defaultConfig = {
@@ -31,15 +32,15 @@ def check_config():
 
     for key in defaultConfig.keys():
         try:
-            temp = config[key]
-            if type(config[key]) != type(defaultConfig[key]):
-                config[key] = defaultConfig[key]
+            if not key in config.keys():
+                raise ValueError
+            elif type(config[key]) != type(defaultConfig[key]):
+                raise ValueError
             if type(config[key]) == list:
-                for _ in range(len(config[key])):
-                    if type(config[key][_]) != str:
-                        del config[key][_]
-            del temp
-        except:
+                for item in range(len(config[key])):
+                    if type(config[key][item]) not in [str, objc.pyobjc_unicode]:
+                        del config[key][item]
+        except ValueError:
             config[key] = defaultConfig[key]
 
     try:
@@ -56,9 +57,9 @@ def check_config():
 def add_account(force=False):
     if len(config["cookies"]) == 0 or force:
         clear()
-        print(f"{BROWN}[Save Cookie]{END}")
+        print(f"{BROWN}[Add Account]{END}")
         print("Copy a .ROBLOSECURITY cookie to your clipboard.")
-        print("This can be found in the Storage/Application section of your console.")
+        print("This can be found in the Storage/Application section of your browser's console.")
         try:
             if not "_|WARNING:-DO-NOT-SHARE-THIS" in pyperclip.paste():
                 pyperclip.copy("")
@@ -269,14 +270,16 @@ add_account()
 # Verify .ROBLOSECURITY cookies
 usernames = []
 display_names = []
-for cookie in config["cookies"]:
+for cookie in range(len(config["cookies"])):
     header = {
-        "Cookie": f".ROBLOSECURITY={cookie}"
+        "Cookie": f".ROBLOSECURITY={config["cookies"][cookie]}"
     }
     try:
         req = requests.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers=header)
+        if not req.ok:
+            raise requests.exceptions.ReadTimeout
     except requests.exceptions.ReadTimeout:
-        del cookie
+        del config["cookies"][cookie]
         save()
         continue
     except requests.exceptions.SSLError:

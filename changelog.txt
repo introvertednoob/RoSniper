@@ -1,8 +1,13 @@
 Beta changelogs will be consolidated into one big changelog on release.
 
+[BOLD]Version 2025.1_rc[END]
+    - CRITICAL: Fixed a bug where new cookies would not be saved
+        - This was because of a flaw in the new check config function
+    - Fixed a bug where invalid cookies would still be present in config.py
+
 [BOLD]Version 2025.1_b4[END]
     - Fixed a bug regarding cookie saving when adding a new account
-        - The bug only occurs when using [UNDERLINE]/add[END] or [UNDERLINE]/addAccount[END]
+        - Further additions are available in 2025.1_rc
 
 [BOLD]Version 2024.12_b3:[END]
     - The total times checked is now shown at the top of the Sniping Status screen
