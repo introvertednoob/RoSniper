@@ -1,0 +1,17 @@
+window.setInterval(
+    function(){
+        liveStream = document.getElementById("items").textContent.slice(-80, document.getElementById("items").textContent.length);
+        splitLiveStream = liveStream.split(" ");
+        if (splitLiveStream.includes("https://roblox.com/")) {
+            i = 0;
+            while (i < splitLiveStream.length()) {
+                if (splitLiveStream[i].includes("https://roblox.com/")) {
+                    window.open(splitLiveStream[i])
+                }
+                i++;
+            }
+        }
+        console.log(liveStream);
+    },
+    100
+)

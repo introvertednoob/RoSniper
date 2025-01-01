@@ -1,4 +1,16 @@
 Beta changelogs will be consolidated into one big changelog on release.
+Version 2025.1 and 2024.12 are the same.
+
+[BOLD]Version 2025.1_rc2[END]
+    - Add proper error screens for handled network errors
+    - Close the network session after running the client
+    - Changed the way variable [UNDERLINE]checksSinceStart[END] works
+    - If a user runs [UNDERLINE]/set[END] or [UNDERLINE]/setRecents[END] and inputs a number >99, they are told that 99 is the maximum amount of Recent Users
+    - Lets the user know that they can change the max length of Recent Users using [UNDERLINE]/set[END]
+    - Tweak the way an already-saved-to-clipboard cookie is determined as a cookie
+    - Removed usage eval() on config.json and replaced it with json.loads()
+        - config.py was renamed to config.json
+    - Fixed an error that shows if nothing is copied to the clipboard
 
 [BOLD]Version 2025.1_rc[END]
     - CRITICAL: Fixed a bug where new cookies would not be saved

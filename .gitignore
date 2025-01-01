@@ -1,5 +1,5 @@
 *.app
 *.DS_Store
 *.spec
-config.py
+config.json
 launcher
