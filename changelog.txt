@@ -1,65 +1,47 @@
-Beta changelogs will be consolidated into one big changelog on release.
-Version 2025.1 and 2024.12 are the same.
+2025.1 has been in the making for a while now.
+It contains major revamps for many parts of RoSniper!
 
-[BOLD]Version 2025.1_rc2[END]
-    - Add proper error screens for handled network errors
-    - Close the network session after running the client
-    - Changed the way variable [UNDERLINE]checksSinceStart[END] works
-    - If a user runs [UNDERLINE]/set[END] or [UNDERLINE]/setRecents[END] and inputs a number >99, they are told that 99 is the maximum amount of Recent Users
-    - Lets the user know that they can change the max length of Recent Users using [UNDERLINE]/set[END]
-    - Tweak the way an already-saved-to-clipboard cookie is determined as a cookie
-    - Removed usage eval() on config.json and replaced it with json.loads()
-        - config.py was renamed to config.json
-    - Fixed an error that shows if nothing is copied to the clipboard
-
-[BOLD]Version 2025.1_rc[END]
-    - CRITICAL: Fixed a bug where new cookies would not be saved
-        - This was because of a flaw in the new check config function
-    - Fixed a bug where invalid cookies would still be present in config.py
-
-[BOLD]Version 2025.1_b4[END]
-    - Fixed a bug regarding cookie saving when adding a new account
-        - Further additions are available in 2025.1_rc
-
-[BOLD]Version 2024.12_b3:[END]
-    - The total times checked is now shown at the top of the Sniping Status screen
-    - If you decline to join someone's game, you have the option to join the next time they play
-    - Removed any extra delays in the client code
-    - Removed the ansi class in favor of variables
-
-[BOLD]Version 2024.12_b2:[END]
-    - Fix multi-user checking
-        - Fixed a bug where Roblox would spam-open if a user was online
+[BOLD]Version 2025.1[END]
+A full RoSniper overhaul.
+    - Revamped the check config function, check_config()
+        - If a value doesn't match the correct type, it is set to default
+        - The fix_recents() and check_config() functions are merged
+    - Revamped the error system
+        - If an error pops up, you will automatically return to the main menu
+        - If an invalid user is in Recent Users, it is now removed
+        - If a specific user cannot be found, RoSniper will print that user specifically
+        - Add proper error screens for handled network errors in some cases
+    - Revamped multi-user checking
         - Changed the way Current Users are handled
-    - Display link to join someone even after the original prompt
-    - New screen: Sniping Status
-        - This combines all user statuses in one screen
-        - The "Get ready to join" text has been removed
-    - Merged the fix_recents and check_config functions
-
-[BOLD]Version 2024.12_b1:[END]
-    - Removed delay before starting the sniping client
-    - Removed redundant code from the client function
-    - If you input a blank user anywhere, it is properly handled
+        - If you decline to join someone's game, you have the option to join the next time they play
+        - If a user is online and goes offline, variables are adjusted accordingly
     - Revamped the command system
         - The command documentation has been improved
         - Commands are not case-sensitive anymore
         - Commands show output when ran correctly
         - If you type a command without arguments, RoSniper will print that
         - If you type a wrong command, RoSniper will attempt to find a similar command
-    - Revamped the check config function, check_config()
-        - If a value doesn't match the correct type, it is set to default
-    - Revamped the error system
-        - If an error pops up, you will automatically return to the main menu
-        - If an invalid user is in Recent Users, it is now removed
-        - If a specific user cannot be found, RoSniper will print that user specifically
-        - Exceptions print properly, if present.
+        - If a user runs [UNDERLINE]/set[END] or [UNDERLINE]/setRecents[END] and inputs a number >99, they are told that 99 is the maximum amount of Recent Users
     - Removed the commands [UNDERLINE]/clearRecents[END] and [UNDERLINE]/clearRecentUsers[END]
         - Use [UNDERLINE]/del all[END] instead, it performs the same function
     - Added command: [UNDERLINE]/set[END]
-        - This performs the same functions as [UNDERLINE]/setRecents[END], but is easier to type
+        - This performs the same functions as [UNDERLINE]/setRecents[END]
+    - Added screen: Sniping Status
+        - This combines all user statuses in one screen
+        - The "Get ready to join" text has been removed
+        - The total number of times checked is displayed
+    - Removed redundant code from the client function
+    - If you input a blank user anywhere, it is properly handled
+    - Removed any extra delays in the client code
     - Improved error handling for network requests
-    - If a user is online and goes offline, adjust variables accordingly
+    - Display link to join someone even after the original prompt
+    - Removed the ansi class in favor of variables
+    - Let the user know that they can change the max length of Recent Users using [UNDERLINE]/set[END]
+    - Close the network session after running the client
+    - Removed usage of eval() on config.json and replaced it with json.loads()
+        - config.py was renamed to config.json
+    - Tweaked the way an already-saved-to-clipboard cookie is determined as a cookie
+    - Fixed an error that shows if nothing is copied to the clipboard
     - Other minor improvements
 
 [BOLD]Version 2024.11.1:[END]
