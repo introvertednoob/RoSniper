@@ -17,7 +17,7 @@ END = "\033[0m"
 
 # Key functions for RoSniper
 def clear():
-    os.system("clear || cls")
+    os.system("clear")
 
 def save():
     open("config.json", "w", encoding="utf-8").write(json.dumps(config, indent=4))
