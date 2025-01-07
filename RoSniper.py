@@ -6,7 +6,7 @@ import webbrowser
 import requests
 import pyperclip
 
-version = "2025.1"
+version = "2025.1.1_b1"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -95,20 +95,22 @@ def add_account(force=False):
             exit()
 
 def run_command(command):
-    global users
     global user
+    global users
+    global decline_first_server
 
     command = command.lower()
-    if command == "/cmds":
+    if command in ["/cmds", "/help"]:
         clear()
         print(f"{BROWN}[Commands]{END}")
-        print(f"{UNDERLINE}/cmds{END}\n  -> Shows this window\n")
+        print(f"{UNDERLINE}/cmds{END} or {UNDERLINE}/help{END}\n  -> Shows this window\n")
         print(f"{UNDERLINE}/changelog{END}\n  -> Shows the RoSniper changelog\n")
         print(f"{UNDERLINE}/setRecents [MAX_LENGTH]{END} or {UNDERLINE}/set [MAX_LENGTH]{END}\n  -> Sets the max length of Recent Users\n    - Default: 5 users\n    - Currently: {config['recent_users_length']} users\n    - Maximum: 99 users\n")
         print(f"{UNDERLINE}/logout (all){END}\n  -> Removes current account or all accounts from config.json\n")
         print(f"{UNDERLINE}/add{END} or {UNDERLINE}/addAccount{END}\n  -> Adds a new account\n")
         print(f"{UNDERLINE}/delay [SECONDS]{END}\n  -> Sets the delay between requests\n    - Default: 0.01s\n    - Currently: {config['delay']}s\n")
         print(f"{UNDERLINE}/del [RECENT_USER] | [RECENT_USER_INDEX] | all{END}\n  -> Deletes a specific user or all users from the Recent Users list\n")
+        print(f"{UNDERLINE}/declineFirst{END} or {UNDERLINE}/df{END}\n  -> Declines the first server of the {BOLD}[Priority]{END} user\n    - Default: False\n    - Currently: {config['decline_first_server']}\n")
         print(f"{UNDERLINE}/exit{END}\n  -> Exits RoSniper\n")
         print(f"Words in brackets represent values (ex: {BOLD}[SECONDS]{END} means {BOLD}the # of seconds{END}).")
         input("Press ENTER to return to the main menu. ")
@@ -164,14 +166,15 @@ def run_command(command):
         if command.endswith(" all"):
             config["cookies"] = []
             print(f"\n{UNDERLINE}Removed all cookies from config.json.{END}")
-            print("Restart RoSniper for this to take effect.")
+            print(f"{BOLD}RoSniper will restart now.{END}")
             time.sleep(1)
         else:
             del config["cookies"][id]
             print(f"\n{UNDERLINE}Deleted this account's cookie from config.json.{END}")
-            print("Restart RoSniper for this to take effect.")
+            print(f"{BOLD}RoSniper will restart now.{END}")
             time.sleep(1)
         save()
+        os.execl(os.sys.executable, os.sys.executable, *os.sys.argv)
     elif command in ["/addaccount", "/add"]:
         print(f"\n{UNDERLINE}You will be redirected to the Save Cookie menu.{END}")
         time.sleep(1)
@@ -182,11 +185,16 @@ def run_command(command):
             save()
         print(f"\n{UNDERLINE}Delay set to {command.split(" ")[1]}s.{END}")
         time.sleep(0.5)
+    elif command in ["/df", "/declinefirst"]:
+        if decline_first_server:
+            decline_first_server = False
+        else:
+            decline_first_server = True
     elif command == "/exit":
         exit()
     else:
         similarCommand = ""
-        listOfCommands = ["/cmds", "/changelog", "/set", "/setrecents", "/del", "/logout", "/addaccount", "/add", "/exit"]
+        listOfCommands = ["/cmds", "/help", "/changelog", "/set", "/setrecents", "/del", "/logout", "/addaccount", "/add", "/exit", "/df", "/declinefirst"]
         for cmd in listOfCommands:
             if command in cmd:
                 similarCommand = cmd
@@ -339,6 +347,7 @@ userContext = {
     "displayName": display_names[id]
 }
 
+decline_first_server = False
 while True:
     # Show home screen
     check_config()
@@ -347,13 +356,8 @@ while True:
     print("Snipe-joins accounts (that the logged-in user can join) when they join a game.")
     print(f"Be ready to join someone's server, hopefully not too deep in the queue :>")
 
-    print(f"\n{BROWN}[How To Use]{END}")
-    print("  - Enter the username that you want to join below.")
-    print("  - If the user is on the website, the Roblox app will launch.")
-    print("  - Finally, wait a bit and be early to the server!")
-
-    print(f"{BROWN}\n[Commands]{END}")
-    print("  - Type /cmds to see the full list of commands.")
+    print(f"{BROWN}\n[Tips]{END}")
+    print("  - Type /cmds or /help to see the full list of commands.")
     print("  - Type /changelog to see the changelog.")
 
     print(f"\n{BROWN}[Recent Users]{END}")
@@ -366,6 +370,8 @@ while True:
         else:
             print(f"You can save up to {config['recent_users_length']} users in this list.")
     print("")
+    if decline_first_server:
+        print(f"{UNDERLINE}Decline First Server is Active{END}")
     print(f"Logged in as {BOLD}{userContext['displayName']} (@{userContext['name']}){END}")
 
     try:
@@ -462,6 +468,18 @@ while True:
 
     session = requests.Session()
     session.headers.update(header)
+
+    # Only works on the priority user, so if you are already in the streamer's game, you WON'T get kicked
+    if decline_first_server:
+        req = session.post(url="https://presence.roblox.com/v1/presence/users", json=data)
+        if req.ok:
+            onlineData = json.loads(req.content.decode())
+            onlineStatus = onlineData["userPresences"][0]["userPresenceType"]
+
+            if onlineStatus == 2:
+                serverID = onlineData["userPresences"][0]["gameId"]
+                declinedServers += [serverID]
+
     while True:
         try:
             checksSinceStart += 1
@@ -497,3 +515,4 @@ while True:
             print(f"{BROWN}[Times Checked: {checksSinceStart}]{END}")
             input(f"An error occured: {e} ")
     session.close()
+    decline_first_server = False

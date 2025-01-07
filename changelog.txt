@@ -1,5 +1,20 @@
-2025.1 has been in the making for a while now.
-It contains major revamps for many parts of RoSniper!
+2025.1's already out, and so is the beta for the minor 2025.1.1 release.
+2025.1.1 SHOULDN'T break anything as only a few minor changes are present.
+Expect an RC soon.
+
+[BOLD]Version 2025.1.1_b1[END]
+A few QoL improvements!
+    - New command alias, [UNDERLINE]/help[END]
+        - Functions the same as [UNDERLINE]/cmds[END]
+    - New command, [UNDERLINE]/declineFirst[END] (alias [UNDERLINE]/df[END])
+        - If a streamer is already playing when you run RoSniper, you won't join them.
+        - This is a temporary value. When you are done sniping, the above function won't work unless you run the command again.
+        - Potential use cases:
+            - You're already trying to join someone.
+            - You are already playing with a streamer.
+            - The streamer's server is already full.
+        - You can still use RoSniper to scan for server-hops in any case.
+    - Removed the "How To Use" section in the Main Menu
 
 [BOLD]Version 2025.1[END]
 A full RoSniper overhaul.
