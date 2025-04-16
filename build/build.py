@@ -88,23 +88,23 @@ if platform.system() == "Darwin":
 
     def transfer_config(confirmation=True):
         clear()
-        print(f"{brown}[Option 5 - Inject config.py into RoSniper]{end}")
+        print(f"{brown}[Option 5 - Inject config.json into RoSniper]{end}")
 
-        if os.path.exists("../config.py"):
-            print("config.py was found in the parent directory.")
-            os.system("cp ../config.py RoSniper.app/Contents/Frameworks/")
-        elif os.path.exists("./config.py"):
-            print("config.py was found in this directory.")
-            os.system("cp ../config.py RoSniper.app/Contents/Frameworks/")
-        elif os.path.exists("./Resources/config.py"):
-            print("config.py was found in the Resources folder.")
-            os.system("cp ../config.py RoSniper.app/Contents/Frameworks/")
+        if os.path.exists("../config.json"):
+            print("config.json was found in the parent directory.")
+            os.system("cp ../config.json RoSniper.app/Contents/Frameworks/")
+        elif os.path.exists("./config.json"):
+            print("config.json was found in this directory.")
+            os.system("cp ../config.json RoSniper.app/Contents/Frameworks/")
+        elif os.path.exists("./Resources/config.json"):
+            print("config.json was found in the Resources folder.")
+            os.system("cp ../config.json RoSniper.app/Contents/Frameworks/")
         else:
-            input("config.py wasn't found. ")
+            input("config.json wasn't found. ")
             return
 
         if confirmation == True:
-            input("config.py was injected into RoSniper.app. ")
+            input("config.json was injected into RoSniper.app. ")
 
     def transfer_to_applications(confirmation=True):
         clear()
@@ -133,7 +133,7 @@ if platform.system() == "Darwin":
         AppExists_A = os.path.exists("/Applications/RoSniper.app")
         print(f"  {faint if not AppExists else ""}[3] Inject an existing changelog.txt into RoSniper.app{end if not AppExists else ""}")
         print(f"  {faint if not AppExists else ""}[4] Inject an existing commands.txt into RoSniper.app{end if not AppExists else ""}")
-        print(f"  {faint if not AppExists else ""}[5] Inject an existing config.py into RoSniper.app{end if not AppExists else ""}")
+        print(f"  {faint if not AppExists else ""}[5] Inject an existing config.json into RoSniper.app{end if not AppExists else ""}")
         print(f"  {faint if not AppExists else ""}[6] Transfer RoSniper to /Applications{end if not AppExists else ""}")
         print(f"  {faint if not AppExists_A else ""}[7] Delete RoSniper from /Applications{end if not AppExists_A else ""}")
 

@@ -7,6 +7,7 @@
     - Updated the build script
         - Fix strings in the build script
         - Add support for injecting commands.txt in the build script
+        - Add support for injecting config.json in the build script
         - Show a faint marker on options that can't be executed yet
     - Bump PyInstaller from 6.11.2 -> 6.13.0
 
