@@ -7,6 +7,7 @@
 [underline]/setRecents [MAX_LENGTH][end] or [underline]/set [MAX_LENGTH][end]
     -> Sets the max length of Recent Users
         - Default: 5 users
+        - Current: [cur_recent_users] users
         - Maximum: 99 users
 
 [underline]/logout (all)[end]
@@ -18,6 +19,7 @@
 [underline]/delay [SECONDS][end]
     -> Sets the delay between requests
         - Default: 0.01s
+        - Current: [cur_delay]s
 
 [underline]/del [RECENT_USER] | [RECENT_USER_INDEX] | all[end]
     -> Deletes a specific user or all users from the Recent Users list
@@ -25,6 +27,7 @@
 [underline]/declineFirst[end] or [underline]/df[end]
     -> Declines the first server of the [bold][Priority][end] user
         - Default: False
+        - Current: [cur_df]
 
 [underline]/exit[end]
     -> Exits RoSniper

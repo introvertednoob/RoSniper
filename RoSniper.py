@@ -7,7 +7,7 @@ import webbrowser
 import requests
 import pyperclip
 
-version = "2025.4_rc"
+version = "2025.4"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -98,7 +98,6 @@ def add_account(force=False):
         if force:
             os.execl(sys.executable, sys.executable, *sys.argv)
 
-
 def run_command(command):
     global user
     global users
@@ -112,7 +111,7 @@ def run_command(command):
         print(f"{gold}[{title}]{end}")
         if os.path.exists(load_file):
             text = open(load_file).read()
-            text = text.replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end)
+            text = text.replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server))
             print(text)
         else:
             print(f"{load_file} isn't present.")
@@ -467,19 +466,6 @@ while True:
     session = requests.Session()
     session.headers.update(header)
 
-    '''
-    # Shorter implementation is now in client()
-    if decline_first_server:
-        req = session.post(url="https://presence.roblox.com/v1/presence/users", json=data)
-        if req.ok:
-            online_data = json.loads(req.content.decode())
-            status = online_data["userPresences"][0]["userPresenceType"]
-
-            if status == 2:
-                server_id = online_data["userPresences"][0]["gameId"]
-                declined_servers += [server_id]
-    '''
-
     while True:
         try:
             checks_since_start += 1
@@ -499,7 +485,7 @@ while True:
             time.sleep(1)
         except requests.exceptions.SSLError:
             clear()
-            print(f"{gold}[Times Checked: {checks_since_start}]{end} ")
+            print(f"{gold}[Times Checked: {checks_since_start}]{end}")
             input("[SSLError] Couldn't connect to the Roblox servers. Your internet may be blocking Roblox. ")
             break
         except requests.exceptions.ConnectTimeout:
