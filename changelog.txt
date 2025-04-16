@@ -1,35 +1,31 @@
-2025.1's already out, and so is the beta for 2025.4!
 2025.1.1 and 2025.4 are the same release.
+Expect 2025.4 today or tomorrow (4/16 or 4/17).
 
-[bold]Version 2025.4_b3[end]
-    - Command documentation is now saved to the file "commands.txt"
-    - Shrunk code by combining the [bold]/changelog[end] and [bold]/cmds | /help[end] commands
-    - Updated the build script
-        - Fix strings in the build script
-        - Add support for injecting commands.txt in the build script
-        - Add support for injecting config.json in the build script
-        - Show a faint marker on options that can't be executed yet
-    - Bump PyInstaller from 6.11.2 -> 6.13.0
-
-[bold]Version 2025.4_b2[end]
-    - If a non-number is given for the [underline]/delay[end] command, the delay is set to 0.01s
-    - Save changes before showing output/any delays for the [underline]/logout[end] command
-    - Renamed variables to comply with PEP 8
-    - Made /df run during the client function instead of before it
-
-[bold]Version 2025.4_b1[end]
+[bold]Version 2025.4_rc[end]
+Feature freeze; only fixing bugs right now.
     - New command alias, [underline]/help[end]
         - Functions the same as [underline]/cmds[end]
     - New command, [underline]/declineFirst[end] (alias [underline]/df[end])
         - If a streamer is already playing when you run RoSniper, you won't join them.
         - This is a temporary value. When you are done sniping, the above function won't work unless you run the command again.
         - Potential use cases:
-            - You're already trying to join someone.
+            - You are already trying to join someone.
             - You are already playing with a streamer.
             - The streamer's server is already full.
         - You can still use RoSniper to scan for server-hops in any case.
     - Removed the "How To Use" section in the Main Menu
     - Restart RoSniper when you erase a cookie from the JSON
+    - If a non-number is given for the [underline]/delay[end] command, the delay is set to 0.01s
+    - Save changes before showing output/any delays for the [underline]/logout[end] command
+    - Renamed variables to comply with PEP 8
+    - Command documentation is now saved to the file "commands.txt"
+    - Shrunk code by combining the [bold]/changelog[end] and [bold]/cmds | /help[end] commands
+    - Updated the build script and fixed bugs within it
+        - Fix strings in the build script
+        - Add support for injecting commands.txt in the build script
+        - Add support for injecting config.json in the build script
+        - Show a faint marker on options that can't be executed yet
+    - Bump PyInstaller from 6.11.2 -> 6.13.0
 
 [bold]Version 2025.1[end]
 A full RoSniper overhaul.
