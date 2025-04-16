@@ -140,10 +140,10 @@ if platform.system() == "Darwin":
         os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
         print(f"{ansi.BROWN}[RoSniper Build Tool]{ansi.END}")
-        print(f"  {ansi.BOLD}[1] Install RoSniper from source (Options 2, 3, 4, and 5 combined){ansi.END}")
+        print(f"  {ansi.BOLD}[1] Install RoSniper from source (Options 2, 3, 4, 5, and 6 combined){ansi.END}")
         print("  [2] Build RoSniper")
         print("  [3] Inject an existing changelog.txt into RoSniper.app")
-        print("  [4] Inject an existing changelog.txt into RoSniper.app")
+        print("  [4] Inject an existing commands.txt into RoSniper.app")
         print("  [5] Inject an existing config.py into RoSniper.app")
         print("  [6] Transfer RoSniper to /Applications")
         print("  [7] Delete RoSniper from /Applications")
