@@ -23,7 +23,7 @@
     -> Deletes a specific user or all users from the Recent Users list
 
 [underline]/declineFirst[end] or [underline]/df[end]
-    -> Declines the first server of the {bold}[Priority][end] user
+    -> Declines the first server of the [bold][Priority][end] user
         - Default: False
 
 [underline]/exit[end]
