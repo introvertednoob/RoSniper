@@ -1,12 +1,23 @@
-2025.1's already out, and so is the beta for the minor 2025.1.1 release.
-2025.1.1 SHOULDN'T break anything as only a few minor changes are present.
-Expect an RC soon.
+2025.1's already out, and so is the beta for 2025.4!
+2025.1.1 and 2025.4 are the same release.
 
-[BOLD]Version 2025.1.1_b1[END]
-A few QoL improvements!
-    - New command alias, [UNDERLINE]/help[END]
-        - Functions the same as [UNDERLINE]/cmds[END]
-    - New command, [UNDERLINE]/declineFirst[END] (alias [UNDERLINE]/df[END])
+[bold]Version 2025.4_b3[end]
+    - Command documentation is now saved to the file "commands.txt"
+    - Shrunk code by combining the [bold]/changelog[end] and [bold]/cmds | /help[end] commands
+    - Fix some strings in the build script
+    - Add support for injecting commands.txt in the build script
+    - Bump PyInstaller from 6.11.2 -> 6.13.0
+
+[bold]Version 2025.4_b2[end]
+    - If a non-number is given for the [underline]/delay[end] command, the delay is set to 0.01s
+    - Save changes before showing output/any delays for the [underline]/logout[end] command
+    - Renamed variables to comply with PEP 8
+    - Made /df run during the client function instead of before it
+
+[bold]Version 2025.4_b1[end]
+    - New command alias, [underline]/help[end]
+        - Functions the same as [underline]/cmds[end]
+    - New command, [underline]/declineFirst[end] (alias [underline]/df[end])
         - If a streamer is already playing when you run RoSniper, you won't join them.
         - This is a temporary value. When you are done sniping, the above function won't work unless you run the command again.
         - Potential use cases:
@@ -15,8 +26,9 @@ A few QoL improvements!
             - The streamer's server is already full.
         - You can still use RoSniper to scan for server-hops in any case.
     - Removed the "How To Use" section in the Main Menu
+    - Restart RoSniper when you erase a cookie from the JSON
 
-[BOLD]Version 2025.1[END]
+[bold]Version 2025.1[end]
 A full RoSniper overhaul.
     - Revamped the check config function, check_config()
         - If a value doesn't match the correct type, it is set to default
@@ -36,11 +48,11 @@ A full RoSniper overhaul.
         - Commands show output when ran correctly
         - If you type a command without arguments, RoSniper will print that
         - If you type a wrong command, RoSniper will attempt to find a similar command
-        - If a user runs [UNDERLINE]/set[END] or [UNDERLINE]/setRecents[END] and inputs a number >99, they are told that 99 is the maximum amount of Recent Users
-    - Removed the commands [UNDERLINE]/clearRecents[END] and [UNDERLINE]/clearRecentUsers[END]
-        - Use [UNDERLINE]/del all[END] instead, it performs the same function
-    - Added command: [UNDERLINE]/set[END]
-        - This performs the same functions as [UNDERLINE]/setRecents[END]
+        - If a user runs [underline]/set[end] or [underline]/setRecents[end] and inputs a number >99, they are told that 99 is the maximum amount of Recent Users
+    - Removed the commands [underline]/clearRecents[end] and [underline]/clearRecentUsers[end]
+        - Use [underline]/del all[end] instead, it performs the same function
+    - Added command: [underline]/set[end]
+        - This performs the same functions as [underline]/setRecents[end]
     - Added screen: Sniping Status
         - This combines all user statuses in one screen
         - The "Get ready to join" text has been removed
@@ -51,7 +63,7 @@ A full RoSniper overhaul.
     - Improved error handling for network requests
     - Display link to join someone even after the original prompt
     - Removed the ansi class in favor of variables
-    - Let the user know that they can change the max length of Recent Users using [UNDERLINE]/set[END]
+    - Let the user know that they can change the max length of Recent Users using [underline]/set[end]
     - Close the network session after running the client
     - Removed usage of eval() on config.json and replaced it with json.loads()
         - config.py was renamed to config.json
@@ -59,12 +71,12 @@ A full RoSniper overhaul.
     - Fixed an error that shows if nothing is copied to the clipboard
     - Other minor improvements
 
-[BOLD]Version 2024.11.1:[END]
+[bold]Version 2024.11.1:[end]
 Minor bugfixes for November's update...
     - RoSniper now tells you if the user has their joins off/you aren't following them
     - Fixed a bug where commands with spaces in between them wouldn't execute properly
 
-[BOLD]Version 2024.11:[END]
+[bold]Version 2024.11:[end]
 First true overhaul since May!
     - Added a new command: /changelog
     - Added the ability to snipe multiple users at once
@@ -77,3 +89,6 @@ First true overhaul since May!
     - Improved error handling for network requests
     - Increased the default delay from 0.0075s -> 0.01s
     - Other minor improvements
+
+Development on RoSniper started in May 2024.
+[bold]There are a lot of undocumented changes from May to now.[end]

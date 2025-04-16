@@ -1,0 +1,32 @@
+[underline]/cmds[end] or [underline]/help[end]
+    -> Shows this window
+
+[underline]/changelog[end]
+    -> Shows the RoSniper changelog
+
+[underline]/setRecents [MAX_LENGTH][end] or [underline]/set [MAX_LENGTH][end]
+    -> Sets the max length of Recent Users
+        - Default: 5 users
+        - Maximum: 99 users
+
+[underline]/logout (all)[end]
+    -> Removes current account or all accounts from config.json
+
+[underline]/add[end] or [underline]/addAccount[end]
+    -> Adds a new account
+
+[underline]/delay [SECONDS][end]
+    -> Sets the delay between requests
+        - Default: 0.01s
+
+[underline]/del [RECENT_USER] | [RECENT_USER_INDEX] | all[end]
+    -> Deletes a specific user or all users from the Recent Users list
+
+[underline]/declineFirst[end] or [underline]/df[end]
+    -> Declines the first server of the {bold}[Priority][end] user
+        - Default: False
+
+[underline]/exit[end]
+    -> Exits RoSniper
+
+Words in brackets represent values (ex: [bold][SECONDS][end] means [bold]the # of seconds[end])

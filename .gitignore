@@ -3,3 +3,5 @@
 *.spec
 config.json
 launcher
+keys
+dev

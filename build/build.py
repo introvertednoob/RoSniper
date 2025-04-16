@@ -18,7 +18,7 @@ if platform.system() == "Darwin":
         print("Here are the requirements to build RoSniper for macOS:")
         print("    - RoSniper.py in the directory of the build script")
         print("    - AppIcon.icns, launcher.py, and Info.plist in ./Resources/")
-        print("    - Dependencies: pyinstaller==6.11.1, pyperclip==1.9.0, and requests==2.32.3")
+        print("    - Dependencies: pyinstaller==6.13.0, pyperclip==1.9.0, and requests==2.32.3")
 
         if os.path.exists("../RoSniper.py"):
             RoSniperPath = "../RoSniper.py"
@@ -62,7 +62,7 @@ if platform.system() == "Darwin":
             print("changelog.txt was found in this directory.")
             os.system("cp ../changelog.txt RoSniper.app/Contents/Frameworks/")
         elif os.path.exists("./Resources/changelog.txt"):
-            print("config.py was found in the Resources folder.")
+            print("changelog.txt was found in the Resources folder.")
             os.system("cp ../changelog.txt RoSniper.app/Contents/Frameworks/")
         else:
             input("changelog.txt wasn't found. ")
@@ -71,9 +71,32 @@ if platform.system() == "Darwin":
         if confirmation == True:
             input("changelog.txt was injected into RoSniper.app. ")
 
+    def transfer_cmd_docs(confirmation=True):
+        clear()
+        print(f"{ansi.BROWN}[Option 4 - Inject changelog into RoSniper]{ansi.END}")
+        if not os.path.exists("RoSniper.app"):
+            input("RoSniper.app wasn't found. Build it using Option 2. ")
+            return
+
+        if os.path.exists("../commands.txt"):
+            print("commands.txt was found in the parent directory.")
+            os.system("cp ../commands.txt RoSniper.app/Contents/Frameworks/")
+        elif os.path.exists("./commands.txt"):
+            print("commands.txt was found in this directory.")
+            os.system("cp ../commands.txt RoSniper.app/Contents/Frameworks/")
+        elif os.path.exists("./Resources/commands.txt"):
+            print("commands.txt was found in the Resources folder.")
+            os.system("cp ../commands.txt RoSniper.app/Contents/Frameworks/")
+        else:
+            input("commands.txt wasn't found. ")
+            return
+
+        if confirmation == True:
+            input("commands.txt was injected into RoSniper.app. ")
+
     def transfer_config(confirmation=True):
         clear()
-        print(f"{ansi.BROWN}[Option 4 - Inject config.py into RoSniper]{ansi.END}")
+        print(f"{ansi.BROWN}[Option 5 - Inject config.py into RoSniper]{ansi.END}")
         if not os.path.exists("RoSniper.app"):
             input("RoSniper.app wasn't found. Build it using Option 2. ")
             return
@@ -96,7 +119,7 @@ if platform.system() == "Darwin":
 
     def transfer_to_applications(confirmation=True):
         clear()
-        print(f"{ansi.BROWN}[Option 5 - Transfer RoSniper to /Applications]{ansi.END}")
+        print(f"{ansi.BROWN}[Option 6 - Transfer RoSniper to /Applications]{ansi.END}")
         if os.path.exists("/Applications/RoSniper.app"):
             os.system("rm -rf /Applications/RoSniper.app")
         os.system("mv RoSniper.app /Applications/")
@@ -105,7 +128,7 @@ if platform.system() == "Darwin":
 
     def delete_from_applications():
         clear()
-        print(f"{ansi.BROWN}[Option 6 - Delete RoSniper from /Applications]{ansi.END}")
+        print(f"{ansi.BROWN}[Option 7 - Delete RoSniper from /Applications]{ansi.END}")
         if os.path.exists("/Applications/RoSniper.app"):
             os.system("rm -rf /Applications/RoSniper.app")
             input("RoSniper.app was deleted from the Applications folder. ")
@@ -120,10 +143,11 @@ if platform.system() == "Darwin":
         print(f"  {ansi.BOLD}[1] Install RoSniper from source (Options 2, 3, 4, and 5 combined){ansi.END}")
         print("  [2] Build RoSniper")
         print("  [3] Inject an existing changelog.txt into RoSniper.app")
-        print("  [4] Inject an existing config.py into RoSniper.app")
-        print("  [5] Transfer RoSniper to /Applications")
-        print("  [6] Delete RoSniper from /Applications")
-        print("  [7] Exit")
+        print("  [4] Inject an existing changelog.txt into RoSniper.app")
+        print("  [5] Inject an existing config.py into RoSniper.app")
+        print("  [6] Transfer RoSniper to /Applications")
+        print("  [7] Delete RoSniper from /Applications")
+        print("  [8] Exit")
 
         option = input("\nSelect an option: ").strip()
         if not option.isnumeric() and not option in ["1", "2", "3", "4", "5", "6", "7"]:
@@ -137,18 +161,21 @@ if platform.system() == "Darwin":
                 build()
                 transfer_changelog(confirmation=False)
                 transfer_config(confirmation=False)
+                transfer_cmd_docs(confirmation=False)
                 transfer_to_applications(confirmation=False)
             case 2:
                 build()
             case 3:
                 transfer_changelog()
             case 4:
-                transfer_config()
+                transfer_cmd_docs()
             case 5:
-                transfer_to_applications()
+                transfer_config()
             case 6:
-                delete_from_applications()
+                transfer_to_applications()
             case 7:
+                delete_from_applications()
+            case 8:
                 exit()
 elif platform.system() == "Windows":
     input("The build script is not available for Windows at this time. ")
