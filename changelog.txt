@@ -1,5 +1,3 @@
-2025.1.1 and 2025.4 are the same release.
-
 [bold]Version 2025.4[end]
 Lots of QoL fixes available!
     - New command alias, [underline]/help[end]
