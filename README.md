@@ -15,5 +15,5 @@ There is a build script in ./build/ that can be used to build RoSniper for macOS
 This creates an executable that anyone (even if they don't have Python) can run.
 Clone this repository and run it, or just run the source code itself.
 
-Tested on macOS 15 with Python 3.13 and 3.13.1! It likely also works on previous versions of macOS/Python 3.
+Tested on macOS 15.X with Python 3.13-3.13.3! It likely also works on previous versions of macOS/Python 3.
 Windows support is unlikely due to launching Roblox with deeplinking being MUCH slower on Windows than on macOS.
