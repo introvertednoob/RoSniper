@@ -7,7 +7,7 @@ import webbrowser
 import requests
 import pyperclip
 
-version = "2025.4"
+version = "2025.6_b1"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -16,6 +16,13 @@ bold = "\033[1m"
 underline = "\033[4m"
 end = "\033[0m"
 
+default_config = {
+    "recent_users_length": 5,
+    "delay": 0.01,
+    "recent_users": [],
+    "cookies": []
+}
+
 # Key functions for RoSniper
 def clear():
     os.system("clear")
@@ -23,36 +30,13 @@ def clear():
 def save():
     open("config.json", "w", encoding="utf-8").write(json.dumps(config, indent=4))
 
-def check_config():
-    default_config = {
-        "recent_users_length": 5,
-        "delay": 0.01,
-        "recent_users": [],
-        "cookies": []
-    }
+def print_wait(text, wait):
+    print(text)
+    time.sleep(wait)
 
-    for key in default_config.keys():
-        try:
-            if not key in config.keys():
-                raise ValueError
-            elif type(config[key]) != type(default_config[key]):
-                raise ValueError
-            if type(config[key]) == list:
-                for item in range(len(config[key])):
-                    if type(config[key][item]) not in [str, objc.pyobjc_unicode]:
-                        del config[key][item]
-        except ValueError:
-            config[key] = default_config[key]
-
-    try:
-        config["recent_users_length"] = round(config["recent_users_length"])
-        if config["recent_users_length"] > 99:
-            config["recent_users_length"] = 99
-        while len(config["recent_users"]) > config["recent_users_length"]:
-            del(config["recent_users"][config["recent_users_length"]])
-    except KeyError:
-        config["recent_users_length"] = 5
-        config["recent_users"] = []
+def delete_recent_user(user):
+    if user.lower() in config["recent_users"]:
+        config["recent_users"].remove(user.lower())
     save()
 
 def add_account(force=False):
@@ -111,46 +95,35 @@ def run_command(command):
         print(f"{gold}[{title}]{end}")
         if os.path.exists(load_file):
             text = open(load_file).read()
-            text = text.replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server))
+            text = text.replace("[green]", "\033[0;32m").replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server))
             print(text)
         else:
             print(f"{load_file} isn't present.")
         input("Press ENTER to return to the main menu. ")
     elif command.startswith("/setrecents ") or command.startswith("/set "):
-        try:
-            if command.split(" ")[1].isnumeric():
-                config["recent_users_length"] = int(command.split(" ")[1])
-                print(f"\n{underline}Set the length of Recent Users to {"99 (max)" if config["recent_users_length"] > 99 else config["recent_users_length"]}.{end}")
-                time.sleep(1)
-            else:
-                print(f"\n{underline}Invalid length.{end}")
-                time.sleep(1)
-            save()
-        except:
-            pass
+        if command.split(" ")[1].isnumeric():
+            config["recent_users_length"] = int(command.split(" ")[1])
+            print_wait(f"\n{underline}Set the length of Recent Users to {"99 (max)" if config["recent_users_length"] > 99 else config["recent_users_length"]}.{end}", 1)
+        else:
+            print_wait(f"\n{underline}Invalid length.{end}", 1)
+        save()
     elif command.startswith("/del "):
         if config["recent_users"] == []:
-            print(f"\n{underline}There are no Recent Users to delete.{end}")
-            time.sleep(0.75)
+            print_wait(f"\n{underline}There are no Recent Users to delete.{end}", 0.75)
         elif command.split(" ")[1] == "all":
             config["recent_users"] = []
-            print(f"\n{underline}Deleted all Recent Users.{end}")
-            time.sleep(1)
+            print_wait(f"\n{underline}Deleted all Recent Users.{end}", 1)
         elif command.split(" ")[1].isnumeric():
             if int(command.split(" ")[1]) <= len(config["recent_users"]):
                 del config["recent_users"][int(command.split(" ")[1]) - 1]
-                print(f"\n{underline}Deleted Recent User #{command.split(" ")[1]}.{end}")
-                time.sleep(1)
+                print_wait(f"\n{underline}Deleted Recent User #{command.split(" ")[1]}.{end}", 1)
             else:
-                print(f"\n{underline}This Recent User doesn't exist.{end}")
-                time.sleep(0.75)
+                print_wait(f"\n{underline}This Recent User doesn't exist.{end}", 0.75)
         elif command.split(" ")[1] in config["recent_users"]:
             config["recent_users"].remove(command.split(" ")[1])
-            print(f"\n{underline}Deleted Recent User [@{command.split(" ")[1]}].{end}")
-            time.sleep(1)
+            print_wait(f"\n{underline}Deleted Recent User [@{command.split(" ")[1]}].{end}", 1)
         else:
-            print(f"\n{underline}This Recent User doesn't exist.{end}")
-            time.sleep(0.75)
+            print_wait(f"\n{underline}This Recent User doesn't exist.{end}", 0.75)
         save()
     elif command == "/logout":
         if command.endswith(" all"):
@@ -160,22 +133,15 @@ def run_command(command):
             del config["cookies"][id]
             print(f"\n{underline}Deleted this account's cookie from config.json.{end}")
         save()
-        print(f"{bold}RoSniper will restart now.{end}")
-        time.sleep(1)
+        print_wait(f"{bold}RoSniper will restart now.{end}", 1)
         os.execl(sys.executable, sys.executable, *sys.argv)
     elif command in ["/addaccount", "/add"]:
-        print(f"\n{underline}You will be redirected to the Save Cookie menu.{end}")
-        time.sleep(1)
+        print_wait(f"\n{underline}You will be redirected to the Save Cookie menu.{end}", 1)
         add_account(force=True)
     elif command.startswith("/delay "):
-        if command.split(" ")[1].replace(".", "").isnumeric():
-            config["delay"] = float(command.split(" ")[1])
-            print(f"\n{underline}Delay set to {command.split(" ")[1]}s.{end}")
-            save()
-        else:
-            config["delay"] = 0.01
-            print(f"\n{underline}Delay set to 0.01s.{end}")
-        time.sleep(0.5)
+        config["delay"] = float(command.split(" ")[1]) if command.split(" ")[1].replace(".", "").isnumeric() else 0.01
+        save()
+        print_wait(f"\n{underline}Delay set to {config["delay"]}s.{end}", 0.5)
     elif command in ["/df", "/declinefirst"]:
         if decline_first_server:
             decline_first_server = False
@@ -212,14 +178,19 @@ def client():
     print(f"{gold}[Times Checked: {checks_since_start}]{end}")
     for _ in range(len(users)):
         status = online_data["userPresences"][_]["userPresenceType"]
+        user_label = f"{bold + "[Priority] " + end if _ == current_user else ""}{users[_]}"
 
         if status == 1:
             if _ == current_user and prepare_roblox:
                 webbrowser.open("roblox://")
                 prepare_roblox = False
-            print(f"{bold+"[Priority] "+end if _ == current_user else ""}{users[_]} is on the Roblox website!")
+            print(f"{user_label} is on the Roblox website!")
+        elif status == 2 and online_data["userPresences"][_]["gameId"] == None and online_data["userPresences"][_]["placeId"] == None:
+            print(f"{user_label} has their joins off, or you aren't following them.")
+            print(f"   -> Follow them @ https://roblox.com/users/{data["userIDs"][_]}/profile")
+            print("   -> This screen will automatically update when you follow them.")
         elif status == 2 and current_server != online_data["userPresences"][_]["gameId"]:
-            game_id = online_data["userPresences"][_]["placeId"]
+            place_id = online_data["userPresences"][_]["placeId"]
             server_id = online_data["userPresences"][_]["gameId"]
 
             if decline_first_server and _ == current_user:
@@ -227,11 +198,10 @@ def client():
                 decline_first_server = False
 
             if server_id in declined_servers:
-                print(f"{bold+"[Priority] "+end if _ == current_user else ""}{users[_]} is in a server you declined (roblox://experiences/start?placeId={game_id}&gameInstanceId={server_id}).")
+                print(f"{user_label} is in a server you declined (roblox://experiences/start?placeId={place_id}&gameInstanceId={server_id}).")
                 continue
             elif current_user != _:
-                override_current_user = input(f"{"\n" if _ > 0 else ""}{users[_]} is in a game, but you are focusing on {users[current_user]}.\nPress ENTER to focus on {users[_]}, or type 'q' to decline. ").lower().strip()
-                if override_current_user.startswith("q"):
+                if input(f"\n{users[_]} is in a game, but you are focusing on {users[current_user]}.\nPress ENTER to focus on {users[_]}, or type 'q' to decline. ").lower().strip().startswith("q"):
                     print(f"Declined to join {users[_]}. RoSniper will still check for {users[_]}, but won't show you that server.")
                     declined_servers += [online_data["userPresences"][_]["gameId"]]
                     
@@ -239,39 +209,66 @@ def client():
                         current_user = _
             
             if not server_id in declined_servers:
-                webbrowser.open(f'roblox://experiences/start?placeId={game_id}&gameInstanceId={server_id}')
-                print(f"{bold+"[Priority] "+end if _ == current_user else ""}{users[_]} is in a game: {underline}roblox://experiences/start?placeId={game_id}&gameInstanceId={server_id}{end}")
+                webbrowser.open(f'roblox://experiences/start?placeId={place_id}&gameInstanceId={server_id}')
+                print(f"{user_label} is in a game: {underline}roblox://experiences/start?placeId={place_id}&gameInstanceId={server_id}{end}")
                 current_user = _
                 prepare_roblox = True
                 current_server = server_id
                 continue
-        elif status == 2 and online_data["userPresences"][_]["gameId"] == None and online_data["userPresences"][_]["placeId"] == None:
-            print(f"{bold+"[Priority] "+end if _ == current_user else ""}{users[_]} has their joins off, or you aren't following them.")
-            print(f"   -> Follow them @ https://roblox.com/users/{data["userIDs"][_]}/profile")
         elif status == 3:
             if not prepare_roblox:
                 prepare_roblox = True
-            print(f"{bold+"[Priority] "+end if _ == current_user else ""}{users[_]} is in Roblox Studio.")
+            print(f"{user_label} is in Roblox Studio.")
         elif status == 0:
             if not prepare_roblox and current_user == _:
                 prepare_roblox = True
-            print(f"{bold+"[Priority] "+end if _ == current_user else ""}{users[_]} is offline.")
+            print(f"{user_label} is offline.")
         elif current_server == online_data["userPresences"][_]["gameId"]:
-            game_id = online_data["userPresences"][_]["placeId"]
+            place_id = online_data["userPresences"][_]["placeId"]
             server_id = online_data["userPresences"][_]["gameId"]
-            print(f"{bold+"[Priority] "+end if _ == current_user else ""}{users[_]} is in a game: {underline}roblox://experiences/start?placeId={game_id}&gameInstanceId={server_id}{end}")
+            print(f"{user_label} is in a game: {underline}roblox://experiences/start?placeId={place_id}&gameInstanceId={server_id}{end}")
+
+def client_exception(error):
+    global checks_since_start
+
+    clear()
+    print(f"{gold}[Times Checked: {checks_since_start}]{end}")
+    print(error)
 
 # Save/load config file and verify it
 if os.path.exists("config.json"):
     try:
         config = json.loads(open("config.json").read())
     except Exception as e:
-        input(f"An error occured: {e} ")
         os.remove("config.json")
+        input(f"An error occured while loading config.json: {e} ")
         exit()
 else:
     config = {}
-check_config()
+
+for key in default_config.keys():
+    try:
+        if not key in config.keys():
+            raise ValueError
+        elif type(config[key]) != type(default_config[key]):
+            raise ValueError
+        if type(config[key]) == list:
+            for item in range(len(config[key])):
+                if type(config[key][item]) not in [str, objc.pyobjc_unicode]:
+                    del config[key][item]
+    except ValueError:
+        config[key] = default_config[key]
+
+try:
+    config["recent_users_length"] = round(config["recent_users_length"])
+    if config["recent_users_length"] > 99:
+        config["recent_users_length"] = 99
+    while len(config["recent_users"]) > config["recent_users_length"]:
+        del(config["recent_users"][config["recent_users_length"]])
+except KeyError:
+    config["recent_users_length"] = 5
+    config["recent_users"] = []
+save()
 
 # Save .ROBLOSECURITY cookie or add a new .ROBLOSECURITY cookie
 add_account()
@@ -305,8 +302,7 @@ for cookie in range(len(config["cookies"])):
         clear()
         print(f"{gold}[Network Error / Too Many Requests]{end}")
         print(f"Couldn't contact the Roblox servers to authenticate you.")
-        print("RoSniper will keep trying to log you in.")
-        time.sleep(5)
+        print_wait("RoSniper will keep trying to log you in every 5s.", 5)
         os.execl(sys.executable, sys.executable, *sys.argv)
     else:
         del cookie
@@ -321,16 +317,15 @@ if len(config["cookies"]) > 1:
         try:
             clear()
             print(f"{gold}[Select an Account]{end}")
-            for i in range(0, len(usernames)):
-                print(f"  - [ID: {i+1}] {usernames[i]}")
+            for i in range(len(usernames)):
+                print(f"  - [ID: {i + 1}] {usernames[i]}")
             print("")
             id = int(input("Enter the account you want to use: ")) - 1
         except KeyboardInterrupt:
             exit()
         except:
-            print("Invalid ID.")
             id = float('inf')
-            time.sleep(0.5)
+            print_wait("Invalid ID.", 0.5)
 else:
     id = 0
 
@@ -349,7 +344,6 @@ user_context = {
 decline_first_server = False
 while True:
     # Show home screen
-    check_config()
     clear()
     print(f"{gold}[RoSniper] [ver. {version}]{end}")
     print("Snipe-joins accounts (that the logged-in user can join) when they join a game.")
@@ -360,8 +354,8 @@ while True:
     print("  - Type /changelog to see the changelog.")
 
     print(f"\n{gold}[Recent Users]{end}")
-    for i in range(0, len(config["recent_users"])):
-        print(f"[{i+1}] {bold}{config['recent_users'][i]}{end}")
+    for i in range(len(config["recent_users"])):
+        print(f"[{i + 1}] {bold}{config['recent_users'][i]}{end}")
     if len(config["recent_users"]) == 0:
         print("No saved users! Join-snipe some users to save them to this list!")
         if config["recent_users_length"] == 5:
@@ -376,8 +370,7 @@ while True:
     try:
         user = input("Enter username, recent user ID, or command: ").strip()
         if user == "":
-            print(f"{underline}\nA user or command is required.{end}")
-            time.sleep(0.75)
+            print_wait(f"{underline}\nA user or command is required.{end}", 0.75)
             continue
     except KeyboardInterrupt:
         exit()
@@ -392,28 +385,22 @@ while True:
     if "" in users:
         users.remove("")
     for user in range(len(users)):
-        if len(users[user]) <= 2 and users[user].isnumeric():
-            try:
+        if len(users[user]) < 3 and users[user].isnumeric():
+            if int(users[user]) <= len(config["recent_users"]):
                 users[user] = config["recent_users"][int(users[user]) - 1]
-            except:
-                print(f"{underline}\nRecent user not avaliable.{end}")
+            else:
                 del users
-                time.sleep(0.75)
+                print_wait(f"{underline}\nRecent user not avaliable.{end}", 0.75)
                 break
 
         # You can't RoSnipe yourself!
         if users[user].lower() == user_context["name"].lower():
-            print(f"{underline}\nYou can't RoSnipe yourself.{end}")
-            if users[user].lower() in config["recent_users"]:
-                config["recent_users"].remove(users[user].lower())
+            print_wait(f"{underline}\nYou can't RoSnipe yourself.{end}", 0.5)
+            delete_recent_user(users[user])
             del users
-            time.sleep(0.5)
             break
 
-    try:
-        temp = users
-        del temp
-    except:
+    if not "users" in globals():
         continue
 
     # Validate the username(s) provided
@@ -433,34 +420,28 @@ while True:
             else:
                 raise ValueError
     except ValueError:
-        print(f"{underline}\nYou can't snipe the same user twice.{end}")
-        time.sleep(1)
+        print_wait(f"{underline}\nYou can't snipe the same user twice.{end}", 1)
         continue
     except requests.exceptions.SSLError:
-        print(f"{underline}Couldn't connect to the Roblox servers. Your internet may be blocking Roblox.{end}")
-        time.sleep(1.5)
+        print_wait(f"{underline}Couldn't connect to the Roblox servers. Your internet may be blocking Roblox.{end}", 1.5)
         continue
-    except:
-        if current_iterated_user in config["recent_users"]:
-            config["recent_users"].remove(current_iterated_user)
-        print(f"{underline}\nWe searched far and wide, but the user [@{current_iterated_user}] doesn't exist.{end}")
-        time.sleep(1.5)
+    except Exception as e:
+        delete_recent_user(current_iterated_user)
+        print_wait(f"{underline}\nWe searched far and wide, but the user [@{current_iterated_user}] doesn't exist.{end}", 1.5)
         continue
 
     # Save usernames to recent users
     for user in users:
-        if user.lower() in config["recent_users"]:
-            config["recent_users"].remove(user.lower())
-        check_config()
+        delete_recent_user(user)
         config["recent_users"] = [user.lower()] + config["recent_users"]
         save()
 
     # Start RoSniper
     clear()
     current_user = 0
+    current_server = ""
     declined_servers = []
     prepare_roblox = True
-    current_server = ""
     checks_since_start = 0
 
     session = requests.Session()
@@ -469,36 +450,25 @@ while True:
     while True:
         try:
             checks_since_start += 1
-            req = session.post(url="https://presence.roblox.com/v1/presence/users", json=data)
+            req = session.post(url="https://presence.roblox.com/v1/presence/users", json=data, timeout=5)
             if req.ok:
                 online_data = json.loads(req.content.decode())
                 client()
                 time.sleep(config["delay"])
             else:
-                clear()
-                print(f"{gold}[Times Checked: {checks_since_start}]{end}")
-                print(f"<{req.status_code}> Couldn't connect to the Roblox servers.")
+                client_exception(f"<{req.status_code}> Couldn't connect to the Roblox servers.")
         except requests.exceptions.ConnectionError:
-            clear()
-            print(f"{gold}[Times Checked: {checks_since_start}]{end}")
-            print("[ConnectionError] Couldn't connect to the Roblox servers. Retrying in 1s...")
+            client_exception("[ConnectionError] Couldn't connect to the Roblox servers. Retrying in 1s...")
             time.sleep(1)
         except requests.exceptions.SSLError:
-            clear()
-            print(f"{gold}[Times Checked: {checks_since_start}]{end}")
-            input("[SSLError] Couldn't connect to the Roblox servers. Your internet may be blocking Roblox. ")
+            client_exception("[SSLError] Couldn't connect to the Roblox servers. Your internet may be blocking Roblox. ")
             break
         except requests.exceptions.ConnectTimeout:
-            clear()
-            print(f"{gold}[Times Checked: {checks_since_start}]{end}")
-            input("[ConnectTimeout] Your request with the Roblox servers timed out. ")
+            client_exception("[ConnectTimeout] Your request with the Roblox servers timed out. ")
             break
         except KeyboardInterrupt:
-            clear()
             break
         except Exception as e:
-            clear()
-            print(f"{gold}[Times Checked: {checks_since_start}]{end}")
-            input(f"An error occured: {e} ")
+            client_exception(f"An error occured: {e} ")
     session.close()
     decline_first_server = False

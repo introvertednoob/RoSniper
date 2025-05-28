@@ -1,3 +1,15 @@
+[green][bold]Version 2025.6_b1[end]
+Just some optimizations and bug fixes this time around.
+    - Optimized and shortened RoSniper's code
+    - Added support for the green ANSI color code to signify the latest version in the changelog
+    - New functions: print_wait(text, wait) and client_exception(error) created to condense code
+    - Removed unnecessary print statements involving checks_since_start
+    - Removed unnecessary try/except statements, now preventing errors with improved logic
+    - Shortened change delay code (/delay)
+    - Removed check_config() and run the code inside it only on start
+    - Changed some strings to add more information to them
+    - Fixed an issue where Roblox opened even though a user wasn't joinable
+
 [bold]Version 2025.4[end]
 Lots of QoL fixes available!
     - New command alias, [underline]/help[end]
@@ -87,4 +99,4 @@ First true overhaul since May!
     - Other minor improvements
 
 Development on RoSniper started in May 2024.
-[bold]There are a lot of undocumented changes from May to now.[end]
+[bold]There are a lot of undocumented changes from May to 2024.11.[end]

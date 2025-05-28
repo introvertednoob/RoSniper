@@ -3,4 +3,5 @@
 *.spec
 config.json
 launcher
+legacy
 __pycache__
