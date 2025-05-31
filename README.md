@@ -17,3 +17,7 @@ Clone this repository and run it, or just run the source code itself.
 
 Tested on macOS 15.X with Python 3.13-3.13.3! It likely also works on previous versions of macOS/Python 3.
 Windows support is unlikely due to launching Roblox with deeplinking being MUCH slower on Windows than on macOS.
+
+
+https://github.com/user-attachments/assets/4984e164-6f92-4dfd-9b7f-153a831c67a4
+
