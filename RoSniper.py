@@ -358,7 +358,7 @@ while True:
     # Show main menu
     clear()
     print(f"{gold}[RoSniper] [ver. {version}]{end}")
-    print("Snipe-joins accounts (that the logged-in user can join) when they join a game.")
+    print("Join-snipes accounts (that the logged-in user can join) when they join a game.")
     print(f"Be ready to join someone's server, hopefully not too deep in the queue :>")
 
     print(f"{gold}\n[Tips]{end}")
