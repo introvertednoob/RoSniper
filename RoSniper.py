@@ -143,7 +143,7 @@ def run_command(command):
         else:
             wait(0.75, f"\n{underline}This Recent User doesn't exist.{end}")
         save()
-    elif command == "/logout":
+    elif command.startswith("/logout"):
         if command.endswith(" all"):
             config["cookies"] = []
             print(f"\n{underline}Removed all cookies from config.json.{end}")
@@ -151,7 +151,7 @@ def run_command(command):
             del config["cookies"][id]
             print(f"\n{underline}Deleted this account's cookie from config.json.{end}")
         save()
-        wait(2, f"{bold}RoSniper will restart now.{end}")
+        wait(1.5, f"{bold}RoSniper will restart now.{end}")
         os.execl(sys.executable, sys.executable, *sys.argv)
     elif command in ["/addaccount", "/add"]:
         wait(1, f"\n{underline}You will be redirected to the Save Cookie menu.{end}")

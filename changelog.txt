@@ -17,6 +17,7 @@ Optimizations galore!
     - Removed check_config() and run the code inside it only on start
     - Fixed a bug where Roblox opened even though a user wasn't joinable
     - Fixed a bug in which exit() wasn't supported when running RoSniper.app
+    - Fixed a bug where erasing all .ROBLOSECURITY cookies wouldn't work
 
 [bold]Version 2025.4[end]
 Lots of QoL fixes available!
