@@ -8,6 +8,7 @@ Optimizations galore!
     - Added functions wait(secs, text) and client_exception(error) to condense code
     - When delaying code using wait(), a clean exit is now supported using CTRL+C
         - save() is ran when invoking CTRL+C as well, so your data is safe
+    - Clear the clipboard after saving .ROBLOSECURITY cookies for security reasons
     - Changed all single quotes to double-quotes inside user-facing text and code
     - Changed some strings to add more information to them
     - Removed unnecessary print statements involving checks_since_start

@@ -80,6 +80,7 @@ def add_account(force=False):
             user_context = json.loads(req.text)
             config["cookies"].append(cookie)
             save()
+            pyperclip.copy("")
             input(f"Cookie saved successfully. Welcome, {user_context["name"]}! ")
         except requests.exceptions.ReadTimeout:
             save()
