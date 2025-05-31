@@ -151,7 +151,7 @@ def run_command(command):
             del config["cookies"][id]
             print(f"\n{underline}Deleted this account's cookie from config.json.{end}")
         save()
-        wait(1, f"{bold}RoSniper will restart now.{end}")
+        wait(2, f"{bold}RoSniper will restart now.{end}")
         os.execl(sys.executable, sys.executable, *sys.argv)
     elif command in ["/addaccount", "/add"]:
         wait(1, f"\n{underline}You will be redirected to the Save Cookie menu.{end}")
