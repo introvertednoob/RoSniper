@@ -7,7 +7,7 @@ This has allowed for me to get into people's servers *way faster*. It's helped m
 - Check for multiple user statuses at the same time
 
 ## How does RoSniper work?
-RoSniper uses Roblox's Presence API to check if they are online. If so, then it will attempt to join that user. **NOTE: You can ONLY join users that let you join them (ex: you're friended/following them, or the user being sniped has their joins on)**
+RoSniper uses Roblox's Presence API to check if they are online. If so, then it will attempt to join that user. **NOTE: You can ONLY join users that let you join them (ex: you're friended/following them, or the user being sniped has their joins on). This is NOT an stream-sniping exploit.**
 
 ## How do I build this from source?
 There is a build script in ./build/ that can be used to build RoSniper for macOS.
