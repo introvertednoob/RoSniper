@@ -29,7 +29,4 @@
         - Default: False
         - Current: [cur_df]
 
-[underline]/exit[end]
-    -> Exits RoSniper
-
 Words in brackets represent values (ex: [bold][SECONDS][end] means [bold]the # of seconds[end])

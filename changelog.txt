@@ -1,4 +1,13 @@
-[green][bold]Version 2025.6_b1[end]
+[green][bold]Version 2025.6_b2[end]
+    - Changed all single quotes to double-quotes inside user-facing text and code
+    - When waiting using sleep() or print_wait(), a clean exit is supported using CTRL+C
+        - save() is ran when invoking CTRL+C during print_wait()
+    - Removed the /exit command
+        - Using CTRL+C instead of /exit is recommended while in the main menu
+    - Fixed a bug from 2025.6_b1 where the Recent Users list could overflow
+    - Fixed a bug in which exit() wasn't supported when running RoSniper.app
+
+[bold]Version 2025.6_b1[end]
 Just some optimizations and bug fixes this time around.
     - Optimized and shortened RoSniper's code
     - Added support for the green ANSI color code to signify the latest version in the changelog
@@ -8,7 +17,7 @@ Just some optimizations and bug fixes this time around.
     - Shortened change delay code (/delay)
     - Removed check_config() and run the code inside it only on start
     - Changed some strings to add more information to them
-    - Fixed an issue where Roblox opened even though a user wasn't joinable
+    - Fixed a bug where Roblox opened even though a user wasn't joinable
 
 [bold]Version 2025.4[end]
 Lots of QoL fixes available!
@@ -99,4 +108,4 @@ First true overhaul since May!
     - Other minor improvements
 
 Development on RoSniper started in May 2024.
-[bold]There are a lot of undocumented changes from May to 2024.11.[end]
+[bold]There are a lot of undocumented changes from May to v2024.11.[end]

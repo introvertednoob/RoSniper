@@ -3,11 +3,12 @@ import sys
 import objc
 import time
 import json
-import webbrowser
 import requests
 import pyperclip
+import webbrowser
+from sys import exit
 
-version = "2025.6_b1"
+version = "2025.6_b2"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -31,12 +32,34 @@ def save():
     open("config.json", "w", encoding="utf-8").write(json.dumps(config, indent=4))
 
 def print_wait(text, wait):
-    print(text)
-    time.sleep(wait)
+    try:
+        print(text)
+        time.sleep(wait)
+    except KeyboardInterrupt:
+        save()
+        exit()
+
+def sleep(wait):
+    try:
+        time.sleep(wait)
+    except KeyboardInterrupt:
+        exit()
 
 def delete_recent_user(user):
     if user.lower() in config["recent_users"]:
         config["recent_users"].remove(user.lower())
+    save()
+
+def fix_recents():
+    try:
+        config["recent_users_length"] = round(config["recent_users_length"])
+        if config["recent_users_length"] > 99:
+            config["recent_users_length"] = 99
+        while len(config["recent_users"]) > config["recent_users_length"]:
+            del(config["recent_users"][config["recent_users_length"]])
+    except KeyError:
+        config["recent_users_length"] = 5
+        config["recent_users"] = []
     save()
 
 def add_account(force=False):
@@ -52,7 +75,7 @@ def add_account(force=False):
         if not "_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_" in pyperclip.paste():
             pyperclip.copy("")
             while pyperclip.paste() == "":
-                time.sleep(0.1)
+                sleep(0.1)
         cookie = pyperclip.paste()
         header = {
             "Cookie": f".ROBLOSECURITY={cookie}"
@@ -62,7 +85,7 @@ def add_account(force=False):
             user_context = json.loads(req.text)
             config["cookies"].append(cookie)
             save()
-            input(f"Cookie saved successfully. Welcome, {user_context['name']}! ")
+            input(f"Cookie saved successfully. Welcome, {user_context["name"]}! ")
         except requests.exceptions.ReadTimeout:
             save()
             exit()
@@ -147,22 +170,20 @@ def run_command(command):
             decline_first_server = False
         else:
             decline_first_server = True
-    elif command == "/exit":
-        exit()
     else:
         similar_command = ""
-        list_of_commands = ["/cmds", "/help", "/changelog", "/set", "/setrecents", "/del", "/logout", "/addaccount", "/add", "/exit", "/df", "/declinefirst"]
+        list_of_commands = ["/cmds", "/help", "/changelog", "/set", "/setrecents", "/del", "/logout", "/addaccount", "/add", "/df", "/declinefirst"]
         for cmd in list_of_commands:
             if command in cmd:
                 similar_command = cmd
                 break
         if similar_command == "":
-            print(f"\n{underline}Invalid command: '{command}'{end}\nType /cmds to see documentation on commands.")
+            print(f"\n{underline}Invalid command: \"{command}\"{end}\nType /cmds to see documentation on commands.")
         elif similar_command != command:
-            print(f"\n{underline}Invalid command: '{command}'. Perhaps you meant '{similar_command}'?{end}\nType /cmds to see documentation on commands.")
+            print(f"\n{underline}Invalid command: \"{command}\". Perhaps you meant \"{similar_command}\"?{end}\nType /cmds to see documentation on commands.")
         else:
             print(f"\n{underline}This command exists, but it requires arguments.{end}\nType /cmds to see documentation on the arguments for commands.")
-        time.sleep(2)
+        sleep(2)
 
 def client():
     global users
@@ -258,16 +279,7 @@ for key in default_config.keys():
                     del config[key][item]
     except ValueError:
         config[key] = default_config[key]
-
-try:
-    config["recent_users_length"] = round(config["recent_users_length"])
-    if config["recent_users_length"] > 99:
-        config["recent_users_length"] = 99
-    while len(config["recent_users"]) > config["recent_users_length"]:
-        del(config["recent_users"][config["recent_users_length"]])
-except KeyError:
-    config["recent_users_length"] = 5
-    config["recent_users"] = []
+fix_recents()
 save()
 
 # Save .ROBLOSECURITY cookie or add a new .ROBLOSECURITY cookie
@@ -296,8 +308,8 @@ for cookie in range(len(config["cookies"])):
         exit()
 
     if req.ok:
-        usernames += [json.loads(req.text)['name']]
-        display_names += [json.loads(req.text)['displayName']]
+        usernames += [json.loads(req.text)["name"]]
+        display_names += [json.loads(req.text)["displayName"]]
     elif req.status_code == 429:
         clear()
         print(f"{gold}[Network Error / Too Many Requests]{end}")
@@ -343,7 +355,7 @@ user_context = {
 
 decline_first_server = False
 while True:
-    # Show home screen
+    # Show main menu
     clear()
     print(f"{gold}[RoSniper] [ver. {version}]{end}")
     print("Snipe-joins accounts (that the logged-in user can join) when they join a game.")
@@ -355,17 +367,17 @@ while True:
 
     print(f"\n{gold}[Recent Users]{end}")
     for i in range(len(config["recent_users"])):
-        print(f"[{i + 1}] {bold}{config['recent_users'][i]}{end}")
+        print(f"[{i + 1}] {bold}{config["recent_users"][i]}{end}")
     if len(config["recent_users"]) == 0:
         print("No saved users! Join-snipe some users to save them to this list!")
         if config["recent_users_length"] == 5:
             print(f"You can save up to 5 users in this list by default. Run /set [MAX_LENGTH] to change this.")
         else:
-            print(f"You can save up to {config['recent_users_length']} users in this list.")
+            print(f"You can save up to {config["recent_users_length"]} users in this list.")
     print("")
     if decline_first_server:
         print(f"{underline}Decline First Server is Active{end}")
-    print(f"Logged in as {bold}{user_context['displayName']} (@{user_context['name']}){end}")
+    print(f"Logged in as {bold}{user_context["displayName"]} (@{user_context["name"]}){end}")
 
     try:
         user = input("Enter username, recent user ID, or command: ").strip()
@@ -433,8 +445,8 @@ while True:
     # Save usernames to recent users
     for user in users:
         delete_recent_user(user)
-        config["recent_users"] = [user.lower()] + config["recent_users"]
-        save()
+        config["recent_users"].insert(0, user.lower())
+    fix_recents()
 
     # Start RoSniper
     clear()
@@ -459,7 +471,7 @@ while True:
                 client_exception(f"<{req.status_code}> Couldn't connect to the Roblox servers.")
         except requests.exceptions.ConnectionError:
             client_exception("[ConnectionError] Couldn't connect to the Roblox servers. Retrying in 1s...")
-            time.sleep(1)
+            sleep(1)
         except requests.exceptions.SSLError:
             client_exception("[SSLError] Couldn't connect to the Roblox servers. Your internet may be blocking Roblox. ")
             break
