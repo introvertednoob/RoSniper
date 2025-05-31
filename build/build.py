@@ -39,7 +39,7 @@ if platform.system() == "Darwin":
         modifiedRoSniper = open(RoSniperPath, "r").read().replace(f"version = \"{listedVersion}\"", f"version = \"{version}\"")
         open("./Resources/RoSniper.py", "w").write(modifiedRoSniper)
 
-        if not os.path.exists('./Resources/launcher') and os.path.exists("./Resources/launcher.py"):
+        if not os.path.exists("./Resources/launcher") and os.path.exists("./Resources/launcher.py"):
             os.system("pyinstaller ./Resources/launcher.py")
             os.system("cp ./dist/launcher/launcher ./Resources/")
             os.system("rm -rf build dist *.spec")
