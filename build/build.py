@@ -12,11 +12,15 @@ def clear():
 if platform.system() == "Darwin":
     def build():
         clear()
-        print(f"{brown}[Option 2 - Build RoSniper]{end}")
-        print("Here are the requirements to build RoSniper for macOS:")
-        print("    - RoSniper.py in the directory of the build script")
+        print(f"{brown}[Build RoSniper]{end}")
+        print(f"{bold}Here are the minimum requirements to build RoSniper for macOS:{end}")
+        print("    - 200MB+ space (app ~100MB, launcher ~2MB, rest is temporary files)")
+        print("    - The modules pyinstaller==6.13.0, pyperclip==1.9.0, and requests==2.32.3")
+        print("    - RoSniper.py in the (parent) directory of the build script")
         print("    - AppIcon.icns, launcher.py, and Info.plist in ./Resources/")
-        print("    - Dependencies: pyinstaller==6.13.0, pyperclip==1.9.0, and requests==2.32.3")
+        print(f"\n{bold}If you're running Option 1 for a complete install:{end}")
+        print("    - commands.txt and changelog.txt in the (parent) directory of the build script")
+        print("    - OPTIONAL: config.json in the (parent) directory of the build script")
 
         if os.path.exists("../RoSniper.py"):
             RoSniperPath = "../RoSniper.py"
@@ -46,69 +50,29 @@ if platform.system() == "Darwin":
         open("./RoSniper.app/Contents/Info.plist", "w").write(modifiedPLIST)
         os.system("rm -rf build dist *.spec ./Resources/RoSniper.py")
 
-    def transfer_changelog(confirmation=True):
+    def transfer_file(file, confirmation=True):
         clear()
-        print(f"{brown}[Option 3 - Inject changelog into RoSniper]{end}")
+        print(f"{brown}[Inject {file.split(".")[0]} into RoSniper]{end}")
 
-        if os.path.exists("../changelog.txt"):
-            print("changelog.txt was found in the parent directory.")
-            os.system("cp ../changelog.txt RoSniper.app/Contents/Frameworks/")
-        elif os.path.exists("./changelog.txt"):
-            print("changelog.txt was found in this directory.")
-            os.system("cp ../changelog.txt RoSniper.app/Contents/Frameworks/")
-        elif os.path.exists("./Resources/changelog.txt"):
-            print("changelog.txt was found in the Resources folder.")
-            os.system("cp ../changelog.txt RoSniper.app/Contents/Frameworks/")
+        if os.path.exists(f"../{file}"):
+            print(f"{file} was found in the parent directory.")
+            os.system(f"cp ../{file} RoSniper.app/Contents/Frameworks/")
+        elif os.path.exists(f"./{file}"):
+            print(f"{file} was found in this directory.")
+            os.system(f"cp ../{file} RoSniper.app/Contents/Frameworks/")
+        elif os.path.exists(f"./Resources/{file}"):
+            print(f"{file} was found in the Resources directory.")
+            os.system(f"cp ../{file} RoSniper.app/Contents/Frameworks/")
         else:
-            input("changelog.txt wasn't found. ")
+            input(f"{file} wasn't found. ")
             return
 
         if confirmation == True:
-            input("changelog.txt was injected into RoSniper.app. ")
-
-    def transfer_cmd_docs(confirmation=True):
-        clear()
-        print(f"{brown}[Option 4 - Inject changelog into RoSniper]{end}")
-
-        if os.path.exists("../commands.txt"):
-            print("commands.txt was found in the parent directory.")
-            os.system("cp ../commands.txt RoSniper.app/Contents/Frameworks/")
-        elif os.path.exists("./commands.txt"):
-            print("commands.txt was found in this directory.")
-            os.system("cp ../commands.txt RoSniper.app/Contents/Frameworks/")
-        elif os.path.exists("./Resources/commands.txt"):
-            print("commands.txt was found in the Resources folder.")
-            os.system("cp ../commands.txt RoSniper.app/Contents/Frameworks/")
-        else:
-            input("commands.txt wasn't found. ")
-            return
-
-        if confirmation == True:
-            input("commands.txt was injected into RoSniper.app. ")
-
-    def transfer_config(confirmation=True):
-        clear()
-        print(f"{brown}[Option 5 - Inject config.json into RoSniper]{end}")
-
-        if os.path.exists("../config.json"):
-            print("config.json was found in the parent directory.")
-            os.system("cp ../config.json RoSniper.app/Contents/Frameworks/")
-        elif os.path.exists("./config.json"):
-            print("config.json was found in this directory.")
-            os.system("cp ../config.json RoSniper.app/Contents/Frameworks/")
-        elif os.path.exists("./Resources/config.json"):
-            print("config.json was found in the Resources folder.")
-            os.system("cp ../config.json RoSniper.app/Contents/Frameworks/")
-        else:
-            input("config.json wasn't found. ")
-            return
-
-        if confirmation == True:
-            input("config.json was injected into RoSniper.app. ")
+            input(f"{file} was injected into RoSniper.app. ")
 
     def transfer_to_applications(confirmation=True):
         clear()
-        print(f"{brown}[Option 6 - Transfer RoSniper to /Applications]{end}")
+        print(f"{brown}[Transfer RoSniper to /Applications]{end}")
         if os.path.exists("/Applications/RoSniper.app"):
             os.system("rm -rf /Applications/RoSniper.app")
         os.system("mv RoSniper.app /Applications/")
@@ -117,27 +81,26 @@ if platform.system() == "Darwin":
 
     def delete_from_applications():
         clear()
-        print(f"{brown}[Option 7 - Delete RoSniper from /Applications]{end}")
+        print(f"{brown}[Delete RoSniper from /Applications]{end}")
         os.system("rm -rf /Applications/RoSniper.app")
         input("RoSniper.app was deleted from the Applications folder. ")
 
     while True:
         clear()
-        os.chdir(os.path.dirname(os.path.realpath(__file__)))
+        os.chdir(os.path.dirname(__file__))
+
+        AppExists = "" if os.path.exists("RoSniper.app") else faint
+        AppExists_A = "" if os.path.exists("/Applications/RoSniper.app") else faint
 
         print(f"{brown}[RoSniper Build Tool]{end}")
-        print(f"  {bold}[1] Install RoSniper from source (Options 2, 3, 4, 5, and 6 combined){end}")
-        print("  [2] Build RoSniper")
-
-        AppExists = os.path.exists("RoSniper.app")
-        AppExists_A = os.path.exists("/Applications/RoSniper.app")
-        print(f"  {faint if not AppExists else ""}[3] Inject an existing changelog.txt into RoSniper.app{end if not AppExists else ""}")
-        print(f"  {faint if not AppExists else ""}[4] Inject an existing commands.txt into RoSniper.app{end if not AppExists else ""}")
-        print(f"  {faint if not AppExists else ""}[5] Inject an existing config.json into RoSniper.app{end if not AppExists else ""}")
-        print(f"  {faint if not AppExists else ""}[6] Transfer RoSniper to /Applications{end if not AppExists else ""}")
-        print(f"  {faint if not AppExists_A else ""}[7] Delete RoSniper from /Applications{end if not AppExists_A else ""}")
-
-        print("  [8] Exit")
+        print(f"{bold}[1] Install RoSniper from source (Options 2, 3, 4, 5, and 6 combined){end}")
+        print("[2] Build RoSniper")
+        print(f"{AppExists}[3] Inject an existing changelog.txt into RoSniper.app{end}")
+        print(f"{AppExists}[4] Inject an existing commands.txt into RoSniper.app{end}")
+        print(f"{AppExists}[5] Inject an existing config.json into RoSniper.app{end}")
+        print(f"{AppExists}[6] Transfer RoSniper to /Applications{end}")
+        print(f"{AppExists_A}[7] Delete RoSniper from /Applications{end}")
+        print("[8] Exit")
 
         option = input("\nSelect an option: ").strip()
         if not option.isnumeric() or not option in ["1", "2", "3", "4", "5", "6", "7", "8"]:
@@ -149,21 +112,21 @@ if platform.system() == "Darwin":
         match option:
             case 1:
                 build()
-                transfer_changelog(confirmation=False)
-                transfer_config(confirmation=False)
-                transfer_cmd_docs(confirmation=False)
+                transfer_file("changelog.txt", confirmation=False)
+                transfer_file("commands.txt", confirmation=False)
+                transfer_file("config.json", confirmation=False)
                 transfer_to_applications(confirmation=False)
             case 2:
                 build()
             case 3:
                 if os.path.exists("RoSniper.app"):
-                    transfer_changelog()
+                    transfer_file("changelog.txt")
             case 4:
                 if os.path.exists("RoSniper.app"):
-                    transfer_cmd_docs()
+                    transfer_file("commands.txt")
             case 5:
                 if os.path.exists("RoSniper.app"):
-                    transfer_config()
+                    transfer_file("config.json")
             case 6:
                 if os.path.exists("RoSniper.app"):
                     transfer_to_applications()
@@ -172,7 +135,5 @@ if platform.system() == "Darwin":
                     delete_from_applications()
             case 8:
                 exit()
-elif platform.system() == "Windows":
-    input("The build script is not available for Windows at this time. ")
-elif platform.system() == "Linux":
-    input("The build script is not available for Linux at this time. ")
+elif platform.system() in ["Windows", "Linux"]:
+    input("The build script is not available for Windows or Linux at this time. ")
