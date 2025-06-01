@@ -4,13 +4,16 @@ Optimizations galore!
     - Optimized and shortened the RoSniper build script (build.py)
         - Added more information to the requirements for building RoSniper
     - Optimized change delay code (/delay)
+    - Added new, more optimized command argument system
     - Added support for the green ANSI color code to signify the latest version in the changelog
     - Added functions wait(secs, text) and client_exception(error) to condense code
+    - Improve Similar Commands ever so slightly
     - When delaying code using wait(), a clean exit is now supported using CTRL+C
         - save() is ran when invoking CTRL+C as well, so your data is safe
     - Clear the clipboard after saving .ROBLOSECURITY cookies for security reasons
     - Changed all single quotes to double-quotes inside user-facing text and code
     - Changed some strings to add more information to them
+    - Changed the "all" argument to "*" in the /del and /logout commands
     - Removed unnecessary print statements involving checks_since_start
     - Removed unnecessary try/except statements, now preventing errors with improved logic
     - Removed the /exit command
@@ -19,6 +22,7 @@ Optimizations galore!
     - Fixed a bug where Roblox opened even though a user wasn't joinable
     - Fixed a bug in which exit() wasn't supported when running RoSniper.app
     - Fixed a bug where erasing all .ROBLOSECURITY cookies wouldn't work
+    - Fixed a bug where Recent Users with completely numeric usernames couldn't be erased by username
 
 [bold]Version 2025.4[end]
 Lots of QoL fixes available!

@@ -107,6 +107,7 @@ def run_command(command):
     global decline_first_server
 
     command = command.lower()
+    arg = command.split(" ")[1] if len(command.split(" ")) > 1 else ""
     if command in ["/cmds", "/help", "/changelog"]:
         clear()
         load_file = "commands.txt" if command in ["/cmds", "/help"] else "changelog.txt"
@@ -120,8 +121,8 @@ def run_command(command):
             print(f"{load_file} isn't present.")
         input("Press ENTER to return to the main menu. ")
     elif command.startswith("/setrecents ") or command.startswith("/set "):
-        if command.split(" ")[1].isnumeric():
-            config["recent_users_length"] = int(command.split(" ")[1])
+        if arg.isnumeric():
+            config["recent_users_length"] = int(arg)
             wait(1, f"\n{underline}Set the length of Recent Users to {"99 (max)" if config["recent_users_length"] > 99 else config["recent_users_length"]}.{end}")
         else:
             wait(1, f"\n{underline}Invalid length.{end}")
@@ -129,28 +130,31 @@ def run_command(command):
     elif command.startswith("/del "):
         if config["recent_users"] == []:
             wait(0.75, f"\n{underline}There are no Recent Users to delete.{end}")
-        elif command.split(" ")[1] == "all":
+        elif arg == "*":
             config["recent_users"] = []
             wait(1, f"\n{underline}Deleted all Recent Users.{end}")
-        elif command.split(" ")[1].isnumeric():
-            if int(command.split(" ")[1]) <= len(config["recent_users"]):
-                del config["recent_users"][int(command.split(" ")[1]) - 1]
-                wait(1, f"\n{underline}Deleted Recent User #{command.split(" ")[1]}.{end}")
+        elif arg in config["recent_users"]:
+            config["recent_users"].remove(arg)
+            wait(1, f"\n{underline}Deleted Recent User [@{arg}].{end}")
+        elif arg.isnumeric():
+            if int(arg) <= len(config["recent_users"]):
+                del config["recent_users"][int(arg) - 1]
+                wait(1, f"\n{underline}Deleted Recent User #{arg}.{end}")
             else:
                 wait(0.75, f"\n{underline}This Recent User doesn't exist.{end}")
-        elif command.split(" ")[1] in config["recent_users"]:
-            config["recent_users"].remove(command.split(" ")[1])
-            wait(1, f"\n{underline}Deleted Recent User [@{command.split(" ")[1]}].{end}")
         else:
             wait(0.75, f"\n{underline}This Recent User doesn't exist.{end}")
         save()
     elif command.startswith("/logout"):
-        if command.endswith(" all"):
+        if arg == "*":
             config["cookies"] = []
             print(f"\n{underline}Removed all cookies from config.json.{end}")
-        else:
+        elif arg == "":
             del config["cookies"][id]
             print(f"\n{underline}Deleted this account's cookie from config.json.{end}")
+        else:
+            wait(2, f"\n{underline}Invalid argument. See /cmds for proper documentation.{end}")
+            return
         save()
         wait(1.5, f"{bold}RoSniper will restart now.{end}")
         os.execl(sys.executable, sys.executable, *sys.argv)
@@ -158,7 +162,7 @@ def run_command(command):
         wait(1, f"\n{underline}You will be redirected to the Save Cookie menu.{end}")
         add_account(force=True)
     elif command.startswith("/delay "):
-        config["delay"] = float(command.split(" ")[1]) if command.split(" ")[1].replace(".", "").isnumeric() else 0.01
+        config["delay"] = float(arg) if arg.replace(".", "").isnumeric() else 0.01
         save()
         wait(0.5, f"\n{underline}Delay set to {config["delay"]}s.{end}")
     elif command in ["/df", "/declinefirst"]:
@@ -168,7 +172,7 @@ def run_command(command):
             decline_first_server = True
     else:
         similar_command = ""
-        list_of_commands = ["/cmds", "/help", "/changelog", "/set", "/setrecents", "/del", "/logout", "/addaccount", "/add", "/df", "/declinefirst"]
+        list_of_commands = ["/cmds", "/help", "/changelog", "/set", "/setrecents", "/del", "/logout", "/add", "/addaccount", "/df", "/declinefirst"]
         for cmd in list_of_commands:
             if command in cmd or cmd in command:
                 similar_command = cmd
