@@ -1,7 +1,7 @@
 [green][bold]Version 2025.6_rc[end]
 Optimizations galore!
     - Optimized and shortened RoSniper's code
-    - Optimized and shortened the RoSniper build script (build.py)
+    - Optimized and shortened the RoSniper build script
         - Added more information to the requirements for building RoSniper
     - Optimized change delay code (/delay)
     - Added new, more optimized command argument system
@@ -19,6 +19,7 @@ Optimizations galore!
     - Removed the /exit command
         - Using CTRL+C instead of /exit is recommended while in the main menu
     - Removed check_config() and run the code inside it only on start
+    - Removed unnecessary output from the build script when executing option 1
     - Fixed a bug where Roblox opened even though a user wasn't joinable
     - Fixed a bug in which exit() wasn't supported when running RoSniper.app
     - Fixed a bug where erasing all .ROBLOSECURITY cookies wouldn't work

@@ -50,33 +50,39 @@ if platform.system() == "Darwin":
         open("./RoSniper.app/Contents/Info.plist", "w").write(modifiedPLIST)
         os.system("rm -rf build dist *.spec ./Resources/RoSniper.py")
 
-    def transfer_file(file, confirmation=True):
+    def transfer_file(file, output=True):
         clear()
-        print(f"{brown}[Inject {file.split(".")[0]} into RoSniper]{end}")
+        if output:
+            print(f"{brown}[Inject {file.split(".")[0]} into RoSniper]{end}")
 
         if os.path.exists(f"../{file}"):
-            print(f"{file} was found in the parent directory.")
+            if output:
+                print(f"{file} was found in the parent directory.")
             os.system(f"cp ../{file} RoSniper.app/Contents/Frameworks/")
         elif os.path.exists(f"./{file}"):
-            print(f"{file} was found in this directory.")
+            if output:
+                print(f"{file} was found in this directory.")
             os.system(f"cp ../{file} RoSniper.app/Contents/Frameworks/")
         elif os.path.exists(f"./Resources/{file}"):
-            print(f"{file} was found in the Resources directory.")
+            if output:
+                print(f"{file} was found in the Resources directory.")
             os.system(f"cp ../{file} RoSniper.app/Contents/Frameworks/")
         else:
             input(f"{file} wasn't found. ")
             return
 
-        if confirmation == True:
+        if output:
             input(f"{file} was injected into RoSniper.app. ")
 
-    def transfer_to_applications(confirmation=True):
+    def transfer_to_applications(output=True):
         clear()
-        print(f"{brown}[Transfer RoSniper to /Applications]{end}")
+        if output:
+            print(f"{brown}[Transfer RoSniper to /Applications]{end}")
+
         if os.path.exists("/Applications/RoSniper.app"):
             os.system("rm -rf /Applications/RoSniper.app")
         os.system("mv RoSniper.app /Applications/")
-        if confirmation == True:
+        if output:
             input("RoSniper.app was moved to the Applications folder. ")
 
     def delete_from_applications():
@@ -112,10 +118,10 @@ if platform.system() == "Darwin":
         match option:
             case 1:
                 build()
-                transfer_file("changelog.txt", confirmation=False)
-                transfer_file("commands.txt", confirmation=False)
-                transfer_file("config.json", confirmation=False)
-                transfer_to_applications(confirmation=False)
+                transfer_file("changelog.txt", output=False)
+                transfer_file("commands.txt", output=False)
+                transfer_file("config.json", output=False)
+                transfer_to_applications(output=False)
             case 2:
                 build()
             case 3:
