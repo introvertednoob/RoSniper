@@ -1,5 +1,5 @@
-[green][bold]Version 2025.6_rc[end]
-Optimizations galore!
+[green][bold]Version 2025.6[end]
+Optimizations and bugfixes galore!
     - Optimized and shortened RoSniper's code
     - Optimized and shortened the RoSniper build script
         - Added more information to the requirements for building RoSniper

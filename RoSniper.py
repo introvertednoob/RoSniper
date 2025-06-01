@@ -8,7 +8,7 @@ import pyperclip
 import webbrowser
 from sys import exit
 
-version = "2025.6_rc"
+version = "2025.6"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
