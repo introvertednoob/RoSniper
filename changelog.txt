@@ -1,4 +1,8 @@
-[green][bold]Version 2025.6[end]
+[green][bold]Version 2025.6.1[end]
+Guaranteed sniper rifle on every icon!
+    - Fixed the icon to actually be seen from Launchpad when built
+
+[bold]Version 2025.6[end]
 Optimizations and bugfixes galore!
     - Optimized and shortened RoSniper's code
     - Optimized and shortened the RoSniper build script
