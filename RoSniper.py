@@ -15,7 +15,6 @@ if platform.system() == "Windows":
             if proc.name() == "RobloxPlayerBeta.exe":
                 psutil.Process(proc.pid).kill()
 else:
-    import objc
     def prepare():
         webbrowser.open("roblox://")
 
@@ -89,6 +88,9 @@ def add_account(force=False):
         }
         try:
             req = requests.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers=header)
+            if not req.ok:
+                input("\nInvalid cookie. Restart RoSniper to try again. ")
+                exit()
             user_context = json.loads(req.text)
             config["cookies"].append(cookie)
             save()
@@ -275,7 +277,6 @@ if os.path.exists("config.json"):
 else:
     config = {}
 
-compat_list = [str] if platform.system() == "Windows" else [str, objc.pyobjc_unicode]
 for key in default_config.keys():
     try:
         if not key in config.keys():
@@ -284,7 +285,7 @@ for key in default_config.keys():
             raise ValueError
         if type(config[key]) == list:
             for item in range(len(config[key])):
-                if type(config[key][item]) not in compat_list:
+                if type(config[key][item]) not in [str]:
                     del config[key][item]
     except ValueError:
         config[key] = default_config[key]
