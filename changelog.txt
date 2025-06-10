@@ -1,4 +1,4 @@
-[green][bold]Version 2025.7_b2[end]
+[green][bold]Version 2025.7_b3[end]
 Windows support + macOS bundle optimizations!
     - Added Windows support for building and running RoSniper
     - Added a .ico file to ensure compatibility with the Windows build script
@@ -6,6 +6,7 @@ Windows support + macOS bundle optimizations!
     - macOS binary sizes will be halved with this update (~85MB -> ~45MB)
         - Unnecessary modules will be removed from binaries released through Releases
         - An update to the build script will allow it to delete duplicate files
+    - Optimize clear() on Windows
     [bold]Note that RoSniper for Windows is in beta.[end]
 
 [bold]Version 2025.6.2[end]

@@ -8,15 +8,23 @@ import pyperclip
 import webbrowser
 from sys import exit
 
+def prepare():
+    webbrowser.open("roblox://")
+
+def clear(times=2):
+    for t in range(times):
+        os.system("clear" if platform.system() != "Windows" else "cls")
+
 if platform.system() == "Windows":
     import psutil
+
+    def clear():
+        os.system("cls")
+
     def prepare():
         for proc in psutil.process_iter():
             if proc.name() == "RobloxPlayerBeta.exe":
                 psutil.Process(proc.pid).kill()
-else:
-    def prepare():
-        webbrowser.open("roblox://")
 
 version = "2025.7_b2"
 os.chdir(os.path.dirname(__file__))
@@ -33,11 +41,6 @@ default_config = {
     "recent_users": [],
     "cookies": []
 }
-
-# Key functions for RoSniper
-def clear(times=2):
-    for t in range(times):
-        os.system("clear" if platform.system() != "Windows" else "cls")
 
 def save():
     open("config.json", "w", encoding="utf-8").write(json.dumps(config, indent=4))
