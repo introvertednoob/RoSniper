@@ -1,14 +1,25 @@
 import os
 import sys
-import objc
 import time
 import json
 import requests
+import platform
 import pyperclip
 import webbrowser
 from sys import exit
 
-version = "2025.6.2"
+if platform.system() == "Windows":
+    import psutil
+    def prepare():
+        for proc in psutil.process_iter():
+            if proc.name() == "RobloxPlayerBeta.exe":
+                psutil.Process(proc.pid).kill()
+else:
+    import objc
+    def prepare():
+        webbrowser.open("roblox://")
+
+version = "2025.7_b1"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -27,7 +38,7 @@ default_config = {
 # Key functions for RoSniper
 def clear(times=2):
     for t in range(times):
-        os.system("clear")
+        os.system("clear" if platform.system() != "Windows" else "cls")
 
 def save():
     open("config.json", "w", encoding="utf-8").write(json.dumps(config, indent=4))
@@ -206,7 +217,7 @@ def client():
 
         if status == 1:
             if _ == current_user and prepare_roblox:
-                webbrowser.open("roblox://")
+                prepare()
                 prepare_roblox = False
             print(f"{user_label} is on the Roblox website!")
         elif status == 2 and place_id == server_id == None:
@@ -264,6 +275,7 @@ if os.path.exists("config.json"):
 else:
     config = {}
 
+compat_list = [str] if platform.system() == "Windows" else [str, objc.pyobjc_unicode]
 for key in default_config.keys():
     try:
         if not key in config.keys():
@@ -272,7 +284,7 @@ for key in default_config.keys():
             raise ValueError
         if type(config[key]) == list:
             for item in range(len(config[key])):
-                if type(config[key][item]) not in [str, objc.pyobjc_unicode]:
+                if type(config[key][item]) not in compat_list:
                     del config[key][item]
     except ValueError:
         config[key] = default_config[key]

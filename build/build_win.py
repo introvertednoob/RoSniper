@@ -1,4 +1,5 @@
 import os
+import shutil
 import platform
 
 brown = "\033[0;33m"
@@ -9,7 +10,7 @@ end = "\033[0m"
 def clear():
     os.system("clear || cls")
 
-if platform.system() == "Darwin":
+if platform.system() == "Windows":
     def build():
         clear()
         print(f"{brown}[Build RoSniper for Windows (beta)]{end}")
@@ -39,9 +40,11 @@ if platform.system() == "Darwin":
         modifiedRoSniper = open(RoSniperPath, "r").read().replace(f"version = \"{listedVersion}\"", f"version = \"{version}\"")
         open("./Resources/RoSniper.py", "w").write(modifiedRoSniper)
         
-        os.system("pyinstaller --windowed ./Resources/RoSniper.py --icon ./Resources/AppIcon.ico")
-        os.system("cp -r dist/RoSniper.app .")
-        os.system("rm -rf build dist *.spec ./Resources/RoSniper.py")
+        os.system("pyinstaller ./Resources/RoSniper.py --icon ./Resources/AppIcon.ico")
+        os.system("xcopy .\\dist\\RoSniper . /E /Q")
+        shutil.rmtree("./build/")
+        shutil.rmtree("./dist/")
+        os.system("erase *.spec .\\Resources\\RoSniper.py /Q")
 
     def transfer_file(file, output=True):
         clear()
@@ -51,45 +54,27 @@ if platform.system() == "Darwin":
         if os.path.exists(f"../{file}"):
             if output:
                 print(f"{file} was found in the parent directory.")
-            os.system(f"cp ../{file} RoSniper.app/Contents/Frameworks/")
+            os.system(f"copy ..\\{file} .\\_internal\\ /Y")
         elif os.path.exists(f"./{file}"):
             if output:
                 print(f"{file} was found in this directory.")
-            os.system(f"cp ../{file} RoSniper.app/Contents/Frameworks/")
+            os.system(f"copy ..\\{file} .\\_internal\\ /Y")
         elif os.path.exists(f"./Resources/{file}"):
             if output:
                 print(f"{file} was found in the Resources directory.")
-            os.system(f"cp ../{file} RoSniper.app/Contents/Frameworks/")
+            os.system(f"copy ..\\{file} .\\_internal\\ /Y")
         else:
             input(f"{file} wasn't found. ")
             return
 
         if output:
-            input(f"{file} was injected into RoSniper.app. ")
-
-    def transfer_to_applications(output=True):
-        clear()
-        if output:
-            print(f"{brown}[Transfer RoSniper to /Applications]{end}")
-
-        if os.path.exists("/Applications/RoSniper.app"):
-            os.system("rm -rf /Applications/RoSniper.app")
-        os.system("mv RoSniper.app /Applications/")
-        if output:
-            input("RoSniper.app was moved to the Applications folder. ")
-
-    def delete_from_applications():
-        clear()
-        print(f"{brown}[Delete RoSniper from /Applications]{end}")
-        os.system("rm -rf /Applications/RoSniper.app")
-        input("RoSniper.app was deleted from the Applications folder. ")
+            input(f"{file} was injected into RoSniper. ")
 
     while True:
         clear()
         os.chdir(os.path.dirname(__file__))
 
-        AppExists = "" if os.path.exists("RoSniper.app") else faint
-        AppExists_A = "" if os.path.exists("/Applications/RoSniper.app") else faint
+        AppExists = "" if os.path.exists("./_internal/") else faint
 
         print(f"{brown}[RoSniper Build Tool]{end}")
         print(f"{bold}[1] Install RoSniper from source (Options 2, 3, 4, 5, and 6 combined){end}")
@@ -97,12 +82,10 @@ if platform.system() == "Darwin":
         print(f"{AppExists}[3] Inject an existing changelog.txt into RoSniper.app{end}")
         print(f"{AppExists}[4] Inject an existing commands.txt into RoSniper.app{end}")
         print(f"{AppExists}[5] Inject an existing config.json into RoSniper.app{end}")
-        print(f"{AppExists}[6] Transfer RoSniper to /Applications{end}")
-        print(f"{AppExists_A}[7] Delete RoSniper from /Applications{end}")
-        print("[8] Exit")
+        print("[6] Exit")
 
         option = input("\nSelect an option: ").strip()
-        if not option.isnumeric() or not option in ["1", "2", "3", "4", "5", "6", "7", "8"]:
+        if not option.isnumeric() or not option in ["1", "2", "3", "4", "5", "6"]:
             input("Invalid option. ")
             continue
         else:
@@ -114,25 +97,20 @@ if platform.system() == "Darwin":
                 transfer_file("changelog.txt", output=False)
                 transfer_file("commands.txt", output=False)
                 transfer_file("config.json", output=False)
-                transfer_to_applications(output=False)
             case 2:
                 build()
             case 3:
-                if os.path.exists("RoSniper.app"):
+                if os.path.exists("./_internal/"):
                     transfer_file("changelog.txt")
             case 4:
-                if os.path.exists("RoSniper.app"):
+                if os.path.exists("./_internal/"):
                     transfer_file("commands.txt")
             case 5:
-                if os.path.exists("RoSniper.app"):
+                if os.path.exists("./_internal/"):
                     transfer_file("config.json")
             case 6:
-                if os.path.exists("RoSniper.app"):
-                    transfer_to_applications()
-            case 7:
-                if os.path.exists("/Applications/RoSniper.app"):
-                    delete_from_applications()
-            case 8:
                 exit()
-elif platform.system() in ["Windows", "Linux"]:
-    input("The build script is not available for Windows or Linux at this time. ")
+elif platform.system() == "Darwin":
+    input("Please use the macOS build script. ")
+elif platform.system() == "Linux":
+    input("Linux is not supported. ")

@@ -1,6 +1,8 @@
 *.app
-*.DS_Store
+*.exe
 *.spec
-config.json
+*.DS_Store
+*.specconfig.json
 launcher
+_internal
 __pycache__

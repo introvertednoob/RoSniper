@@ -1,4 +1,11 @@
-[green][bold]Version 2025.6.2[end]
+[green][bold]Version 2025.7_b1[end]
+Finally, Windows support!
+    - Added Windows support for building and running RoSniper
+    - Added a .ico file to ensure compatibility with the Windows build script
+    - Created build_win.py to build RoSniper for Windows
+    [bold]Note that RoSniper for Windows is in beta and the program may not work properly.[end]
+
+[bold]Version 2025.6.2[end]
 Proper clears!
     - Fixed the clear() function to properly clear text in most cases
         - The clear() functions inside the client() function remain unchanged for maximum speed
