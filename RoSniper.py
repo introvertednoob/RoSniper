@@ -18,7 +18,7 @@ else:
     def prepare():
         webbrowser.open("roblox://")
 
-version = "2025.7_b1"
+version = "2025.7_b2"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
