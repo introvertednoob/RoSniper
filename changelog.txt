@@ -2,7 +2,7 @@
 Finally, Windows support!
     - Added Windows support for building and running RoSniper
     - Added a .ico file to ensure compatibility with the Windows build script
-    - Created build_win.py to build RoSniper for Windows
+    - Created a cross-platform build script (currently buildCP.py, will be merged with build.py eventually)
     [bold]Note that RoSniper for Windows is in beta and the program may not work properly.[end]
 
 [bold]Version 2025.6.2[end]
