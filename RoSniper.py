@@ -26,7 +26,7 @@ if platform.system() == "Windows":
             if proc.name() == "RobloxPlayerBeta.exe":
                 psutil.Process(proc.pid).kill()
 
-version = "2025.7_b2"
+version = "2025.7_b3"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
