@@ -3,4 +3,5 @@
 *.spec
 config.json
 launcher
+RoSniperCP.py
 __pycache__
