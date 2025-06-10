@@ -8,7 +8,7 @@ import pyperclip
 import webbrowser
 from sys import exit
 
-version = "2025.6.1"
+version = "2025.6.2"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -25,8 +25,9 @@ default_config = {
 }
 
 # Key functions for RoSniper
-def clear():
-    os.system("clear")
+def clear(times=2):
+    for t in range(times):
+        os.system("clear")
 
 def save():
     open("config.json", "w", encoding="utf-8").write(json.dumps(config, indent=4))
@@ -195,7 +196,7 @@ def client():
     global checks_since_start
     global decline_first_server
 
-    clear()
+    clear(1)
     print(f"{gold}[Times Checked: {checks_since_start}]{end}")
     for _ in range(len(users)):
         status = online_data["userPresences"][_]["userPresenceType"]
@@ -248,7 +249,7 @@ def client():
 def client_exception(error):
     global checks_since_start
 
-    clear()
+    clear(1)
     print(f"{gold}[Times Checked: {checks_since_start}]{end}")
     print(error)
 

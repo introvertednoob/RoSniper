@@ -1,4 +1,9 @@
-[green][bold]Version 2025.6.1[end]
+[green][bold]Version 2025.6.2[end]
+Proper clears!
+    - Fixed the clear() function to properly clear text in most cases
+        - The clear() functions inside the client() function remain unchanged for maximum speed
+
+[bold]Version 2025.6.1[end]
 Guaranteed sniper rifle on every icon!
     - Fixed the icon to actually be seen from Launchpad when built
 
