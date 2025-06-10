@@ -15,7 +15,7 @@ if platform.system() == "Darwin":
         print(f"{brown}[Build RoSniper]{end}")
         print(f"{bold}Here are the minimum requirements to build RoSniper for macOS:{end}")
         print("    - 200MB+ space (app ~100MB, launcher ~2MB, rest is temporary files)")
-        print("    - The modules pyinstaller==6.13.0, pyperclip==1.9.0, and requests==2.32.3")
+        print("    - The modules pyinstaller==6.14.1, pyperclip==1.9.0, and requests==2.32.4")
         print("    - RoSniper.py in the (parent) directory of the build script")
         print("    - AppIcon.icns, launcher.py, and Info.plist in ./Resources/")
         print(f"\n{bold}If you're running Option 1 for a complete install:{end}")
