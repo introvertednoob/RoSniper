@@ -16,7 +16,7 @@ Clone this repository and run it, or just run the source code itself.</br>
 
 Works on all macOS versions 15.0-26.0b1 with Python 3.13-3.13.4! It likely also works on previous versions.</br>
 ~~Windows support is unlikely due to launching Roblox with deeplinking being MUCH slower on Windows than on macOS.~~</br>
-🎉 Windows support is being worked on for the next major RoSniper release (2025.7)!! The beta will be released soon. 🎉
+🎉 Windows support is being worked on for the next major RoSniper release!! The beta will be released soon. 🎉
 
 ## Showcase
 https://github.com/user-attachments/assets/4984e164-6f92-4dfd-9b7f-153a831c67a4
