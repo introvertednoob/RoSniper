@@ -1,9 +1,9 @@
-[green][bold]Version 2025.7_b4[end]
+[green][bold]Version 2025.6.3_b4[end]
     - [Windows] Fix the clear() function from potentially erroring out
     - Attempted to optimize the clear() function further
     - Fix some error string formatting
 
-[bold]Version 2025.7_b1 - 2025.7_b3[end]
+[bold]Version 2025.6.3_b1 - 2025.6.3_b3[end]
 Windows support + macOS bundle optimizations!
     - Added Windows support for building and running RoSniper
     - Added a .ico file to ensure compatibility with the Windows build script
