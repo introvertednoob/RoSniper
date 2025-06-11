@@ -17,7 +17,7 @@ if op in ["Darwin", "Windows"]:
         print(f"{brown}[Build RoSniper]{end}")
         print(f"{bold}Here are the minimum requirements to build RoSniper:{end}")
         print("    - 160MB+ space (app ~50MB, launcher ~2MB, rest is temporary files)")
-        print("    - The modules pyinstaller==6.14.1, pyperclip==1.9.0, and requests==2.32.4")
+        print("    - The modules pyinstaller==6.14.1, pyperclip==1.9.0, requests==2.32.4, and psutil==7.0.0 (Windows only)")
         print("    - RoSniper.py in the (parent) directory of the build script")
         print("    - AppIcon(.icns/.ico), launcher.py, and Info.plist in ./Resources/")
         print("    - Any version of RoSniper (MacOS) or RoSniper v1.0.0+ (Windows)")
