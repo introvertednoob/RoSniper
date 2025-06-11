@@ -8,25 +8,7 @@ import pyperclip
 import webbrowser
 from sys import exit
 
-def prepare():
-    webbrowser.open("roblox://")
-
-def clear(times=2):
-    for t in range(times):
-        os.system("clear" if platform.system() != "Windows" else "cls")
-
-if platform.system() == "Windows":
-    import psutil
-
-    def clear():
-        os.system("cls")
-
-    def prepare():
-        for proc in psutil.process_iter():
-            if proc.name() == "RobloxPlayerBeta.exe":
-                psutil.Process(proc.pid).kill()
-
-version = "2025.7_b3"
+version = "2025.7_b4"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -42,12 +24,29 @@ default_config = {
     "cookies": []
 }
 
+clear_cmd = "clear" if platform.system() == "Darwin" else "cls"
+def clear(definite=True):
+    if platform.system() == "Darwin" and definite:
+        os.system("clear; clear")
+    else:
+        os.system(clear_cmd)
+
+def prepare():
+    webbrowser.open("roblox://")
+
+if platform.system() == "Windows":
+    import psutil
+    def prepare():
+        for proc in psutil.process_iter():
+            if proc.name() == "RobloxPlayerBeta.exe":
+                psutil.Process(proc.pid).kill()
+
 def save():
     open("config.json", "w", encoding="utf-8").write(json.dumps(config, indent=4))
 
-def wait(secs, text=None):
+def wait(secs, text=False):
     try:
-        if text != None:
+        if text:
             print(text)
         time.sleep(secs)
     except KeyboardInterrupt:
@@ -112,7 +111,7 @@ def add_account(force=False):
             print("\nRoSniper received an unexpected response:")
             input(req.text)
         except Exception as e:
-            input(f"Failed to save cookie. Error: {e}")
+            input(f"\nFailed to save cookie. Error: {e}")
             exit()
 
         if force:
@@ -212,7 +211,7 @@ def client():
     global checks_since_start
     global decline_first_server
 
-    clear(1)
+    clear(False)
     print(f"{gold}[Times Checked: {checks_since_start}]{end}")
     for _ in range(len(users)):
         status = online_data["userPresences"][_]["userPresenceType"]
@@ -265,7 +264,7 @@ def client():
 def client_exception(error):
     global checks_since_start
 
-    clear(1)
+    clear(False)
     print(f"{gold}[Times Checked: {checks_since_start}]{end}")
     print(error)
 
