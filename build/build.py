@@ -20,7 +20,7 @@ if op in ["Darwin", "Windows"]:
         print("    - The modules pyinstaller==6.14.1, pyperclip==1.9.0, and requests==2.32.4")
         print("    - RoSniper.py in the (parent) directory of the build script")
         print("    - AppIcon(.icns/.ico), launcher.py, and Info.plist in ./Resources/")
-        print("    - Any version of RoSniper (MacOS) or RoSniper 2025.7+ (Windows)")
+        print("    - Any version of RoSniper (MacOS) or RoSniper v1.0.0+ (Windows)")
         print(f"\n{bold}If you're running Option 1 for a complete install:{end}")
         print("    - commands.txt and changelog.txt in the (parent) directory of the build script")
         print("    - OPTIONAL: config.json in the (parent) directory of the build script")

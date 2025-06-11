@@ -1,18 +1,15 @@
-[green][bold]Version 2025.6.3_b4[end]
-    - [Windows] Fix the clear() function from potentially erroring out
+[green][bold]Version 1.0.0_rc[end]
+[bold]The official, albeit slightly late, one-year anniversary update for RoSniper's development!![end]
+A cross-platform build script is now available for RoSniper, along with Windows support!
     - Attempted to optimize the clear() function further
-    - Fix some error string formatting
-
-[bold]Version 2025.6.3_b1 - 2025.6.3_b3[end]
-Windows support + macOS bundle optimizations!
-    - Added Windows support for building and running RoSniper
-    - Added a .ico file to ensure compatibility with the Windows build script
+    - Added a cross-platform build script that can build RoSniper for Windows and macOS
+    - Added cross-platform support to RoSniper for Windows and macOS
+    - Added an .ico icon file to ensure compatibility with the Windows part of the build script
     - Updated build.py to be cross-platform
     - macOS binary sizes will be halved with this update (~85MB -> ~45MB)
         - Unnecessary modules will be removed from binaries released through Releases
         - An update to the build script will allow it to delete duplicate files
-    - Optimize clear() on Windows
-    [bold]Note that RoSniper for Windows is in beta, and may not function as expected.[end]
+    - Fix some error string formatting
 
 [bold]Version 2025.6.2[end]
 Proper clears!

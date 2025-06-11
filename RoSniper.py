@@ -8,7 +8,7 @@ import pyperclip
 import webbrowser
 from sys import exit
 
-version = "2025.6.3_b4"
+version = "1.0.0_rc"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -369,7 +369,7 @@ decline_first_server = False
 while True:
     # Show main menu
     clear()
-    print(f"{gold}[RoSniper] [ver. {version}]{end}")
+    print(f"{gold}[RoSniper] [v{version}]{end}")
     print("Join-snipes accounts (that the logged-in user can join) when they join a game.")
     print(f"Be ready to join someone's server, hopefully not too deep in the queue :>")
 
