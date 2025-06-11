@@ -28,7 +28,7 @@ Optimizations and bugfixes galore!
     - Optimized and shortened RoSniper's code
     - Optimized and shortened the RoSniper build script
         - Added more information to the requirements for building RoSniper
-    - Optimized change delay code (/delay)
+    - Optimized change delay code ([underline]/delay[end])
     - Added new, more optimized command argument system
     - Added support for the green ANSI color code to signify the latest version in the changelog
     - Added functions wait(secs, text) and client_exception(error) to condense code
@@ -38,11 +38,11 @@ Optimizations and bugfixes galore!
     - Clear the clipboard after saving .ROBLOSECURITY cookies for security reasons
     - Changed all single quotes to double-quotes inside user-facing text and code
     - Changed some strings to add more information to them
-    - Changed the "all" argument to "*" in the /del and /logout commands
+    - Changed the "all" argument to "*" in the [underline]/del[end] and [underline]/logout[end] commands
     - Removed unnecessary print statements involving checks_since_start
     - Removed unnecessary try/except statements, now preventing errors with improved logic
-    - Removed the /exit command
-        - Using CTRL+C instead of /exit is recommended while in the main menu
+    - Removed the [underline]/exit[end] command
+        - Using CTRL+C instead of [underline]/exit[end] is recommended while in the main menu
     - Removed check_config() and run the code inside it only on start
     - Removed unnecessary output from the build script when executing option 1
     - Fixed a bug where Roblox opened even though a user wasn't joinable
