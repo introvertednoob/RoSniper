@@ -6,6 +6,7 @@ A cross-platform build script is now available for RoSniper, along with Windows 
     - Added cross-platform support to RoSniper for Windows and macOS
     - Added an .ico icon file to ensure compatibility with the Windows part of the build script
     - Updated build.py to be cross-platform
+    - Switch to semantic versioning when releasing updates from this release onwards
     - macOS binary sizes will be halved with this update (~85MB -> ~45MB)
         - Unnecessary modules will be removed from binaries released through Releases
         - An update to the build script will allow it to delete duplicate files
