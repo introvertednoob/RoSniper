@@ -8,7 +8,11 @@ import pyperclip
 import webbrowser
 from sys import exit
 
-version = "1.0.0_rc"
+op = platform.system()
+if op == "Windows":
+    import psutil
+
+version = "1.0.0_rc2"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -24,25 +28,24 @@ default_config = {
     "cookies": []
 }
 
-clear_cmd = "clear" if platform.system() == "Darwin" else "cls"
+clear_cmd = "clear" if op == "Darwin" else "cls"
 def clear(definite=True):
-    if platform.system() == "Darwin" and definite:
+    if op == "Darwin" and definite:
         os.system("clear; clear")
     else:
         os.system(clear_cmd)
 
 def prepare():
-    webbrowser.open("roblox://")
-
-if platform.system() == "Windows":
-    import psutil
-    def prepare():
+    if op == "Darwin":
+        webbrowser.open("roblox://")
+    else:
         for proc in psutil.process_iter():
             if proc.name() == "RobloxPlayerBeta.exe":
                 psutil.Process(proc.pid).kill()
 
 def save():
-    open("config.json", "w", encoding="utf-8").write(json.dumps(config, indent=4))
+    with open("config.json", "w", encoding="utf-8") as cfg:
+        json.dump(config, cfg, indent=4)
 
 def wait(secs, text=False):
     try:

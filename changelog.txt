@@ -1,6 +1,7 @@
-[green][bold]Version 1.0.0_rc[end]
+[green][bold]Version 1.0.0_rc2[end]
 [bold]The official, albeit slightly late, one-year anniversary update for RoSniper's development!![end]
 A cross-platform build script is now available for RoSniper, along with Windows support!
+    - [from rc1] Merged both parts of the prepare() function into one
     - Attempted to optimize the clear() function further
     - Added a cross-platform build script that can build RoSniper for Windows and macOS
     - Added cross-platform support to RoSniper for Windows and macOS
