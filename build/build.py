@@ -111,18 +111,18 @@ if op in ["Darwin", "Windows"]:
         os.chdir(os.path.dirname(__file__))
 
         app_location = "_internal" if op == "Windows" else "RoSniper.app"
-        AppExists = "" if os.path.exists(app_location) else faint
-        AppExists_A = "" if os.path.exists("/Applications/RoSniper.app") else faint
+        app_exists = "" if os.path.exists(app_location) else faint
+        app_exists_a = "" if os.path.exists("/Applications/RoSniper.app") else faint
 
         print(f"{brown}[RoSniper Build Tool]{end}")
         print(f"{bold}[1] Install RoSniper from source (Options 2, 3, 4, 5{", and 6" if op == "Darwin" else ""} combined){end}")
         print("[2] Build RoSniper")
-        print(f"{AppExists}[3] Inject an existing changelog.txt into RoSniper{end}")
-        print(f"{AppExists}[4] Inject an existing commands.txt into RoSniper{end}")
-        print(f"{AppExists}[5] Inject an existing config.json into RoSniper{end}")
+        print(f"{app_exists}[3] Inject an existing changelog.txt into RoSniper{end}")
+        print(f"{app_exists}[4] Inject an existing commands.txt into RoSniper{end}")
+        print(f"{app_exists}[5] Inject an existing config.json into RoSniper{end}")
         if op == "Darwin":
-            print(f"{AppExists}[6] Transfer RoSniper to /Applications (macOS Only){end}")
-            print(f"{AppExists_A}[7] Delete RoSniper from /Applications (macOS Only){end}")
+            print(f"{app_exists}[6] Transfer RoSniper to /Applications (macOS Only){end}")
+            print(f"{app_exists_a}[7] Delete RoSniper from /Applications (macOS Only){end}")
         print(f"[{"6" if op == "Windows" else "8"}] Exit")
 
         option = input("\nSelect an option: ").strip()
