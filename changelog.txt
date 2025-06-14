@@ -1,8 +1,6 @@
-[green][bold]Version 1.0.0_rc3[end]
+[green][bold]Version 1.0.0[end]
 [bold]The official, albeit slightly late, one-year anniversary update for RoSniper's development!![end]
 A cross-platform build script is now available for RoSniper, along with Windows support!
-    - [from rc2] Removed exclusions of modules when building in favor of better .venv module management
-    - [from rc2] Fixed a bug where the max Recent Users length could visually be set to >99 for the current session
     - Attempted to optimize the clear() function further
     - Added a cross-platform build script that can build RoSniper for Windows and macOS
     - Added cross-platform support to RoSniper for Windows and macOS
@@ -13,6 +11,7 @@ A cross-platform build script is now available for RoSniper, along with Windows 
         - Unnecessary modules will be removed from binaries released through Releases
         - An update to the build script will allow it to delete duplicate files
     - Fixed some error string formatting
+    - Fixed a bug where the max Recent Users length could visually be set to >99 for the current session
 
 [bold]Version 2025.6.2[end]
 Proper clears!

@@ -1,8 +1,8 @@
 *.app
 *.exe
+*.zip
 *.spec
 *.DS_Store
-*.spec
 config.json
 launcher
 _internal

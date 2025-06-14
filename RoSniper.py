@@ -12,7 +12,7 @@ op = platform.system()
 if op == "Windows":
     import psutil
 
-version = "1.0.0_rc3"
+version = "1.0.0"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
