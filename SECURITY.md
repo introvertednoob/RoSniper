@@ -1,11 +1,3 @@
-## Supported Versions
-
-| Version  | Supported?         |
-| -------- | ------------------ |
-| 1.0.x    | :white_check_mark: |
-| 2025.x   | :x:                |
-| < 2025.x | :x:                |
-
 ## Reporting a Vulnerability
 Report vulnerabilities at [the issue page](https://github.com/introvertednoob/RoSniper/issues).
 
