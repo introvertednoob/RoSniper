@@ -48,7 +48,7 @@ if op in ["Darwin", "Windows"]:
                 os.system("cp ./dist/launcher/launcher ./Resources/")
                 os.system("rm -rf build dist *.spec")
 
-            os.system("pyinstaller --windowed ./Resources/RoSniper.py --icon ./Resources/AppIcon.icns --exclude-module psutil")
+            os.system("pyinstaller --windowed ./Resources/RoSniper.py --icon ./Resources/AppIcon.icns")
             os.system("cp -r ./dist/RoSniper.app .")
             os.system("cp ./Resources/launcher ./RoSniper.app/Contents/MacOS/")
             for delete in os.listdir("./RoSniper.app/Contents/Resources/"):

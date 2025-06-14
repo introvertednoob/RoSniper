@@ -1,17 +1,18 @@
-[green][bold]Version 1.0.0_rc2[end]
+[green][bold]Version 1.0.0_rc3[end]
 [bold]The official, albeit slightly late, one-year anniversary update for RoSniper's development!![end]
 A cross-platform build script is now available for RoSniper, along with Windows support!
-    - [from rc1] Merged both parts of the prepare() function into one
+    - [from rc2] Removed exclusions of modules when building in favor of better .venv module management
+    - [from rc2] Fixed a bug where the max Recent Users length could visually be set to >99 for the current session
     - Attempted to optimize the clear() function further
     - Added a cross-platform build script that can build RoSniper for Windows and macOS
     - Added cross-platform support to RoSniper for Windows and macOS
     - Added an .ico icon file to ensure compatibility with the Windows part of the build script
     - Updated build.py to be cross-platform
     - Switch to semantic versioning when releasing updates from this release onwards
-    - macOS binary sizes will be halved with this update (~85MB -> ~45MB)
+    - macOS binary sizes will be halved with this update (~85MB -> ~46MB)
         - Unnecessary modules will be removed from binaries released through Releases
         - An update to the build script will allow it to delete duplicate files
-    - Fix some error string formatting
+    - Fixed some error string formatting
 
 [bold]Version 2025.6.2[end]
 Proper clears!

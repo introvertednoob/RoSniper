@@ -12,7 +12,7 @@ op = platform.system()
 if op == "Windows":
     import psutil
 
-version = "1.0.0_rc2"
+version = "1.0.0_rc3"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -133,15 +133,13 @@ def run_command(command):
         title = "Commands" if command in ["/cmds", "/help"] else "Changelog"
         print(f"{gold}[{title}]{end}")
         if os.path.exists(load_file):
-            text = open(load_file).read()
-            text = text.replace("[green]", "\033[0;32m").replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server))
-            print(text)
+            print(open(load_file).read().replace("[green]", "\033[0;32m").replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server)))
         else:
             print(f"{load_file} isn't present.")
         input("Press ENTER to return to the main menu. ")
     elif command.startswith("/setrecents ") or command.startswith("/set "):
         if arg.isnumeric():
-            config["recent_users_length"] = int(arg)
+            config["recent_users_length"] = 99 if int(arg) > 99 else int(arg)
             wait(1, f"\n{underline}Set the length of Recent Users to {"99 (max)" if config["recent_users_length"] > 99 else config["recent_users_length"]}.{end}")
         else:
             wait(1, f"\n{underline}Invalid length.{end}")
