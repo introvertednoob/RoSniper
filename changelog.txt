@@ -1,4 +1,13 @@
-[green][bold]Version 1.0.0[end]
+[green][bold]Version 1.1.0[end]
+    - Added more comments to further document RoSniper
+    - Reworked the exception system
+        - Commonly used exception messages are now stored inside dictionaries
+        - More exceptions are now handled properly in more places
+        - Tweaked the wording of some exception messages
+    - The function add_account() now only runs on startup if there are no valid cookies
+    - Optimized code slightly
+
+[bold]Version 1.0.0[end]
 [bold]The official, albeit slightly late, one-year anniversary update for RoSniper's development!![end]
 A cross-platform build script is now available for RoSniper, along with Windows support!
     - Attempted to optimize the clear() function further

@@ -3,6 +3,8 @@
 *.zip
 *.spec
 *.DS_Store
+DEV_*
+RoSniper-*
 config.json
 launcher
 _internal

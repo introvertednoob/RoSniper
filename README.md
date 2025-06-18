@@ -3,8 +3,10 @@ This has allowed for me to get into people's servers *way faster*. It's helped m
 
 ## Current Features:
 - Snipe users you recently tried to join for easier access to them
-- Most of the program is customizable using commands or by modifying config.json
+- Customize your experience through commands or by modifying config.json
 - Check for multiple user statuses at the same time
+- Decline the first server which is detected, just in case it's already full
+- Build RoSniper into an executable which anyone can run
 
 ## How does RoSniper work?
 RoSniper uses Roblox's Presence API to check if a given user is online. If so, then it will attempt to join that user.</br>
@@ -20,4 +22,3 @@ Tested on all macOS versions 15.0-26.0b1 with Python 3.13-3.13.4! It likely also
 
 ## Showcase
 https://github.com/user-attachments/assets/4984e164-6f92-4dfd-9b7f-153a831c67a4
-

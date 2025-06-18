@@ -12,7 +12,7 @@ op = platform.system()
 if op == "Windows":
     import psutil
 
-version = "1.0.0"
+version = "1.1.0"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -20,6 +20,14 @@ gold = "\033[0;33m"
 bold = "\033[1m"
 underline = "\033[4m"
 end = "\033[0m"
+
+# Define exception and default config dicts
+errors = {
+    "requests.exceptions.ConnectionError": "[ConnectionError] Couldn't connect to the Roblox servers.",
+    "requests.exceptions.ConnectTimeout": "[ConnectTimeout] Your request with the Roblox servers timed out.",
+    "requests.exceptions.SSLError": "[SSLError] Couldn't connect to the Roblox servers. Your internet may be blocking Roblox.",
+    "requests.exceptions.ReadTimeout": "[ReadTimeout] Your request with the Roblox servers timed out."
+}
 
 default_config = {
     "recent_users_length": 5,
@@ -63,79 +71,64 @@ def delete_recent_user(user):
 
 def fix_recents():
     try:
-        config["recent_users_length"] = round(config["recent_users_length"])
         if config["recent_users_length"] > 99:
             config["recent_users_length"] = 99
         while len(config["recent_users"]) > config["recent_users_length"]:
-            del(config["recent_users"][config["recent_users_length"]])
+            del config["recent_users"][config["recent_users_length"]]
     except KeyError:
         config["recent_users_length"] = 5
         config["recent_users"] = []
     save()
 
-def add_account(force=False):
-    if len(config["cookies"]) == 0 or force:
-        clear()
-        print(f"{gold}[Add Account]{end}")
-        print("Copy a .ROBLOSECURITY cookie to your clipboard.")
-        print("This can be found in the Storage/Application section of your browser's console.")
+def add_account(restart):
+    clear()
+    print(f"{gold}[Add Account]{end}")
+    print("Copy a .ROBLOSECURITY cookie to your clipboard.")
+    print("This can be found in the Storage/Application section of your browser's console.")
 
-        if type(pyperclip.paste()) == type(None):
-            pyperclip.copy("")
-        
-        if not "_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_" in pyperclip.paste():
-            pyperclip.copy("")
-            while pyperclip.paste() == "":
-                wait(0.1)
-        cookie = pyperclip.paste()
-        header = {
-            "Cookie": f".ROBLOSECURITY={cookie}"
-        }
-        try:
-            req = requests.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers=header)
-            if not req.ok:
-                input("\nInvalid cookie. Restart RoSniper to try again. ")
-                exit()
-            user_context = json.loads(req.text)
-            config["cookies"].append(cookie)
-            save()
-            pyperclip.copy("")
-            input(f"Cookie saved successfully. Welcome, {user_context["name"]}! ")
-        except requests.exceptions.ReadTimeout:
-            save()
-            exit()
-        except requests.exceptions.SSLError:
-            input("\nCouldn't connect to the Roblox servers. Your internet may be blocking Roblox. ")
-            exit()
-        except requests.exceptions.ConnectTimeout:
-            input("\nYour request with the Roblox servers timed out. ")
-            exit()
-        except json.JSONDecodeError:
-            print("\nRoSniper received an unexpected response:")
-            input(req.text)
-        except Exception as e:
-            input(f"\nFailed to save cookie. Error: {e}")
-            exit()
+    if type(pyperclip.paste()) == type(None):
+        pyperclip.copy("")
 
-        if force:
-            os.execl(sys.executable, sys.executable, *sys.argv)
+    if not "_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_" in pyperclip.paste():
+        pyperclip.copy("")
+        while pyperclip.paste() == "":
+            wait(0.1)
+    cookie = pyperclip.paste()
+    header = {
+        "Cookie": f".ROBLOSECURITY={cookie}"
+    }
+    try:
+        req = requests.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers=header)
+        if not req.ok:
+            input("\nInvalid cookie. Restart RoSniper to try again. ")
+            exit()
+        user_context = json.loads(req.text)
+        config["cookies"].append(cookie)
+        save()
+        pyperclip.copy("")
+        input(f"Cookie saved successfully. Welcome, {user_context["name"]}! ")
+    except Exception as e:
+        if str(e) in errors.keys():
+            input(f"\n{errors[str(e)]} ")
+        exit()
+
+    if restart:
+        os.execl(sys.executable, sys.executable, *sys.argv)
 
 def run_command(command):
-    global user
-    global users
     global decline_first_server
 
     command = command.lower()
     arg = command.split(" ")[1] if len(command.split(" ")) > 1 else ""
     if command in ["/cmds", "/help", "/changelog"]:
         clear()
-        load_file = "commands.txt" if command in ["/cmds", "/help"] else "changelog.txt"
         title = "Commands" if command in ["/cmds", "/help"] else "Changelog"
+        load_file = f"{title}.txt"
         print(f"{gold}[{title}]{end}")
         if os.path.exists(load_file):
             print(open(load_file).read().replace("[green]", "\033[0;32m").replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server)))
         else:
-            print(f"{load_file} isn't present.")
+            print(f"{load_file.lower()} isn't present.")
         input("Press ENTER to return to the main menu. ")
     elif command.startswith("/setrecents ") or command.startswith("/set "):
         if arg.isnumeric():
@@ -177,16 +170,13 @@ def run_command(command):
         os.execl(sys.executable, sys.executable, *sys.argv)
     elif command in ["/addaccount", "/add"]:
         wait(1, f"\n{underline}You will be redirected to the Save Cookie menu.{end}")
-        add_account(force=True)
+        add_account(True)
     elif command.startswith("/delay "):
         config["delay"] = float(arg) if arg.replace(".", "").isnumeric() else 0.01
         save()
         wait(0.5, f"\n{underline}Delay set to {config["delay"]}s.{end}")
     elif command in ["/df", "/declinefirst"]:
-        if decline_first_server:
-            decline_first_server = False
-        else:
-            decline_first_server = True
+        decline_first_server = False if decline_first_server else True
     else:
         similar_command = ""
         list_of_commands = ["/cmds", "/help", "/changelog", "/set", "/setrecents", "/del", "/logout", "/add", "/addaccount", "/df", "/declinefirst"]
@@ -202,6 +192,7 @@ def run_command(command):
             print(f"\n{underline}This command exists, but it requires arguments.{end}\nType /cmds to see documentation on the arguments for commands.")
         wait(2)
 
+# Client (exception) code
 def client():
     global users
     global online_data
@@ -228,7 +219,7 @@ def client():
         elif status == 2 and place_id == server_id == None:
             print(f"{user_label} has their joins off, or you aren't following them.")
             print(f"   -> Follow them @ https://roblox.com/users/{data["userIDs"][_]}/profile")
-            print("   -> This screen will automatically update when you follow them.")
+            print("   -> This screen will automatically update when you follow/friend the user.")
         elif status == 2 and current_server != server_id:
             if decline_first_server and _ == current_user:
                 declined_servers += [server_id]
@@ -296,7 +287,8 @@ fix_recents()
 save()
 
 # Save .ROBLOSECURITY cookie or add a new .ROBLOSECURITY cookie
-add_account()
+if len(config["cookies"]) == 0:
+    add_account(False)
 
 # Verify .ROBLOSECURITY cookies
 usernames = []
@@ -308,16 +300,14 @@ for cookie in range(len(config["cookies"])):
     try:
         req = requests.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers=header)
         if not req.ok:
-            raise requests.exceptions.ReadTimeout
-    except requests.exceptions.ReadTimeout:
-        del config["cookies"][cookie]
-        save()
-        continue
-    except requests.exceptions.SSLError:
-        print("Couldn't connect to the Roblox servers. Your internet may be blocking Roblox.")
-        exit()
-    except requests.exceptions.ConnectTimeout:
-        input("\nYour request with the Roblox servers timed out. ")
+            del config["cookies"][cookie]
+            save()
+            continue
+    except Exception as e:
+        input(e)
+        if str(e) in errors.keys():
+            clear()
+            input(errors[str(e)])
         exit()
 
     if req.ok:
@@ -371,8 +361,7 @@ while True:
     # Show main menu
     clear()
     print(f"{gold}[RoSniper] [v{version}]{end}")
-    print("Join-snipes accounts (that the logged-in user can join) when they join a game.")
-    print(f"Be ready to join someone's server, hopefully not too deep in the queue :>")
+    print("Join-snipes accounts that the logged-in user can join!")
 
     print(f"{gold}\n[Tips]{end}")
     print("  - Type /cmds or /help to see the full list of commands.")
@@ -383,10 +372,7 @@ while True:
         print(f"[{i + 1}] {bold}{config["recent_users"][i]}{end}")
     if len(config["recent_users"]) == 0:
         print("No saved users! Join-snipe some users to save them to this list!")
-        if config["recent_users_length"] == 5:
-            print(f"You can save up to 5 users in this list by default. Run /set [MAX_LENGTH] to change this.")
-        else:
-            print(f"You can save up to {config["recent_users_length"]} users in this list.")
+        print(f"You can save up to {config["recent_users_length"]} users in this list{" by default. Run /set [MAX_LENGTH] to change this." if config["recent_users_length"] == 5 else "."}")
     print("")
     if decline_first_server:
         print(f"{underline}Decline First Server is Active{end}")
@@ -418,7 +404,6 @@ while True:
                 wait(0.75, f"{underline}\nRecent user not avaliable.{end}")
                 break
 
-        # You can't RoSnipe yourself!
         if users[user].lower() == user_context["name"].lower():
             wait(0.5, f"{underline}\nYou can't RoSnipe yourself.{end}")
             delete_recent_user(users[user])
@@ -447,21 +432,22 @@ while True:
     except ValueError:
         wait(1, f"{underline}\nYou can't snipe the same user twice.{end}")
         continue
-    except requests.exceptions.SSLError:
-        wait(1.5, f"{underline}Couldn't connect to the Roblox servers. Your internet may be blocking Roblox.{end}")
-        continue
-    except Exception as e:
+    except IndexError:
         delete_recent_user(current_iterated_user)
         wait(1.5, f"{underline}\nWe searched far and wide, but the user [@{current_iterated_user}] doesn't exist.{end}")
         continue
+    except Exception as e:
+        if str(e) in errors.keys():
+            wait(1.5, f"{underline}{errors[str(e)]}{end}")
+            exit()
 
-    # Save usernames to recent users
+    # Save usernames to Recent Users
     for user in users:
         delete_recent_user(user)
         config["recent_users"].insert(0, user.lower())
     fix_recents()
 
-    # Start RoSniper
+    # Start the RoSniper client
     clear()
     current_user = 0
     current_server = ""
@@ -477,23 +463,22 @@ while True:
             checks_since_start += 1
             req = session.post(url="https://presence.roblox.com/v1/presence/users", json=data, timeout=5)
             if req.ok:
-                online_data = json.loads(req.content.decode())
+                online_data = json.loads(req.text)
                 client()
                 time.sleep(config["delay"])
             else:
-                client_exception(f"<{req.status_code}> Couldn't connect to the Roblox servers.")
+                client_exception(f"<{req.status_code}> {errors["requests.exceptions.ConnectionError"]}")
         except requests.exceptions.ConnectionError:
-            client_exception("[ConnectionError] Couldn't connect to the Roblox servers. Retrying in 1s...")
+            client_exception(f"{errors["requests.exceptions.ConnectionError"]} Retrying in 1s...")
             wait(1)
-        except requests.exceptions.SSLError:
-            client_exception("[SSLError] Couldn't connect to the Roblox servers. Your internet may be blocking Roblox. ")
-            break
-        except requests.exceptions.ConnectTimeout:
-            client_exception("[ConnectTimeout] Your request with the Roblox servers timed out. ")
-            break
         except KeyboardInterrupt:
             break
         except Exception as e:
-            client_exception(f"An error occured: {e} ")
+            if str(e) in errors.keys():
+                client_exception(errors[str(e)])
+            else:
+                client_exception(f"An error occured: {e} ")
+            wait(1)
+            break
     session.close()
     decline_first_server = False
