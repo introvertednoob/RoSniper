@@ -7,10 +7,10 @@ bold = "\033[1m"
 faint = "\033[2m"
 end = "\033[0m"
 
-def clear():
-    os.system("clear || cls")
-
 op = platform.system()
+def clear():
+    os.system("clear;clear" if op == "Darwin" else "cls")
+
 if op in ["Darwin", "Windows"]:
     def build():
         clear()
@@ -33,14 +33,11 @@ if op in ["Darwin", "Windows"]:
             input("RoSniper.py wasn't found. ")
             return
 
-        listedVersion = open(RoSniperPath, "r").read().split("version = \"")[1].split("\"")[0]
-        print(f"\nSOURCE RoSniper Version: {listedVersion}")
-        version = input("Set the EXECUTABLE RoSniper Version (press ENTER for same version): ").strip()
-        if version == "":
-            version = listedVersion
+        version = open(RoSniperPath, "r").read().split("version = \"")[1].split("\"")[0]
+        print(f"\nSOURCE RoSniper Version: {version}")
+        input("Press ENTER to start building RoSniper. ")
         modifiedPLIST = open("./Resources/Info.plist", "r").read().replace("0.0.0", version)
-        modifiedRoSniper = open(RoSniperPath, "r").read().replace(f"version = \"{listedVersion}\"", f"version = \"{version}\"")
-        open("./Resources/RoSniper.py", "w").write(modifiedRoSniper)
+        open("./Resources/RoSniper.py", "w").write(open(RoSniperPath, "r").read())
 
         if op == "Darwin":
             if not os.path.exists("./Resources/launcher") and os.path.exists("./Resources/launcher.py"):
