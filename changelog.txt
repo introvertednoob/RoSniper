@@ -1,4 +1,7 @@
-[green][bold]Version 1.1.0[end]
+[green][bold]Version 1.1.1[end]
+    - Fixed a bug where RoSniper wouldn't join a user if they rejoined the same server
+
+[bold]Version 1.1.0[end]
     - Added more comments to further document RoSniper
     - Reworked the exception system
         - Commonly used exception messages are now stored inside dictionaries

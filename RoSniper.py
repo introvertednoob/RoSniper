@@ -12,7 +12,7 @@ op = platform.system()
 if op == "Windows":
     import psutil
 
-version = "1.1.0"
+version = "1.1.1"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -214,6 +214,7 @@ def client():
         if status == 1:
             if _ == current_user and prepare_roblox:
                 prepare()
+                current_server = ""
                 prepare_roblox = False
             print(f"{user_label} is on the Roblox website!")
         elif status == 2 and place_id == server_id == None:
