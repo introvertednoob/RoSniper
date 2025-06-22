@@ -1,4 +1,16 @@
-[green][bold]Version 1.1.1[end]
+[green][bold]Version 1.2.0[end]
+    - Added slightly smarter cookie-in-clipboard detection
+    - Added /delay to the Similar Commands list
+    - Reworked the UID collection system
+        - Instead of multiple single requests, one large request containing all users is sent
+        - All invalid users are displayed and removed from Recent Users
+        - Sniping multiple users at once should be faster
+    - Similar Commands now lists all possible similar commands
+    - Duplicate cookies are now not accepted through add_account()
+    - Removed debug code from v1.1.0 related to printing caught exceptions when RoSniper started
+    - Removed redundant try/except in fix_recents() since config validation already covers this
+
+[bold]Version 1.1.1[end]
     - Fixed a bug where RoSniper wouldn't join a user if they rejoined the same server
 
 [bold]Version 1.1.0[end]
