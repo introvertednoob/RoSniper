@@ -1,4 +1,19 @@
-[green][bold]Version 1.2.0[end]
+[green][bold]Version 1.3.0[end]
+    - Added a new command, [underline]/alias[end] (macOS only)
+        - The ZSH alias <snipe> can be created through this command for easier access to RoSniper
+    - Added a non-interactive mode
+        - Directly snipe users by adding their username(s) as an argument or run commands (even with arguments)
+        - Use command-line arguments such as -m (use Monitoring Only Mode) and -d (enable Decline First Server)
+    - Added a Monitoring Mode to monitor any user without join-sniping them (including yourself)
+        - Use the [underline]/m[end] or [underline]/monitoring[end] commands to enter/exit Monitoring Only Mode
+        - Press CTRL+C to freeze RoSniper and copy information in this mode
+    - Added the account being used to snipe to the Sniping Status UI
+    - Added an indicator for Monitoring Only Mode/Decline First Server to the Sniping Status UI
+    - Changed the verify cookie code to use requests.Session() for faster cookie validation
+        - You'll only notice this if you use multiple accounts
+    - Removed [underline]/help[end] ([underline]/cmds[end] alias)
+
+[bold]Version 1.2.0[end]
     - Added slightly smarter cookie-in-clipboard detection
     - Added /delay to the Similar Commands list
     - Reworked the UID collection system

@@ -3,7 +3,7 @@
 *.zip
 *.spec
 *.DS_Store
-DEV_*
+build_release.py
 RoSniper-*
 config.json
 launcher
