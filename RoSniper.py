@@ -13,7 +13,7 @@ op = platform.system()
 if op == "Windows":
     import psutil
 
-version = "1.3.0"
+version = "1.3.1"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -442,7 +442,7 @@ while True:
             user = input("Enter username, recent user ID, or command: ").lower().strip()
             nl = "\n"
         else:
-            user = " ".join(sys.argv[1:])
+            user = " ".join(sys.argv[1:]).lower()
             sys.argv.append("!close_after_restart")
             nl = ""
 
