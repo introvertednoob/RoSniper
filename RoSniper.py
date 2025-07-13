@@ -230,7 +230,6 @@ def client():
 
     clear(False)
     print(f"{gold}[Times Checked: {checks_since_start}] [Account: @{usernames[id]}]{end}")
-    print(f"Prepare Roblox? {prepare_roblox}")
     if monitoring:
         print(f"{bold}You're currently in Monitoring Only Mode. Join-sniping is disabled.{end}")
         print("Press CTRL+C at any time to copy information.\n")
