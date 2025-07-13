@@ -82,8 +82,8 @@ if op in ["Darwin", "Windows"]:
             if not os.path.exists("./_internal/assets/"):
                 os.mkdir("./_internal/assets/")
 
-        executable = "copy" if op == "Windows" else "cp -r"
-        dest = ".\\_internal\\assets /Y" if op == "Windows" else "RoSniper.app/Contents/Frameworks/assets"
+        executable = "copy /Y" if op == "Windows" else "cp -r"
+        dest = ".\\_internal\\assets" if op == "Windows" else "RoSniper.app/Contents/Frameworks/assets"
         path = path if op == "Darwin" else path.replace("/", "\\")
         os.system(f"{executable} {path} {dest}")
 
