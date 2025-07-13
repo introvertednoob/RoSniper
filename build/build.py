@@ -144,7 +144,7 @@ if op in ["Darwin", "Windows"]:
         print(f"{brown}[RoSniper Build Tool]{end}")
         print(f"{bold}[1] Install RoSniper from source (Options 2, 3, 4{", and 5" if op == "Darwin" else ""} combined){end}")
         print("[2] Build RoSniper")
-        print(f"{app_exists}[3] Inject an existing changelog.txt into RoSniper{end}")
+        print(f"{app_exists}[3] Inject an existing config.json into RoSniper{end}")
         print(f"{app_exists}[4] Inject the asset directory into RoSniper{end}")
         if op == "Darwin":
             print(f"{app_exists}[5] Transfer RoSniper to /Applications (macOS Only){end}")
