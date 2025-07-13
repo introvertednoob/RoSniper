@@ -10,10 +10,8 @@ import webbrowser
 from sys import exit
 
 op = platform.system()
-if op == "Windows":
-    import psutil
 
-version = "1.3.1"
+version = "1.3.2_b1"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -45,13 +43,7 @@ def clear(definite=True):
         os.system(clear_cmd)
 
 def prepare():
-    if op == "Darwin":
-        webbrowser.open("roblox://")
-    else:
-        for proc in psutil.process_iter():
-            if proc.name() == "RobloxPlayerBeta.exe":
-                proc.kill()
-                break
+    webbrowser.open("roblox-player:")
 
 def save():
     with open("config.json", "w", encoding="utf-8") as cfg:
