@@ -79,7 +79,8 @@ if op in ["Darwin", "Windows"]:
             print(f"The asset directory was found in {path}.")
 
         if op == "Windows":
-            os.mkdir("./_internal/assets/")
+            if not os.path.exists("./_internal/assets/"):
+                os.mkdir("./_internal/assets/")
 
         executable = "copy" if op == "Windows" else "cp -r"
         dest = ".\\_internal\\assets /Y" if op == "Windows" else "RoSniper.app/Contents/Frameworks/assets"
