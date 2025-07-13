@@ -13,7 +13,7 @@ op = platform.system()
 if op == "Windows":
     import subprocess
 
-version = "1.3.2_dev"
+version = "1.4.0_dev"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -118,7 +118,7 @@ def run_command(command):
     if command in ["/cmds", "/changelog"]:
         clear()
         title = "Commands" if command == "/cmds" else "Changelog"
-        load_file = f"{title}.txt"
+        load_file = f"./assets/{title}.txt"
         print(f"{gold}[{title}]{end}")
         if os.path.exists(load_file):
             print(open(load_file).read().replace("[green]", "\033[0;32m").replace("[gold]", gold).replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server)).replace("[cur_m]", str(monitoring)))
@@ -202,6 +202,13 @@ def run_command(command):
             wait(1, f"\n{underline}Successfully added the <snipe> alias.{end}")
         else:
             wait(1, f"{nl}{underline}You must be using macOS to run this command.{end}")
+    elif command.startswith("/donate "):
+        clear()
+        donations = json.loads(open("./assets/donations.json").read())
+        if arg in donations.keys():
+            webbrowser.open(donations[arg])
+        else:
+            wait(1, f"{nl}{underline}Invalid donation amount. See /cmds for valid donation amounts.{end}")
     else:
         similar_commands = []
         list_of_commands = ["/cmds", "/changelog", "/set", "/setrecents", "/delay", "/del", "/logout", "/add", "/addaccount", "/df", "/declinefirst", "/alias", "/m", "/monitoring"]

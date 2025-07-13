@@ -36,6 +36,11 @@
         - [bold]-m[end] to enable the monitoring-only mode
     -> If you change the location of your RoSniper executable, you will need to regenerate the alias.
 
+[underline]/donate[end]
+    -> Opens a Roblox gamepass in your browser
+    -> Possible arguments: 10, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000
+    -> [bold]Donating is not necessary to use RoSniper or any of its functionality, although I sincerely appreciate donations.[end]
+
 [gold][Temporary Commands][end]
 The effects of these commands only last for one sniping session.
 
