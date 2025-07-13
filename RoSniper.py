@@ -11,7 +11,7 @@ from sys import exit
 
 op = platform.system()
 if op == "Windows":
-    import psutil
+    import subprocess
 
 version = "1.3.1_dev"
 os.chdir(os.path.dirname(__file__))
@@ -48,10 +48,7 @@ def prepare():
     if op == "Darwin":
         webbrowser.open("roblox://")
     else:
-        for proc in psutil.process_iter():
-            if proc.name() == "RobloxPlayerBeta.exe":
-                proc.kill()
-                break
+        subprocess.run(["taskkill", "/f", "/im", "RobloxPlayerBeta.exe"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 def save():
     with open("config.json", "w", encoding="utf-8") as cfg:
@@ -233,6 +230,7 @@ def client():
 
     clear(False)
     print(f"{gold}[Times Checked: {checks_since_start}] [Account: @{usernames[id]}]{end}")
+    print(f"Prepare Roblox? {prepare_roblox}")
     if monitoring:
         print(f"{bold}You're currently in Monitoring Only Mode. Join-sniping is disabled.{end}")
         print("Press CTRL+C at any time to copy information.\n")
