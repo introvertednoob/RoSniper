@@ -1,4 +1,7 @@
-[green][bold]Version 1.3.1[end]
+[green][bold]Version 1.3.2[end]
+    - Fixed a bug where prepare() wouldn't work on Windows in some cases
+
+[bold]Version 1.3.1[end]
     - Fixed a bug where capital letters broke the command and username systems
 
 [bold]Version 1.3.0[end]
