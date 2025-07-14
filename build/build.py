@@ -66,17 +66,17 @@ if op in ["Darwin", "Windows"]:
             print(f"{brown}[Transfer Asset Directory into RoSniper]{end}")
         
         if os.path.exists(f"../assets"):
-            path = f"../"
+            path = f"../assets"
         elif os.path.exists(f"./assets"):
-            path = f"./"
+            path = f"./assets"
         elif os.path.exists(f"./Resources/assets"):
-            path = f"./Resources/"
+            path = f"./Resources/assets"
         else:
             input(f"The asset directory wasn't found. ")
             return
 
         if output:
-            print(f"The asset directory was found in {path}.")
+            print(f"The asset directory was found at {path}.")
 
         if op == "Windows":
             if not os.path.exists("./_internal/assets/"):
