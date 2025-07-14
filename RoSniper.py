@@ -211,7 +211,7 @@ def run_command(command):
             wait(1, f"{nl}{underline}Invalid donation amount. See /cmds for valid donation amounts.{end}")
     else:
         similar_commands = []
-        list_of_commands = ["/cmds", "/changelog", "/set", "/setrecents", "/delay", "/del", "/logout", "/add", "/addaccount", "/df", "/declinefirst", "/alias", "/m", "/monitoring"]
+        list_of_commands = ["/cmds", "/changelog", "/set", "/setrecents", "/delay", "/del", "/logout", "/add", "/addaccount", "/df", "/declinefirst", "/alias", "/m", "/monitoring", "/donate"]
         for cmd in list_of_commands:
             if command in cmd or cmd in command:
                 similar_commands += [cmd]
