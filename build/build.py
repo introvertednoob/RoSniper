@@ -17,7 +17,7 @@ if op in ["Darwin", "Windows"]:
         print(f"{brown}[Build RoSniper]{end}")
         print(f"{bold}Here are the minimum requirements to build RoSniper:{end}")
         print("    - 160MB+ space (app ~50MB, launcher ~2MB, rest is temporary files)")
-        print("    - The modules pyinstaller==6.14.1, pyperclip==1.9.0, requests==2.32.4")
+        print("    - The modules in requirements.txt")
         print("    - RoSniper.py in the (parent) directory of the build script")
         print("    - AppIcon(.icns/.ico), launcher.py, and Info.plist in ./Resources/")
         print("    - Any version of RoSniper (MacOS) or RoSniper v1.0.0+ (Windows)")
@@ -66,11 +66,11 @@ if op in ["Darwin", "Windows"]:
             print(f"{brown}[Transfer Asset Directory into RoSniper]{end}")
         
         if os.path.exists(f"../assets"):
-            path = f"../assets"
+            path = f"../"
         elif os.path.exists(f"./assets"):
-            path = f"./assets"
+            path = f"./"
         elif os.path.exists(f"./Resources/assets"):
-            path = f"./Resources/assets"
+            path = f"./Resources/"
         else:
             input(f"The asset directory wasn't found. ")
             return
@@ -161,7 +161,7 @@ if op in ["Darwin", "Windows"]:
         match option:
             case 1:
                 build()
-                transfer_assets()
+                transfer_assets(output=False)
                 transfer_file("config.json", output=False)
                 if op == "Darwin":
                     transfer_to_applications(output=False)
