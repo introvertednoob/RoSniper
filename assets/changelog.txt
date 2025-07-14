@@ -2,6 +2,7 @@
     - Added Robux donations through [underline]/donate[end]
         - Donating is [bold]not and never will be required[end] to access RoSniper or any of its functionality.
         - If you seriously like this project, consider donating!
+    - Passing -a with a valid Account ID will only validate that one cookie to save time with multiple cookies
     - Fixed a bug where prepare() wouldn't work on Windows in some cases
     - Moved changelog, command docs, and donation files to ./assets/
 

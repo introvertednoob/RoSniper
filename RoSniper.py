@@ -75,6 +75,41 @@ def fix_recents():
         del config["recent_users"][config["recent_users_length"]]
     save()
 
+def verify_cookie(cookie):
+    global session
+    global usernames
+    global display_names
+
+    header = {
+        "Cookie": f".ROBLOSECURITY={config["cookies"][cookie]}"
+    }
+    try:
+        req = session.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers=header)
+        if not req.ok:
+            del config["cookies"][cookie]
+            save()
+            return
+    except Exception as e:
+        if str(e) in errors.keys():
+            clear()
+            input(errors[str(e)])
+        exit()
+
+    if req.ok:
+        usernames += [json.loads(req.text)["name"]]
+        display_names += [json.loads(req.text)["displayName"]]
+    elif req.status_code == 429:
+        clear()
+        print(f"{gold}[Network Error / Too Many Requests]{end}")
+        print(f"Couldn't contact the Roblox servers to authenticate you.")
+        wait(5, "RoSniper will keep trying to log you in every 5s.")
+        os.execl(sys.executable, sys.executable, *sys.argv)
+    else:
+        del cookie
+        save()
+        return
+    del header
+
 def add_account(restart):
     clear()
     print(f"{gold}[Add Account]{end}")
@@ -123,7 +158,7 @@ def run_command(command):
         if os.path.exists(load_file):
             print(open(load_file).read().replace("[green]", "\033[0;32m").replace("[gold]", gold).replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server)).replace("[cur_m]", str(monitoring)))
         else:
-            print(f"{load_file.lower()} isn't present.")
+            print(f"The file ./assets/{load_file.lower()} isn't present.")
         input("Press ENTER to return to the main menu. ")
     elif command.startswith("/setrecents ") or command.startswith("/set "):
         if arg.isnumeric():
@@ -206,6 +241,8 @@ def run_command(command):
         clear()
         donations = json.loads(open("./assets/donations.json").read())
         if arg in donations.keys():
+            print(f"{nl}{underline}Thank you for donating! Donations help keep RoSniper free for all!{end}")
+            wait(3, f"A gamepass for {bold}{arg} Robux{end} will open shortly.")
             webbrowser.open(donations[arg])
         else:
             wait(1, f"{nl}{underline}Invalid donation amount. See /cmds for valid donation amounts.{end}")
@@ -329,47 +366,14 @@ save()
 if len(config["cookies"]) == 0:
     add_account(False)
 
-# Verify .ROBLOSECURITY cookies
+# Process args + select an account if more than one cookie is present
 usernames = []
 display_names = []
-session = requests.Session()
-for cookie in range(len(config["cookies"])):
-    header = {
-        "Cookie": f".ROBLOSECURITY={config["cookies"][cookie]}"
-    }
-    try:
-        req = session.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers=header)
-        if not req.ok:
-            del config["cookies"][cookie]
-            save()
-            continue
-    except Exception as e:
-        if str(e) in errors.keys():
-            clear()
-            input(errors[str(e)])
-        exit()
-
-    if req.ok:
-        usernames += [json.loads(req.text)["name"]]
-        display_names += [json.loads(req.text)["displayName"]]
-    elif req.status_code == 429:
-        clear()
-        print(f"{gold}[Network Error / Too Many Requests]{end}")
-        print(f"Couldn't contact the Roblox servers to authenticate you.")
-        wait(5, "RoSniper will keep trying to log you in every 5s.")
-        os.execl(sys.executable, sys.executable, *sys.argv)
-    else:
-        del cookie
-        save()
-        continue
-    del header
-session.close()
-
 monitoring = False
 decline_first_server = False
 account_set_by_argument = False
 
-# Process args + select an account if more than one cookie is present
+session = requests.Session()
 if len(sys.argv) > 1:
     for arg in sys.argv[1:]:
         if arg == "-m":
@@ -381,6 +385,13 @@ if len(sys.argv) > 1:
             if len(config["cookies"]) < id:
                 wait(1, f"{underline}Invalid Account ID. The highest usable Account ID is {len(config["cookies"])}.{end}")
                 exit()
+            while len(usernames) < id:
+                display_names += [""]
+                usernames += [""]
+            verify_cookie(id)
+            if len(usernames) < id:
+                wait(1, f"{underline}The selected account has an invalid cookie.{end}")
+                exit()
             account_set_by_argument = True
         elif "-a" in arg and not arg.replace("-a", "").isnumeric():
             wait(1, f"{underline}Please enter a numeric Account ID.{end}")
@@ -388,6 +399,12 @@ if len(sys.argv) > 1:
         else:
             continue
     sys.argv = [arg for arg in sys.argv if not arg in ("-m", "-d") and not "-a" in arg]
+
+# Verify all .ROBLOSECURITY cookies if an account isn't set through -a
+if not account_set_by_argument:
+    for cookie in range(len(config["cookies"])):
+        verify_cookie(cookie)
+session.close()
 
 if len(config["cookies"]) > 1 and not account_set_by_argument:
     id = float('inf')
