@@ -4,7 +4,7 @@
         - If you seriously like this project, consider donating!
     - Passing -a with a valid Account ID will only validate that one cookie to save time with multiple cookies
     - Fixed a bug where prepare() wouldn't work on Windows in some cases
-    - Moved changelog, command docs, and donation files to ./assets/
+    - Moved changelog, command docs, and donation metadata to ./assets/
 
 [bold]Version 1.3.1[end]
     - Fixed a bug where capital letters broke the command and username systems
