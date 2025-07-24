@@ -13,7 +13,7 @@ op = platform.system()
 if op == "Windows":
     import subprocess
 
-version = "1.4.0_dev"
+version = "1.4.0"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
