@@ -381,14 +381,14 @@ if len(sys.argv) > 1:
             decline_first_server = True
         elif "-a" in arg and arg.replace("-a", "").isnumeric():
             id = int(arg[2:]) - 1
-            if len(config["cookies"]) < id:
+            if len(config["cookies"]) < (id + 1):
                 wait(1, f"{underline}Invalid Account ID. The highest usable Account ID is {len(config["cookies"])}.{end}")
                 exit()
             while len(usernames) < id:
                 display_names += [""]
                 usernames += [""]
             verify_cookie(id)
-            if len(usernames) < id:
+            if len(usernames) < (id + 1):
                 wait(1, f"{underline}The selected account has an invalid cookie.{end}")
                 exit()
             account_set_by_argument = True
