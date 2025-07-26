@@ -1,4 +1,4 @@
-[underline]/cmds[end] or [underline]/help[end]
+[underline]/cmds[end]
     -> Shows this window
 
 [underline]/changelog[end]
