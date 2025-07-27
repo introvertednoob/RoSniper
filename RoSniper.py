@@ -13,7 +13,7 @@ op = platform.system()
 if op == "Windows":
     import subprocess
 
-version = "1.4.0"
+version = "1.4.1"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -152,13 +152,11 @@ def run_command(command):
     arg = command.split(" ")[1] if len(command.split(" ")) > 1 else ""
     if command in ["/cmds", "/changelog"]:
         clear()
-        title = "Commands" if command == "/cmds" else "Changelog"
-        load_file = f"./assets/{title}.txt"
-        print(f"{gold}[{title}]{end}")
+        load_file = f"./assets/{"commands" if command == "/cmds" else "changelog"}.txt"
         if os.path.exists(load_file):
             print(open(load_file).read().replace("[green]", "\033[0;32m").replace("[gold]", gold).replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server)).replace("[cur_m]", str(monitoring)))
         else:
-            print(f"The file ./assets/{load_file.lower()} isn't present.")
+            print(f"The file ./assets/{load_file} isn't present.")
         input("Press ENTER to return to the main menu. ")
     elif command.startswith("/setrecents ") or command.startswith("/set "):
         if arg.isnumeric():

@@ -1,4 +1,13 @@
-[green][bold]Version 1.4.0[end]
+[gold][Changelog][end]
+[green][bold]Version 1.4.1[end]
+    - Added the ability to pass an option for the build script through command-line arguments
+    - Revamped the look of Command Docs ([underline]/cmds[end])
+        - Command aliases are now in parentheses
+        - Possible command arguments are no longer underlined
+    - Removed any instances of [underline]/help[end] from Command Docs
+    - Removed dynamic command docs/changelog titling from RoSniper
+
+[bold]Version 1.4.0[end]
     - Added Robux donations through [underline]/donate[end]
         - Donating is [bold]not and never will be required[end] to access RoSniper or any of its functionality.
         - If you seriously like this project, consider donating!
