@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 import platform
 
@@ -141,20 +142,23 @@ if op in ["Darwin", "Windows"]:
         app_exists = "" if os.path.exists(app_location) else faint
         app_exists_a = "" if os.path.exists("/Applications/RoSniper.app") else faint
 
-        print(f"{brown}[RoSniper Build Tool]{end}")
-        print(f"{bold}[1] Install RoSniper from source (Options 2, 3, 4{", and 5" if op == "Darwin" else ""} combined){end}")
-        print("[2] Build RoSniper")
-        print(f"{app_exists}[3] Inject an existing config.json into RoSniper{end}")
-        print(f"{app_exists}[4] Inject the asset directory into RoSniper{end}")
-        if op == "Darwin":
-            print(f"{app_exists}[5] Transfer RoSniper to /Applications (macOS Only){end}")
-            print(f"{app_exists_a}[6] Delete RoSniper from /Applications (macOS Only){end}")
-        print(f"[{"5" if op == "Windows" else "7"}] Exit")
+        args = sys.argv[1:]
+        if len(args) == 0:
+            print(f"{brown}[RoSniper Build Tool]{end}")
+            print(f"{bold}[1] Install RoSniper from source (Options 2, 3, 4{", and 5" if op == "Darwin" else ""} combined){end}")
+            print("[2] Build RoSniper")
+            print(f"{app_exists}[3] Inject an existing config.json into RoSniper{end}")
+            print(f"{app_exists}[4] Inject the asset directory into RoSniper{end}")
+            if op == "Darwin":
+                print(f"{app_exists}[5] Transfer RoSniper to /Applications (macOS Only){end}")
+                print(f"{app_exists_a}[6] Delete RoSniper from /Applications (macOS Only){end}")
+            print(f"[{"5" if op == "Windows" else "7"}] Exit")
+            option = input("\nSelect an option: ").strip()
+        else:
+            option = args[-1].strip()
 
-        option = input("\nSelect an option: ").strip()
         if not option.isnumeric() or not option in ["1", "2", "3", "4", "5", "6" if op == "Darwin" else "1", "7" if op == "Darwin" else "1"]:
             input("Invalid option. ")
-            continue
         else:
             option = int(option)
 
@@ -183,6 +187,9 @@ if op in ["Darwin", "Windows"]:
                     delete_from_applications()
             case 7:
                 exit()
+        
+        if len(args) > 0:
+            exit()
 else:
     clear()
     input("The build script is not available for Linux at this time. ")
