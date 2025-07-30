@@ -13,7 +13,11 @@ op = platform.system()
 if op == "Windows":
     import subprocess
 
-version = "1.4.1"
+if getattr(sys, 'frozen', False):
+    if len(sys.argv) >= 2 and sys.argv[0] == sys.argv[1]:
+        sys.argv.pop(1)
+
+version = "1.4.2_dev"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -372,6 +376,7 @@ account_set_by_argument = False
 
 session = requests.Session()
 if len(sys.argv) > 1:
+    input(sys.argv)
     for arg in sys.argv[1:]:
         if arg == "-m":
             monitoring = True
