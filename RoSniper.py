@@ -376,7 +376,6 @@ account_set_by_argument = False
 
 session = requests.Session()
 if len(sys.argv) > 1:
-    input(sys.argv)
     for arg in sys.argv[1:]:
         if arg == "-m":
             monitoring = True
