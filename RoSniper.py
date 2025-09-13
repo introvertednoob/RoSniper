@@ -7,6 +7,7 @@ import requests
 import platform
 import pyperclip
 import webbrowser
+import browser_cookie3
 from sys import exit
 
 op = platform.system()
@@ -17,7 +18,7 @@ if getattr(sys, 'frozen', False):
     if len(sys.argv) >= 2 and sys.argv[0] == sys.argv[1]:
         sys.argv.pop(1)
 
-version = "1.4.2"
+version = "1.5.0"
 os.chdir(os.path.dirname(__file__))
 
 # Save ANSI codes to variables
@@ -79,6 +80,18 @@ def fix_recents():
         del config["recent_users"][config["recent_users_length"]]
     save()
 
+def get_cookie():
+    try:
+        cj = browser_cookie3.safari(domain_name='roblox.com')
+        
+        for cookie in cj:
+            if cookie.name == ".ROBLOSECURITY":
+                return cookie.value
+        return None
+    except Exception as e:
+        print(f"Error reading cookies: {e}")
+        return None
+
 def verify_cookie(cookie):
     global session
     global usernames
@@ -119,28 +132,37 @@ def add_account(restart):
     print(f"{gold}[Add Account]{end}")
     print("Copy a .ROBLOSECURITY cookie to your clipboard.")
     print("This can be found in the Storage/Application section of your browser's console.")
+    
+    print("\nOr, copy 'getcookiefrombrowser' to fetch the cookie from your browser.")
+    print("Login to your Roblox account here: https://roblox.com/")
 
     if type(pyperclip.paste()) == type(None):
         pyperclip.copy("")
 
-    while not pyperclip.paste().startswith("_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_"):
+    while not True in [pyperclip.paste().startswith("_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_"), pyperclip.paste() == "getcookiefrombrowser"]:
         pyperclip.copy("")
         wait(0.1)
-    cookie = pyperclip.paste()
+
+    if pyperclip.paste() == "getcookiefrombrowser":
+        cookie = get_cookie()
+    else:
+        cookie = pyperclip.paste()
 
     if cookie in config["cookies"]:
+        pyperclip.copy("")
         input("\nThis cookie already exists. ")
         return
 
     try:
         req = requests.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers={"Cookie": f".ROBLOSECURITY={cookie}"})
         if not req.ok:
+            pyperclip.copy("")
             input("\nInvalid cookie. Restart RoSniper to try again. ")
             exit()
         config["cookies"] += [cookie]
         save()
         pyperclip.copy("")
-        input(f"Cookie saved successfully. Welcome, {json.loads(req.text)["name"]}! ")
+        input(f"\nCookie saved successfully. Welcome, {json.loads(req.text)["name"]}! ")
     except Exception as e:
         if str(e) in errors.keys():
             input(f"\n{errors[str(e)]} ")

@@ -1,4 +1,7 @@
 [gold][Changelog][end]
+[green][bold]Version 1.5.0[end]
+    - Added the ability to fetch a .ROBLOSECURITY cookie directly from the browser storage
+
 [green][bold]Version 1.4.2[end]
     - Fixed a bug where duplicate paths were present in sys.argv when a restart was invoked
 
