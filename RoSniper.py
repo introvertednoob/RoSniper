@@ -461,7 +461,8 @@ while True:
         break
 
     if len(sys.argv) == 1:
-        print(f"{gold}[RoSniper - v{version}]{end}")
+        print(f"{gold}{bold}[RoSniper]{end}")
+        print(f"Version {version}")
         print("Join-snipes accounts that the logged-in user can join!")
 
         print(f"{gold}\n[Tips]{end}")
