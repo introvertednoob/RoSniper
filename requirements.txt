@@ -4,3 +4,4 @@ pyinstaller<7.0.0
 # These modules are required to use RoSniper and build it.
 pyperclip<2.0.0
 requests<3.0.0
+browser-cookie3<1.0.0
