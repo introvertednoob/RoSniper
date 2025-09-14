@@ -80,9 +80,14 @@ def fix_recents():
         del config["recent_users"][config["recent_users_length"]]
     save()
 
-def get_cookie():
+def get_cookie(browser):
     try:
-        cj = browser_cookie3.safari(domain_name='roblox.com')
+        if browser == "safari":
+            cj = browser_cookie3.safari(domain_name='roblox.com')
+        elif browser == "chrome":
+            cj = browser_cookie3.chrome(domain_name='roblox.com')
+        elif browser == "all":
+            cj = browser_cookie3.load(domain_name='roblox.com')
         
         for cookie in cj:
             if cookie.name == ".ROBLOSECURITY":
@@ -132,19 +137,20 @@ def add_account(restart):
     print(f"{gold}[Add Account]{end}")
     print("Copy a .ROBLOSECURITY cookie to your clipboard.")
     print("This can be found in the Storage/Application section of your browser's console.")
-    
-    print("\nOr, copy 'getcookiefrombrowser' to fetch the cookie from your browser.")
-    print("Login to your Roblox account here: https://roblox.com/")
+    print("Login to your Roblox account here: https://roblox.com/")    
+
+    print("\nOr, copy a browser name to fetch the cookie from that browser:")
+    print("getsafari, getchrome, getall")
 
     if type(pyperclip.paste()) == type(None):
         pyperclip.copy("")
 
-    while not True in [pyperclip.paste().startswith("_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_"), pyperclip.paste() == "getcookiefrombrowser"]:
+    while not True in [pyperclip.paste().startswith("_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_"), "get" in pyperclip.paste()]:
         pyperclip.copy("")
         wait(0.1)
 
-    if pyperclip.paste() == "getcookiefrombrowser":
-        cookie = get_cookie()
+    if "get" in pyperclip.paste() and pyperclip.paste() in ["getsafari", "getchrome", "getall"]:
+        cookie = get_cookie(browser=pyperclip.paste().replace("get", ""))
     else:
         cookie = pyperclip.paste()
 
