@@ -86,6 +86,10 @@ def get_cookie(browser):
             cj = browser_cookie3.safari(domain_name='roblox.com')
         elif browser == "chrome":
             cj = browser_cookie3.chrome(domain_name='roblox.com')
+        elif browser == "edge":
+            cj = browser_cookie3.edge(domain_name='roblox.com')
+        elif browser == "firefox":
+            cj = browser_cookie3.firefox(domain_name='roblox.com')
         elif browser == "all":
             cj = browser_cookie3.load(domain_name='roblox.com')
         
@@ -140,7 +144,7 @@ def add_account(restart):
     print("Login to your Roblox account here: https://roblox.com/")    
 
     print("\nOr, copy a browser name to fetch the cookie from that browser:")
-    print("getsafari, getchrome, getall")
+    print("getsafari, getchrome, getedge, getfirefox, getall")
 
     if type(pyperclip.paste()) == type(None):
         pyperclip.copy("")
@@ -149,7 +153,7 @@ def add_account(restart):
         pyperclip.copy("")
         wait(0.1)
 
-    if "get" in pyperclip.paste() and pyperclip.paste() in ["getsafari", "getchrome", "getall"]:
+    if "get" in pyperclip.paste() and pyperclip.paste() in ["getsafari", "getchrome", "getedge", "getfirefox", "getall"]:
         cookie = get_cookie(browser=pyperclip.paste().replace("get", ""))
     else:
         cookie = pyperclip.paste()
