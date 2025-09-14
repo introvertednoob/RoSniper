@@ -17,7 +17,7 @@ if op in ["Darwin", "Windows"]:
         clear()
         print(f"{brown}[Build RoSniper]{end}")
         print(f"{bold}Here are the minimum requirements to build RoSniper:{end}")
-        print("    - 160MB+ space (app ~50MB, launcher ~2MB, rest is temporary files)")
+        print("    - 200MB+ space (app ~55MB, launcher ~2MB, rest is temporary files)")
         print("    - The modules in requirements.txt")
         print("    - RoSniper.py in the (parent) directory of the build script")
         print("    - AppIcon(.icns/.ico), launcher.py, and Info.plist in ./Resources/")
