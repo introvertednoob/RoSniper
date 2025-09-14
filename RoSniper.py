@@ -139,11 +139,11 @@ def verify_cookie(cookie):
 def add_account(restart):
     clear()
     print(f"{gold}[Add Account]{end}")
-    print("Copy a .ROBLOSECURITY cookie to your clipboard.")
+    print(f"{bold}Copy a .ROBLOSECURITY cookie to your clipboard.{end}")
     print("This can be found in the Storage/Application section of your browser's console.")
     print("Login to your Roblox account here: https://roblox.com/")    
 
-    print("\nOr, copy a browser name to fetch the cookie from that browser:")
+    print(f"\n{bold}Or, copy a browser name to fetch the cookie from that browser:{end}")
     print("getsafari, getchrome, getedge, getfirefox, getall")
 
     if type(pyperclip.paste()) == type(None):
@@ -212,8 +212,9 @@ def run_command(command):
             wait(1, f"{nl}{underline}Deleted Recent User [@{arg}].{end}")
         elif arg.isnumeric():
             if int(arg) <= len(config["recent_users"]):
+                recent_user_name = config["recent_users"][int(arg) - 1]
                 del config["recent_users"][int(arg) - 1]
-                wait(1, f"{nl}{underline}Deleted Recent User #{arg}.{end}")
+                wait(1.25, f"{nl}{underline}Deleted Recent User #{arg} (@{recent_user_name}).{end}")
             else:
                 wait(0.75, f"{nl}{underline}This Recent User doesn't exist.{end}")
         else:
