@@ -491,7 +491,11 @@ while True:
             print(f"{underline}Decline First Server is Active!{end}")
         if monitoring:
             print(f"{underline}Monitoring Only Mode is Active!{end}")
-        print(f"Logged in as {bold}{display_names[id]} (@{usernames[id]}){end}")
+        
+        if usernames[id] == "Awij126":
+            print(f"\033[38;5;227mLogged in as @{usernames[id]},\033[0m \033[38;5;26mwho is N00B\033[0m \033[38;5;70m(he da best noob)\033[0m")
+        else:
+            print(f"Logged in as {bold}{display_names[id]} (@{usernames[id]}){end}")
 
     try:
         if len(sys.argv) == 1:
