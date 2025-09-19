@@ -38,7 +38,6 @@ if op in ["Darwin", "Windows"]:
         print(f"\nSOURCE RoSniper Version: {version}")
         input("Press ENTER to start building RoSniper. ")
         modifiedPLIST = open("./Resources/Info.plist", "r").read().replace("0.0.0", version)
-        open("./Resources/RoSniper.py", "w").write(open(RoSniperPath, "r").read())
 
         if op == "Darwin":
             if not os.path.exists("./Resources/launcher") and os.path.exists("./Resources/launcher.py"):
@@ -46,20 +45,20 @@ if op in ["Darwin", "Windows"]:
                 os.system("cp ./dist/launcher/launcher ./Resources/")
                 os.system("rm -rf build dist *.spec")
 
-            os.system("pyinstaller --windowed ./Resources/RoSniper.py --icon ./Resources/AppIcon.icns")
+            os.system(f"pyinstaller --windowed {RoSniperPath} --icon ./Resources/AppIcon.icns")
             os.system("cp -r ./dist/RoSniper.app .")
             os.system("cp ./Resources/launcher ./RoSniper.app/Contents/MacOS/")
             for delete in os.listdir("./RoSniper.app/Contents/Resources/"):
                 if delete != "AppIcon.icns":
                     os.system(f"rm -rf ./RoSniper.app/Contents/Resources/{delete}")
             open("./RoSniper.app/Contents/Info.plist", "w").write(modifiedPLIST)
-            os.system("rm -rf build dist *.spec ./Resources/RoSniper.py")
+            os.system("rm -rf build dist *.spec")
         else:
-            os.system("pyinstaller ./Resources/RoSniper.py --icon ./Resources/AppIcon.ico")
+            os.system(f"pyinstaller {RoSniperPath} --icon ./Resources/AppIcon.ico")
             os.system("xcopy .\\dist\\RoSniper . /E /Q")
             shutil.rmtree("./build/")
             shutil.rmtree("./dist/")
-            os.system("erase *.spec .\\Resources\\RoSniper.py /Q")
+            os.system("erase *.spec /Q")
 
     def transfer_assets(output=True):
         clear()

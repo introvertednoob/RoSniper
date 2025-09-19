@@ -39,14 +39,13 @@ def build(ops):
 
     version = open(RoSniperPath, "r").read().split("version = \"")[1].split("\"")[0]
     modifiedPLIST = open("./Resources/Info.plist", "r").read().replace("0.0.0", version)
-    open("./Resources/RoSniper.py", "w").write(open(RoSniperPath, "r").read())
 
     if ops == "Windows":
         if os.path.exists(f"./RoSniper-Windows/"):
             shutil.rmtree("./RoSniper-Windows/")
 
         os.mkdir(f"./RoSniper-Windows/")
-        os.system(f"wine C:/Users/{getpass.getuser()}/appdata/local/programs/python/python313/scripts/pyinstaller.exe ./Resources/RoSniper.py --icon ./Resources/AppIcon.ico")
+        os.system(f"wine C:/Users/{getpass.getuser()}/appdata/local/programs/python/python313/scripts/pyinstaller.exe {RoSniperPath} --icon ./Resources/AppIcon.ico")
         os.system(f"cp -r ./dist/RoSniper/_internal/ ./RoSniper-Windows/_internal")
         os.system(f"cp ./dist/RoSniper/RoSniper.exe ./RoSniper-Windows/RoSniper.exe")
     elif ops == "Darwin":
@@ -55,14 +54,14 @@ def build(ops):
             os.system("cp ./dist/launcher/launcher ./Resources/")
             os.system("rm -rf build dist *.spec")
 
-        os.system("pyinstaller --windowed ./Resources/RoSniper.py --icon ./Resources/AppIcon.icns")
+        os.system(f"pyinstaller --windowed {RoSniperPath} --icon ./Resources/AppIcon.icns")
         os.system("cp -r ./dist/RoSniper.app ./RoSniper.app")
         os.system("cp ./Resources/launcher ./RoSniper.app/Contents/MacOS/")
         for delete in os.listdir("./RoSniper.app/Contents/Resources/"):
             if delete != "AppIcon.icns":
                 os.system(f"rm -rf ./RoSniper.app/Contents/Resources/{delete}")
         open("./RoSniper.app/Contents/Info.plist", "w").write(modifiedPLIST)
-    os.system("rm -rf build dist *.spec ./Resources/RoSniper.py")
+    os.system("rm -rf build dist *.spec")
 
 def transfer_assets(ops):
     if os.path.exists(f"../assets"):
