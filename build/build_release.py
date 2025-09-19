@@ -76,6 +76,9 @@ def transfer_assets(ops):
     if ops == "Windows":
         if not os.path.exists("./RoSniper-Windows/_internal/assets/"):
             os.mkdir("./RoSniper-Windows/_internal/assets/")
+    elif ops == "Darwin":
+        if not os.path.exists("./RoSniper.app/Contents/Frameworks/assets/"):
+            os.mkdir("./RoSniper.app/Contents/Frameworks/assets/")
 
     os.system(f"cp -r {path}/* {"./RoSniper-Windows/_internal/assets/" if ops == "Windows" else "./RoSniper.app/Contents/Frameworks/assets"}")
 
