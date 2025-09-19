@@ -1,5 +1,7 @@
 [gold][Changelog][end]
 [green][bold]Version 1.5.0[end]
+    - Add support for Python 3.14 (mainly had to wait for PyInstaller)
+        - Not all operating systems will receive pre-built binaries using Python 3.14 immediately.
     - Added the ability to fetch a .ROBLOSECURITY cookie directly from the browser storage
     - Tweaked how the version is displayed to the user
     - When deleting a numeric Recent User, their username is now shown
