@@ -1,5 +1,8 @@
 [gold][Changelog][end]
-[green][bold]Version 1.5.0_1[end]
+[green][bold]Version 1.5.1[end]
+    - Optimize cookie-finding code
+
+[bold]Version 1.5.0_1[end]
     - Fix an issue where pre-built macOS binaries would not have the ./assets/ directory
 
 [bold]Version 1.5.0[end]
