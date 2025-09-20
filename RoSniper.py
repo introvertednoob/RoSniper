@@ -82,17 +82,7 @@ def fix_recents():
 
 def get_cookie(browser):
     try:
-        if browser == "safari":
-            cj = browser_cookie3.safari(domain_name='roblox.com')
-        elif browser == "chrome":
-            cj = browser_cookie3.chrome(domain_name='roblox.com')
-        elif browser == "edge":
-            cj = browser_cookie3.edge(domain_name='roblox.com')
-        elif browser == "firefox":
-            cj = browser_cookie3.firefox(domain_name='roblox.com')
-        elif browser == "all":
-            cj = browser_cookie3.load(domain_name='roblox.com')
-        
+        cj = getattr(browser_cookie3, browser)(domain_name='roblox.com')
         for cookie in cj:
             if cookie.name == ".ROBLOSECURITY":
                 return cookie.value
@@ -154,7 +144,7 @@ def add_account(restart):
         wait(0.1)
 
     if "get" in pyperclip.paste() and pyperclip.paste() in ["getsafari", "getchrome", "getedge", "getfirefox", "getall"]:
-        cookie = get_cookie(browser=pyperclip.paste().replace("get", ""))
+        cookie = get_cookie(browser=pyperclip.paste().replace("get", "").replace("all", "load"))
     else:
         cookie = pyperclip.paste()
 
