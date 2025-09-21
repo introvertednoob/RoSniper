@@ -266,8 +266,8 @@ def run_command(command):
         donations = json.loads(open("./assets/donations.json").read())
         if arg in donations.keys():
             print(f"{nl}{underline}Thank you for donating! Donations help keep RoSniper free for all! - @Awij126{end}")
-            wait(4, f"A gamepass for {bold}{arg} Robux{end} will open shortly.")
-            webbrowser.open(donations[arg])
+            wait(3, f"A gamepass for {bold}{arg} Robux{end} will open shortly.")
+            webbrowser.open(f"https://www.roblox.com/game-pass/{donations[arg]}")
         else:
             wait(1, f"{nl}{underline}Invalid donation amount. See /cmds for valid donation amounts.{end}")
     else:

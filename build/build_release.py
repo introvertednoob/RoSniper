@@ -45,7 +45,7 @@ def build(ops):
             shutil.rmtree("./RoSniper-Windows/")
 
         os.mkdir(f"./RoSniper-Windows/")
-        os.system(f"wine C:/Users/{getpass.getuser()}/appdata/local/programs/python/python313/scripts/pyinstaller.exe {RoSniperPath} --icon ./Resources/AppIcon.ico")
+        os.system(f"wine C:/Users/{getpass.getuser()}/appdata/local/programs/python/python314/scripts/pyinstaller.exe {RoSniperPath} --icon ./Resources/AppIcon.ico")
         os.system(f"cp -r ./dist/RoSniper/_internal/ ./RoSniper-Windows/_internal")
         os.system(f"cp ./dist/RoSniper/RoSniper.exe ./RoSniper-Windows/RoSniper.exe")
     elif ops == "Darwin":

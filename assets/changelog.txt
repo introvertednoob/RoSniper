@@ -1,7 +1,12 @@
 [gold][Changelog][end]
 [green][bold]Version 1.5.1[end]
+    - Updated Windows pre-built binaries to Python 3.14
+        - The lz4 module was quite a challenge to get working with my build setup
     - Optimized cookie-finding code
+    - Optimized donation amount JSON to only store gamepass IDs
+    - Tweaked info.plist (LSUIElement = true)
     - Fixed an issue where macOS would prompt to open Roblox when joining a user
+        - webbrowser.open() was phased out on macOS in favor of a new method
 
 [bold]Version 1.5.0_1[end]
     - Fixed an issue where pre-built macOS binaries would not have the ./assets/ directory
