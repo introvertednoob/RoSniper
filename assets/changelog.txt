@@ -1,9 +1,10 @@
 [gold][Changelog][end]
 [green][bold]Version 1.5.1[end]
-    - Optimize cookie-finding code
+    - Optimized cookie-finding code
+    - Fixed an issue where macOS would prompt to open Roblox when joining a user
 
 [bold]Version 1.5.0_1[end]
-    - Fix an issue where pre-built macOS binaries would not have the ./assets/ directory
+    - Fixed an issue where pre-built macOS binaries would not have the ./assets/ directory
 
 [bold]Version 1.5.0[end]
     - Add support for Python 3.14 (mainly had to wait for PyInstaller)
