@@ -35,7 +35,7 @@ if op in ["Darwin", "Windows"]:
             return
 
         version = open(RoSniperPath, "r").read().split("version = \"")[1].split("\"")[0]
-        print(f"\nSOURCE RoSniper Version: {version}")
+        print(f"\nRoSniper Version: {version}")
         input("Press ENTER to start building RoSniper. ")
         modifiedPLIST = open("./Resources/Info.plist", "r").read().replace("0.0.0", version)
 
