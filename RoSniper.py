@@ -591,6 +591,9 @@ while True:
                 time.sleep(config["delay"])
             else:
                 client_exception(f"<{req.status_code}> {errors["requests.exceptions.ConnectionError"]}")
+        except requests.exceptions.ConnectionError:
+            client_exception(f"{errors["requests.exceptions.ConnectionError"]} Retrying in 1s...")
+            wait(1)
         except KeyboardInterrupt:
             if monitoring:
                 try:
@@ -599,9 +602,6 @@ while True:
                 except KeyboardInterrupt:
                     pass
             break
-        except requests.exceptions.ConnectionError:
-            client_exception(f"{errors["requests.exceptions.ConnectionError"]} Retrying in 1s...")
-            wait(1)
         except Exception as e:
             client_exception(errors[str(e)] if str(e) in errors.keys() else f"An error occured: {e} ")
             input("Press ENTER to return to the main menu. ")
