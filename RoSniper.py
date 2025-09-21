@@ -42,18 +42,18 @@ default_config = {
     "cookies": []
 }
 
+def open_link(url):
+    if op == "Darwin":
+        os.system(f"open \"{url}\"")
+    else:
+        webbrowser.open(url)
+
 clear_cmd = "clear" if op == "Darwin" else "cls"
 def clear(definite=True):
     if op == "Darwin" and definite:
         os.system("clear; clear")
     else:
         os.system(clear_cmd)
-
-def prepare():
-    if op == "Darwin":
-        webbrowser.open("roblox://")
-    else:
-        subprocess.run(["taskkill", "/f", "/im", "RobloxPlayerBeta.exe"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 def save():
     with open("config.json", "w", encoding="utf-8") as cfg:
@@ -313,7 +313,10 @@ def client():
 
         if status == 1:
             if _ == current_user and prepare_roblox and not monitoring:
-                prepare()
+                if op == "Darwin":
+                    open_link("roblox://")
+                else:
+                    subprocess.run(["taskkill", "/f", "/im", "RobloxPlayerBeta.exe"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                 current_server = ""
                 prepare_roblox = False
             print(f"{user_label} is on the Roblox website!")
@@ -339,7 +342,7 @@ def client():
 
             if not server_id in declined_servers:
                 if not monitoring:
-                    webbrowser.open(f'roblox://experiences/start?placeId={place_id}&gameInstanceId={server_id}')
+                    open_link(f'roblox://experiences/start?placeId={place_id}&gameInstanceId={server_id}')
                 print(f"{user_label} is in a game: {underline}roblox://experiences/start?placeId={place_id}&gameInstanceId={server_id}{end}")
                 current_user = _
                 prepare_roblox = True
