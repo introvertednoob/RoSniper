@@ -23,6 +23,5 @@ Tested on all macOS versions 15.0-26.1b1 with Python 3.14.x! It likely also work
 🎉 Windows support has been added in v1.0.0! It is recommended to use Windows 11. 🎉
 
 ## Showcase
-https://github.com/user-attachments/assets/4984e164-6f92-4dfd-9b7f-153a831c67a4
 https://github.com/user-attachments/assets/863c15cb-54ea-494c-8d57-8dcbac6ee981
 
