@@ -23,5 +23,5 @@ Tested on all macOS versions 15.0-26.1b1 with Python 3.14.x! It likely also work
 🎉 Windows support has been added in v1.0.0! It is recommended to use Windows 11. 🎉
 
 ## (Revamped) Showcase
-The source code for the revamped trailer can be found in ./trailer/!
+The source code for the revamped trailer can be found in ./trailer/!</br>
 https://github.com/user-attachments/assets/bf9bcbfa-9228-4432-aef2-9baa2bb00024
