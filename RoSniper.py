@@ -8,7 +8,10 @@ import platform
 import pyperclip
 import webbrowser
 import browser_cookie3
+
 from sys import exit
+from pathlib import Path
+from platformdirs import user_config_dir
 
 op = platform.system()
 if op == "Windows":
@@ -18,8 +21,13 @@ if getattr(sys, 'frozen', False):
     if len(sys.argv) >= 2 and sys.argv[0] == sys.argv[1]:
         sys.argv.pop(1)
 
-version = "1.5.1"
+version = "1.6.0"
 os.chdir(os.path.dirname(__file__))
+
+# Set and make config dir
+config_dir = Path(user_config_dir("RoSniper", "introvertednoob"))
+config_dir.mkdir(parents=True, exist_ok=True)
+config_path = f"{config_dir}/config.json"
 
 # Save ANSI codes to variables
 gold = "\033[0;33m"
@@ -56,7 +64,7 @@ def clear(definite=True):
         os.system(clear_cmd)
 
 def save():
-    with open("config.json", "w", encoding="utf-8") as cfg:
+    with open(config_path, "w", encoding="utf-8") as cfg:
         json.dump(config, cfg, indent=4)
 
 def wait(secs, text=False):
@@ -367,11 +375,11 @@ if "!close_after_restart" in sys.argv:
     exit()
 
 # Save/load config file and verify it
-if os.path.exists("config.json"):
+if os.path.exists(config_path):
     try:
-        config = json.loads(open("config.json").read())
+        config = json.loads(open(config_path).read())
     except Exception as e:
-        os.remove("config.json")
+        os.remove(config_path)
         input(f"An error occured while loading config.json: {e} ")
         os.execl(sys.executable, sys.executable, *sys.argv)
 else:

@@ -1,5 +1,5 @@
 """
-RoSniper Update Dependency Tool (used since v1.5.1)
+RoSniper Update Dependency Tool (used since v1.6.0)
 I am using this script to update dependencies for both the macOS and Windows official releases.
 
 DISCLAIMER: DO NOT EXPECT THIS SCRIPT TO BE STABLE, NOR EXPECT IT TO WORK ON YOUR MACHINE.
