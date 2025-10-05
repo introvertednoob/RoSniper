@@ -19,7 +19,7 @@ There is a build script in ./build/ that can be used to build RoSniper for macOS
 This creates an executable that anyone (even if they don't have Python) can run.</br>
 Clone this repository and build RoSniper, or just run the source code itself.</br>
 
-Tested on all macOS versions 15.0-26.0 with Python 3.13.x! It likely also works on previous versions.</br>
+Tested on all macOS versions 15.0-26.1b1 with Python 3.14.x! It likely also works on previous versions.</br>
 🎉 Windows support has been added in v1.0.0! It is recommended to use Windows 11. 🎉
 
 ## Showcase
