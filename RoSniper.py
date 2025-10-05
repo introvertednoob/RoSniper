@@ -21,7 +21,7 @@ if getattr(sys, 'frozen', False):
     if len(sys.argv) >= 2 and sys.argv[0] == sys.argv[1]:
         sys.argv.pop(1)
 
-version = "1.6.0"
+version = "1.6.1"
 os.chdir(os.path.dirname(__file__))
 
 # Set and make config dir
