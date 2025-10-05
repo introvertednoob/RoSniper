@@ -24,7 +24,6 @@ if op in ["Darwin", "Windows"]:
         print("    - Any version of RoSniper (MacOS) or RoSniper v1.0.0+ (Windows)")
         print(f"\n{bold}If you're running Option 1 for a complete install:{end}")
         print("    - commands.txt and changelog.txt in the (parent) directory of the build script")
-        print("    - OPTIONAL: config.json in the (parent) directory of the build script")
 
         if os.path.exists("../RoSniper.py"):
             RoSniperPath = "../RoSniper.py"
@@ -90,32 +89,6 @@ if op in ["Darwin", "Windows"]:
         if output:
             input(f"The asset directory was injected into RoSniper. ")
 
-    def transfer_file(file, output=True):
-        clear()
-        if output:
-            print(f"{brown}[Inject {file.split(".")[0]} into RoSniper]{end}")
-        
-        if os.path.exists(f"../{file}"):
-            path = f"../{file}"
-        elif os.path.exists(f"./{file}"):
-            path = f"./{file}"
-        elif os.path.exists(f"./Resources/{file}"):
-            path = f"./Resources/{file}"
-        else:
-            input(f"{file} wasn't found. ")
-            return
-
-        if output:
-            print(f"{file} was found in {path}.")
-
-        executable = "copy" if op == "Windows" else "cp"
-        dest = ".\\_internal\\ /Y" if op == "Windows" else "RoSniper.app/Contents/Frameworks/"
-        path = path if op == "Darwin" else path.replace("/", "\\")
-        os.system(f"{executable} {path} {dest}")
-
-        if output:
-            input(f"{file} was injected into RoSniper. ")
-
     def transfer_to_applications(output=True):
         clear()
         if output:
@@ -144,19 +117,18 @@ if op in ["Darwin", "Windows"]:
         args = sys.argv[1:]
         if len(args) == 0:
             print(f"{brown}[RoSniper Build Tool]{end}")
-            print(f"{bold}[1] Install RoSniper from source (Options 2, 3, 4{", and 5" if op == "Darwin" else ""} combined){end}")
+            print(f"{bold}[1] Install RoSniper from source (Options 2{", 3, and 4" if op == "Darwin" else " and 3"} combined){end}")
             print("[2] Build RoSniper")
-            print(f"{app_exists}[3] Inject an existing config.json into RoSniper{end}")
-            print(f"{app_exists}[4] Inject the asset directory into RoSniper{end}")
+            print(f"{app_exists}[3] Inject the asset directory into RoSniper{end}")
             if op == "Darwin":
-                print(f"{app_exists}[5] Transfer RoSniper to /Applications (macOS Only){end}")
-                print(f"{app_exists_a}[6] Delete RoSniper from /Applications (macOS Only){end}")
-            print(f"[{"5" if op == "Windows" else "7"}] Exit")
+                print(f"{app_exists}[4] Transfer RoSniper to /Applications (macOS Only){end}")
+                print(f"{app_exists_a}[5] Delete RoSniper from /Applications (macOS Only){end}")
+            print(f"[{"4" if op == "Windows" else "6"}] Exit")
             option = input("\nSelect an option: ").strip()
         else:
             option = args[-1].strip()
 
-        if not option.isnumeric() or not option in ["1", "2", "3", "4", "5", "6" if op == "Darwin" else "1", "7" if op == "Darwin" else "1"]:
+        if not option.isnumeric() or not option in ["1", "2", "3", "4" if op == "Darwin" else "1", "5" if op == "Darwin" else "1"]:
             input("Invalid option. ")
         else:
             option = int(option)
@@ -165,26 +137,22 @@ if op in ["Darwin", "Windows"]:
             case 1:
                 build()
                 transfer_assets(output=False)
-                transfer_file("config.json", output=False)
                 if op == "Darwin":
                     transfer_to_applications(output=False)
             case 2:
                 build()
             case 3:
                 if os.path.exists(app_location):
-                    transfer_file("config.json")
-            case 4:
-                if os.path.exists(app_location):
                     transfer_assets()
-            case 5:
+            case 4:
                 if os.path.exists(app_location) and op == "Darwin":
                     transfer_to_applications()
                 elif op == "Windows":
                     exit()
-            case 6:
+            case 5:
                 if os.path.exists("/Applications/RoSniper.app") and op == "Darwin":
                     delete_from_applications()
-            case 7:
+            case 6:
                 exit()
         
         if len(args) > 0:
