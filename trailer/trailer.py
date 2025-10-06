@@ -33,6 +33,7 @@ def close_tab():
     pyautogui.keyDown("command")
     pyautogui.press("w")
     pyautogui.keyUp("command")
+    pyautogui.press("enter")
 
 def intro():
     clear()
