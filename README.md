@@ -30,11 +30,11 @@ https://github.com/user-attachments/assets/bf9bcbfa-9228-4432-aef2-9baa2bb00024
 ## Streamer Showcase
 I have actually joined multiple streamers with this program!</br>
 
-<img width="1543" height="887" alt="kreekcraft_dandys_world" src="https://github.com/user-attachments/assets/080192f0-fade-4190-8990-ed68881e0c39" />
+<img width="1543" height="887" alt="kreekcraft_dandys_world" src="https://github.com/user-attachments/assets/080192f0-fade-4190-8990-ed68881e0c39" /></br>
 For example, I was in KreekCraft's game (the only person!) on a Dandy's World stream.</br>
 
-<img width="1372" height="871" alt="kreekcraft_pls_donate" src="https://github.com/user-attachments/assets/e56e70d4-e9b4-4011-9092-bf0097b48bf9" />
+<img width="1372" height="871" alt="kreekcraft_pls_donate" src="https://github.com/user-attachments/assets/e56e70d4-e9b4-4011-9092-bf0097b48bf9" /></br>
 I also managed to get into a Pls Donate server with KreekCraft.</br>
 
-<img width="772" height="576" alt="lolcat" src="https://github.com/user-attachments/assets/ef34ed8b-636a-4543-86bd-08f2e17e1708" />
+<img width="772" height="576" alt="lolcat" src="https://github.com/user-attachments/assets/ef34ed8b-636a-4543-86bd-08f2e17e1708" /></br>
 Less notably, I joined lolcat (while getting into a lobby with KreekCraft for a Squid Game clone).</br>
