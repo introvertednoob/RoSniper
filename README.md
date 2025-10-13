@@ -1,4 +1,4 @@
-# What does RoSniper do?
+# RoSniper
 RoSniper uses Roblox's Presence API to check if a given user is online. If so, then it will attempt to join that user.</br>
 **DISCLAIMER: You can ONLY join users that let you join them (ex: you're friended/following them, or the user being sniped has their joins on). This is NOT a stream-sniping exploit, and won't be advertised as one.**
 
@@ -16,7 +16,7 @@ There is a build script in ./build/ that can be used to build RoSniper for macOS
 This creates an executable that anyone (even if they don't have Python) can run.</br>
 Clone this repository and build RoSniper, or just run the source code itself.</br>
 
-Tested on all macOS versions 15.0-26.1b1 with Python 3.14.x! It likely also works on previous versions.</br>
+Tested on all macOS versions 15.0-26.x with Python 3.14.x! It likely also works on previous versions.</br>
 🎉 Windows support has been added in v1.0.0! It is recommended to use Windows 11. 🎉
 
 # Showcase
@@ -24,7 +24,7 @@ The source code for the revamped trailer can be found in ./trailer/!</br>
 
 https://github.com/user-attachments/assets/bf9bcbfa-9228-4432-aef2-9baa2bb00024
 
-## Streamer Showcase
+# Streamer Showcase
 I have join-sniped multiple streamers using RoSniper!</br>
 So can you, as long as the streamer has their joins on. **Again, this program only works on people you are ALLOWED to join.**</br>
 
