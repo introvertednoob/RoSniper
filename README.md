@@ -36,7 +36,7 @@ I have join-sniped multiple streamers using RoSniper!</br>
 So can you, as long as the streamer has their joins on. **Again, this program only works on people you are able to join NORMALLY.**</br>
 
 ### For example, I was the only other person in KreekCraft's game on a Dandy's World stream.</br>
-Currently updating this image to remove a name.
+<img width="1543" height="887" alt="kreekcraft_dandys_world" src="https://github.com/user-attachments/assets/7f9ed94f-2686-4fda-8355-ce01856bd939" />
 
 ### I also managed to get into a Pls Donate! server with KreekCraft.</br>
 <img width="1372" height="871" alt="kreekcraft_pls_donate" src="https://github.com/user-attachments/assets/e56e70d4-e9b4-4011-9092-bf0097b48bf9" /></br>
