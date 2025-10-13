@@ -1,7 +1,4 @@
-## Ever wanted to join someone instantly on Roblox?
-This has allowed for me to get into people's servers *way faster*. I'm sharing a more polished version of that program.
-
-## How does RoSniper work?
+# What does RoSniper do?
 RoSniper uses Roblox's Presence API to check if a given user is online. If so, then it will attempt to join that user.</br>
 **DISCLAIMER: You can ONLY join users that let you join them (ex: you're friended/following them, or the user being sniped has their joins on). This is NOT a stream-sniping exploit, and won't be advertised as one.**
 
@@ -22,7 +19,7 @@ Clone this repository and build RoSniper, or just run the source code itself.</b
 Tested on all macOS versions 15.0-26.1b1 with Python 3.14.x! It likely also works on previous versions.</br>
 🎉 Windows support has been added in v1.0.0! It is recommended to use Windows 11. 🎉
 
-## Showcase
+# Showcase
 The source code for the revamped trailer can be found in ./trailer/!</br>
 
 https://github.com/user-attachments/assets/bf9bcbfa-9228-4432-aef2-9baa2bb00024
