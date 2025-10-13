@@ -19,6 +19,10 @@ Clone this repository and build RoSniper, or just run the source code itself.</b
 Tested on all macOS versions 15.0-26.x with Python 3.14.x! It likely also works on previous versions.</br>
 🎉 Windows support has been added in v1.0.0! It is recommended to use Windows 11. 🎉
 
+## Donations
+Donations will never be required to use any features of RoSniper.</br>
+If you seriously love and/or enjoy the project, consider running `/donate ROBUX_AMOUNT` in RoSniper.
+
 # Showcase
 The source code for the revamped trailer can be found in ./trailer/!</br>
 
