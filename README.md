@@ -28,10 +28,10 @@ The source code for the revamped trailer can be found in ./trailer/!</br>
 https://github.com/user-attachments/assets/bf9bcbfa-9228-4432-aef2-9baa2bb00024
 
 ## Streamer Showcase
-I have actually joined multiple streamers with this program!</br>
+I have join-sniped multiple streamers using RoSniper!</br>
 So can you, as long as the streamer has their joins on. **Again, this program only works on people you are ALLOWED to join.**</br>
 
-### For example, I was in KreekCraft's game (the only person!) on a Dandy's World stream.</br>
+### For example, I was the only other person in KreekCraft's game on a Dandy's World stream.</br>
 <img width="1543" height="887" alt="kreekcraft_dandys_world" src="https://github.com/user-attachments/assets/080192f0-fade-4190-8990-ed68881e0c39" /></br>
 
 ### I also managed to get into a Pls Donate server with KreekCraft.</br>
