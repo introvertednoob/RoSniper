@@ -40,7 +40,7 @@ So can you, as long as the streamer has their joins on. **Again, this program on
 ### For example, I was the only other person in KreekCraft's game on a Dandy's World stream.</br>
 <img width="1543" height="887" alt="kreekcraft_dandys_world" src="https://github.com/user-attachments/assets/080192f0-fade-4190-8990-ed68881e0c39" /></br>
 
-### I also managed to get into a Pls Donate server with KreekCraft.</br>
+### I also managed to get into a Pls Donate! server with KreekCraft.</br>
 <img width="1372" height="871" alt="kreekcraft_pls_donate" src="https://github.com/user-attachments/assets/e56e70d4-e9b4-4011-9092-bf0097b48bf9" /></br>
 
 ### Less notably, I joined lolcat in a Squid Game clone.</br>
