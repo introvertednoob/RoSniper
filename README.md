@@ -29,6 +29,7 @@ https://github.com/user-attachments/assets/bf9bcbfa-9228-4432-aef2-9baa2bb00024
 
 ## Streamer Showcase
 I have actually joined multiple streamers with this program!</br>
+So can you, as long as the streamer has their joins on. **Again, this program only works on people you are ALLOWED to join.**</br>
 
 ### For example, I was in KreekCraft's game (the only person!) on a Dandy's World stream.</br>
 <img width="1543" height="887" alt="kreekcraft_dandys_world" src="https://github.com/user-attachments/assets/080192f0-fade-4190-8990-ed68881e0c39" /></br>
