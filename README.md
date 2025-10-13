@@ -1,4 +1,4 @@
-# <img width="256" height="256" alt="AppIcon" src="https://github.com/user-attachments/assets/628445a0-5e54-41b6-ba5e-dbe9ab6864e0" /> RoSniper
+# <img width="32" height="32" alt="RoSniper" src="https://github.com/user-attachments/assets/628445a0-5e54-41b6-ba5e-dbe9ab6864e0" /> RoSniper
 RoSniper uses Roblox's Presence API to check if a given user is online. If so, then it will attempt to join that user.</br>
 **DISCLAIMER: You can ONLY join users that let you join them (ex: you're friended/following them, or the user being sniped has their joins on). This is NOT a stream-sniping exploit, and won't be advertised as one.**
 
