@@ -5,7 +5,9 @@
 ![GitHub License](https://img.shields.io/github/license/introvertednoob/RoSniper)
 
 RoSniper uses Roblox's Presence API to check if a given user is online. If so, then it will attempt to join that user.</br>
-**DISCLAIMER: You can ONLY join users that let you join them (ex: you're friended/following them, or the user being sniped has their joins on). RoSniper is NOT a RoSearcher clone or an injectable exploit.**
+**DISCLAIMER: You can ONLY join users that let you join them (ex: you're friended/following them, or the user being sniped has their joins on). RoSniper is NOT a RoSearcher clone or an injectable exploit.**</br></br>
+
+Tested on all macOS versions 15.0-26.x and Windows 11 with Python 3.14.x! RoSniper likely also works on previous versions.</br>
 
 ## Current Features:
 - Snipe users you recently tried to join for easier access to them
@@ -20,9 +22,6 @@ RoSniper uses Roblox's Presence API to check if a given user is online. If so, t
 There is a build script in ./build/ that can be used to build RoSniper for macOS and Windows.</br>
 This creates an executable that anyone (even if they don't have Python) can run.</br>
 Clone this repository and build RoSniper, or just run the source code itself.</br>
-
-Tested on all macOS versions 15.0-26.x with Python 3.14.x! It likely also works on previous versions.</br>
-🎉 Windows support has been added in v1.0.0! It is recommended to use Windows 11. 🎉
 
 ## Donations
 Donations will never be required to use any features of RoSniper.</br>
