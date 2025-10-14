@@ -24,7 +24,7 @@ Clone this repository and build RoSniper, or just run the source code itself.</b
 
 ## Donations
 Donations will never be required to use any features of RoSniper.</br>
-If you seriously love and/or enjoy the project, consider running `/donate ROBUX_AMOUNT` in RoSniper.
+If you enjoy using RoSniper, consider running `/donate ROBUX_AMOUNT` in RoSniper.
 
 # Showcase
 The source code for the revamped trailer can be found in ./trailer/!</br>
