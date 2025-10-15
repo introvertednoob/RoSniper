@@ -1,6 +1,7 @@
 [gold][Changelog][end]
 [green][bold]Source[end]
     - feat: added toggle tips command
+    - fix: update option validation to include 6th option for macOS
 
 [bold]Version 1.6.0[end]
     - Changed the location of config.json to be in %LocalAppData%/introvertednoob/RoSniper/ or ~/Library/Application Support/RoSniper/
