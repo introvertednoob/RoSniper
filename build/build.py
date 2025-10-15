@@ -128,7 +128,7 @@ if op in ["Darwin", "Windows"]:
         else:
             option = args[-1].strip()
 
-        if not option.isnumeric() or not option in ["1", "2", "3", "4" if op == "Darwin" else "1", "5" if op == "Darwin" else "1"]:
+        if not option.isnumeric() or not option in ["1", "2", "3", "4", "5" if op == "Darwin" else "1", "6" if op == "Darwin" else "1"]:
             input("Invalid option. ")
         else:
             option = int(option)
