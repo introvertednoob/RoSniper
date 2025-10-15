@@ -43,6 +43,11 @@
         - Current: [cur_recent_users] users
         - Maximum: 99 users
 
+[underline]/toggleTips[end]
+    -> Toggles if the tips on the Main Menu are shown
+        - Default: True
+        - Tips Shown: [cur_tips]
+
 [gold][Temporary Commands][end]
 The effects of these commands only last for one sniping session.
 

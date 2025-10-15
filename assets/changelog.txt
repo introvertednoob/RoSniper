@@ -1,5 +1,8 @@
 [gold][Changelog][end]
-[green][bold]Version 1.6.0[end]
+[green][bold]Source[end]
+    - feat: added toggle tips command
+
+[bold]Version 1.6.0[end]
     - Changed the location of config.json to be in %LocalAppData%/introvertednoob/RoSniper/ or ~/Library/Application Support/RoSniper/
         - The formatting of config.json has stayed the same, just migrate the json here
     - Updated Windows pre-built binaries to Python 3.14

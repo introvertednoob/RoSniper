@@ -46,6 +46,7 @@ errors = {
 default_config = {
     "recent_users_length": 5,
     "delay": 0.01,
+    "show_tips": True,
     "recent_users": [],
     "cookies": []
 }
@@ -90,7 +91,7 @@ def fix_recents():
 
 def get_cookie(browser):
     try:
-        cj = getattr(browser_cookie3, browser)(domain_name='roblox.com')
+        cj = getattr(browser_cookie3, browser)(domain_name="roblox.com")
         for cookie in cj:
             if cookie.name == ".ROBLOSECURITY":
                 return cookie.value
@@ -188,7 +189,7 @@ def run_command(command):
         clear()
         load_file = f"./assets/{"commands" if command == "/cmds" else "changelog"}.txt"
         if os.path.exists(load_file):
-            print(open(load_file).read().replace("[green]", "\033[0;32m").replace("[gold]", gold).replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server)).replace("[cur_m]", str(monitoring)))
+            print(open(load_file).read().replace("[green]", "\033[0;32m").replace("[gold]", gold).replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server)).replace("[cur_m]", str(monitoring)).replace("[cur_tips]", str(config["show_tips"])))
         else:
             print(f"The file ./assets/{load_file} isn't present.")
         input("Press ENTER to return to the main menu. ")
@@ -278,9 +279,12 @@ def run_command(command):
             webbrowser.open(f"https://www.roblox.com/game-pass/{donations[arg]}")
         else:
             wait(1, f"{nl}{underline}Invalid donation amount. See /cmds for valid donation amounts.{end}")
+    elif command == "/toggletips":
+        config["show_tips"] = False if config["show_tips"] else True
+        save()
     else:
         similar_commands = []
-        list_of_commands = ["/cmds", "/changelog", "/set", "/setrecents", "/delay", "/del", "/logout", "/add", "/addaccount", "/df", "/declinefirst", "/alias", "/m", "/monitoring", "/donate"]
+        list_of_commands = ["/cmds", "/changelog", "/set", "/setrecents", "/delay", "/del", "/logout", "/add", "/addaccount", "/df", "/declinefirst", "/alias", "/m", "/monitoring", "/donate", "/toggletips"]
         for cmd in list_of_commands:
             if command in cmd or cmd in command:
                 similar_commands += [cmd]
@@ -477,9 +481,11 @@ while True:
         print(f"Version {version}")
         print("Join-snipes accounts that the logged-in user can join!")
 
-        print(f"{gold}\n[Tips]{end}")
-        print("  - Type /cmds or /help to see the list of commands.")
-        print("  - Type /changelog to see the changelog.")
+        if config["show_tips"] == True:
+            print(f"{gold}\n[Tips]{end}")
+            print("  - Type /cmds to see the list of commands.")
+            print("  - Type /changelog to see the changelog.")
+            print("  - Type /toggletips to hide or show these tips.")
 
         print(f"\n{gold}[Recent Users]{end}")
         for user in range(len(config["recent_users"])):
@@ -500,7 +506,7 @@ while True:
 
     try:
         if len(sys.argv) == 1:
-            user = input("Enter username, recent user ID, or command: ").lower().strip()
+            user = input("Enter a username, recent user ID, or command: ").lower().strip()
             nl = "\n"
         else:
             user = " ".join(sys.argv[1:]).lower()
