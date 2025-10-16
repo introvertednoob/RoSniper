@@ -243,9 +243,8 @@ def run_command(command):
         save()
         wait(0.5, f"{nl}{underline}Delay set to {config["delay"]}s.{end}")
     elif command in ["/df", "/declinefirst"]:
+        monitoring = False
         decline_first_server = False if decline_first_server else True
-        if decline_first_server:
-            monitoring = False
     elif command in ["/m", "/monitoring"]:
         decline_first_server = False
         monitoring = False if monitoring else True
