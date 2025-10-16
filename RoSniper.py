@@ -28,7 +28,6 @@ config_dir = Path(user_config_dir("RoSniper", "introvertednoob"))
 config_dir.mkdir(parents=True, exist_ok=True)
 config_path = f"{config_dir}/config.json"
 
-# Save ANSI color codes to variables
 gold = "\033[0;33m"
 bold = "\033[1m"
 underline = "\033[4m"
@@ -297,7 +296,6 @@ def run_command(command):
         else:
             wait(2 + 0.25 * len(similar_commands), f"{nl}{underline}Invalid command: \"{command}\". Perhaps you meant \"{"\", \"".join(similar_commands)}\"?{end}\nType /cmds to see documentation on commands.")
 
-# Client + exception code
 def client():
     global users
     global online_data
@@ -407,7 +405,7 @@ save()
 if len(config["cookies"]) == 0:
     add_account(False)
 
-# Process args + select an account if more than one cookie is present
+# Process args
 usernames = []
 display_names = []
 monitoring = False
@@ -551,7 +549,7 @@ while True:
     if not "users" in globals():
         continue
 
-    # Validate the username(s) provided
+    # Validate usernames
     try:
         data = {
             "usernames": users
