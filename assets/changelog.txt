@@ -2,7 +2,7 @@
 [green][bold]Version 1.7.0[end]
     - Add toggle tips command ([underline]/toggletips[end])
         - This lets you hide the tips on the Main Menu!
-    - Fixed network errors not showing
+    - Fixed errors not being shown to the user
     - (build.py) Update option validation to include the 6th option for macOS
 
 [bold]Version 1.6.0[end]
