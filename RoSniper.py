@@ -267,7 +267,13 @@ def run_command(command):
                 if not "alias snipe=" in open(f"/Users/{getpass.getuser()}/.zshrc").read():
                     open(f"/Users/{getpass.getuser()}/.zshrc", "a").write(f"\n{snipe_alias}")
                 else:
-                    wait(1, f"\n{underline}The <snipe> alias was already added.{end}")
+                    zshrc = open(f"/Users/{getpass.getuser()}/.zshrc").readlines()
+                    for line in range(len(zshrc)):
+                        if "alias snipe=" in zshrc[line]:
+                            zshrc[line] = snipe_alias + "\n"
+
+                    open(f"/Users/{getpass.getuser()}/.zshrc", "w").writelines(zshrc)
+                    wait(1, f"\n{underline}The <snipe> alias has been updated.{end}")
                     return
             wait(1, f"\n{underline}Successfully added the <snipe> alias.{end}")
         else:
@@ -478,7 +484,7 @@ while True:
 
     if len(sys.argv) == 1:
         print(f"{gold}{bold}[RoSniper]{end}")
-        print(f"Version {version}")
+        print(f"Version {version} ({"binary" if getattr(sys, 'frozen', False) else "source"})")
         print("Join-snipes accounts that the logged-in user can join!")
 
         if config["show_tips"] == True:
