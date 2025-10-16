@@ -21,21 +21,19 @@ if getattr(sys, 'frozen', False):
     if len(sys.argv) >= 2 and sys.argv[0] == sys.argv[1]:
         sys.argv.pop(1)
 
-version = "1.6.0"
+version = "1.7.0"
 os.chdir(os.path.dirname(__file__))
 
-# Set and make config dir
 config_dir = Path(user_config_dir("RoSniper", "introvertednoob"))
 config_dir.mkdir(parents=True, exist_ok=True)
 config_path = f"{config_dir}/config.json"
 
-# Save ANSI codes to variables
+# Save ANSI color codes to variables
 gold = "\033[0;33m"
 bold = "\033[1m"
 underline = "\033[4m"
 end = "\033[0m"
 
-# Define exception and default config dicts
 errors = {
     "requests.exceptions.ConnectionError": "[ConnectionError] Couldn't connect to the Roblox servers.",
     "requests.exceptions.ConnectTimeout": "[ConnectTimeout] Your request with the Roblox servers timed out.",
@@ -470,7 +468,7 @@ if len(config["cookies"]) > 0:
 else:
     os.execl(sys.executable, sys.executable, *sys.argv)
 
-# Show main menu
+# Main code loop
 while True:
     clear()
     if "!close_after_restart" in sys.argv:
