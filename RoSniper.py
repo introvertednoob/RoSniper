@@ -116,7 +116,10 @@ def verify_cookie(cookie):
         err = f"{type(e).__module__}.{type(e).__name__}"
         if err in errors.keys():
             clear()
-            input(f"{errors[err]} ")
+            print(f"{gold}[RoSniper has encountered an error!]{end}")
+            print(errors[err])
+            print(f"\nFull Error:\n{str(e)}")
+            input(f"\nThere is likely an issue with your network or Roblox's servers. ")
         exit()
 
     if req.ok:
