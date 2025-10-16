@@ -3,6 +3,7 @@
     - Added toggle tips command ([underline]/toggletips[end])
         - This lets you hide the tips on the Main Menu!
     - Added the ability to update the <snipe> alias
+    - Added source or binary status to the displayed main menu version
     - Fixed errors not being shown to the user
     - (build.py) Update option validation to include the 6th option for macOS
 
