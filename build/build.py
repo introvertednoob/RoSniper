@@ -3,7 +3,7 @@ import sys
 import shutil
 import platform
 
-brown = "\033[0;33m"
+gold = "\033[0;33m"
 bold = "\033[1m"
 faint = "\033[2m"
 end = "\033[0m"
@@ -15,7 +15,7 @@ def clear():
 if op in ["Darwin", "Windows"]:
     def build():
         clear()
-        print(f"{brown}[Build RoSniper]{end}")
+        print(f"{gold}[Build RoSniper]{end}")
         print(f"{bold}Here are the minimum requirements to build RoSniper:{end}")
         print("    - 200MB+ space (app ~55MB, launcher ~2MB, rest is temporary files)")
         print("    - The modules in requirements.txt")
@@ -62,7 +62,7 @@ if op in ["Darwin", "Windows"]:
     def transfer_assets(output=True):
         clear()
         if output:
-            print(f"{brown}[Transfer Asset Directory into RoSniper]{end}")
+            print(f"{gold}[Transfer Asset Directory into RoSniper]{end}")
         
         if os.path.exists(f"../assets"):
             path = f"../assets"
@@ -92,7 +92,7 @@ if op in ["Darwin", "Windows"]:
     def transfer_to_applications(output=True):
         clear()
         if output:
-            print(f"{brown}[Transfer RoSniper to /Applications]{end}")
+            print(f"{gold}[Transfer RoSniper to /Applications]{end}")
 
         if os.path.exists("/Applications/RoSniper.app"):
             os.system("rm -rf /Applications/RoSniper.app")
@@ -102,7 +102,7 @@ if op in ["Darwin", "Windows"]:
 
     def delete_from_applications():
         clear()
-        print(f"{brown}[Delete RoSniper from /Applications]{end}")
+        print(f"{gold}[Delete RoSniper from /Applications]{end}")
         os.system("rm -rf /Applications/RoSniper.app")
         input("RoSniper.app was deleted from the Applications folder. ")
 
@@ -116,7 +116,7 @@ if op in ["Darwin", "Windows"]:
 
         args = sys.argv[1:]
         if len(args) == 0:
-            print(f"{brown}[RoSniper Build Tool]{end}")
+            print(f"{gold}[RoSniper Build Tool]{end}")
             print(f"{bold}[1] Install RoSniper from source (Options 2{", 3, and 4" if op == "Darwin" else " and 3"} combined){end}")
             print("[2] Build RoSniper")
             print(f"{app_exists}[3] Inject the asset directory into RoSniper{end}")

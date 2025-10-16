@@ -13,7 +13,7 @@ import getpass
 import zipfile
 import platform
 
-brown = "\033[0;33m"
+gold = "\033[0;33m"
 bold = "\033[1m"
 end = "\033[0m"
 
@@ -28,7 +28,7 @@ if not op == "Darwin":
 
 def build(ops):
     clear()
-    print(f"{brown}[Building RoSniper for platform '{ops}']{end}")
+    print(f"{gold}[Building RoSniper for platform '{ops}']{end}")
     if os.path.exists("../RoSniper.py"):
         RoSniperPath = "../RoSniper.py"
     elif os.path.exists("./RoSniper.py"):
@@ -104,7 +104,7 @@ while True:
     clear()
     os.chdir(os.path.dirname(__file__))
 
-    print(f"{brown}[RoSniper Build Tool]{end}")
+    print(f"{gold}[RoSniper Build Tool]{end}")
     print(f"{bold}[1] Build RoSniper for macOS + Windows (through WINE){end}")
     print(f"[2] Build RoSniper for macOS")
     print(f"[3] Build RoSniper for Windows (through WINE)")
