@@ -113,9 +113,10 @@ def verify_cookie(cookie):
             save()
             return
     except Exception as e:
-        if str(e) in errors.keys():
+        err = f"{type(e).__module__}.{type(e).__name__}"
+        if err in errors.keys():
             clear()
-            input(errors[str(e)])
+            input(f"{errors[err]} ")
         exit()
 
     if req.ok:
@@ -171,8 +172,9 @@ def add_account(restart):
         pyperclip.copy("")
         input(f"\nCookie saved successfully. Welcome, {json.loads(req.text)["name"]}! ")
     except Exception as e:
-        if str(e) in errors.keys():
-            input(f"\n{errors[str(e)]} ")
+        err = f"{type(e).__module__}.{type(e).__name__}"
+        if err in errors.keys():
+            input(f"\n{errors[err]} ")
         exit()
 
     if restart:
@@ -571,8 +573,9 @@ while True:
             "userIDs": [user_id_map[user] for user in users]
         }
     except Exception as e:
-        if str(e) in errors.keys():
-            wait(1.5, f"{underline}{errors[str(e)]}{end}")
+        err = f"{type(e).__module__}.{type(e).__name__}"
+        if err in errors.keys():
+            wait(1.5, f"{underline}{errors[err]}{end}")
             exit()
 
     # Save usernames to Recent Users
@@ -615,7 +618,7 @@ while True:
                     pass
             break
         except Exception as e:
-            client_exception(errors[str(e)] if str(e) in errors.keys() else f"An error occured: {e} ")
+            client_exception(errors[f"{type(e).__module__}.{type(e).__name__}"] if f"{type(e).__module__}.{type(e).__name__}" in errors.keys() else f"An error occured: {e} ")
             input("Press ENTER to return to the main menu. ")
             break
     session.close()
