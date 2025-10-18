@@ -321,7 +321,7 @@ def run_command(command):
         save()
     else:
         similar_commands = []
-        list_of_commands = ["/cmds", "/changelog", "/set", "/setrecents", "/delay", "/del", "/logout", "/add", "/addaccount", "/df", "/declinefirst", "/alias", "/m", "/monitoring", "/donate", "/toggletips"]
+        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/m", "/monitoring", "/logout", "/set", "/setrecents", "/switch", "/toggletips"]
         for cmd in list_of_commands:
             if command in cmd or cmd in command:
                 similar_commands += [cmd]
