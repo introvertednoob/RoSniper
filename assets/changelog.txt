@@ -1,5 +1,10 @@
 [gold][Changelog][end]
-[green][bold]Version 1.7.0[end]
+[green][bold]Version 1.8.0[end]
+    - Added account switching
+    - Added a new command, [underline]/switch[end]
+        - Possible arguments: None, Account ID (#)
+
+[bold]Version 1.7.0[end]
     - Added toggle tips command ([underline]/toggletips[end])
         - This lets you hide the tips on the Main Menu!
     - Added the ability to update the <snipe> alias

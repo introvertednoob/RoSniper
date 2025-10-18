@@ -21,7 +21,7 @@ if getattr(sys, 'frozen', False):
     if len(sys.argv) >= 2 and sys.argv[0] == sys.argv[1]:
         sys.argv.pop(1)
 
-version = "1.7.0"
+version = "1.8.0"
 os.chdir(os.path.dirname(__file__))
 
 config_dir = Path(user_config_dir("RoSniper", "introvertednoob"))
@@ -241,6 +241,23 @@ def run_command(command):
         config["delay"] = float(arg) if arg.replace(".", "").isnumeric() else 0.01
         save()
         wait(0.5, f"{nl}{underline}Delay set to {config["delay"]}s.{end}")
+    elif command.startswith("/switch"):
+        if arg == "":
+            wait(1, f"{nl}{underline}You will be redirected to the Set Account menu.{end}")
+            set_account()
+        else:
+            if not arg.isdigit():
+                wait(1, f"{nl}{underline}Invalid argument. See /cmds for proper documentation.{end}")
+                return
+            
+            cid = int(arg) - 1
+            if (cid + 1) > len(config["cookies"]):
+                wait(1, f"{nl}{underline}This Account ID is too high.{end}")
+                return
+            
+            wait(0.5, f"{nl}{underline}Switching accounts...{end}")
+            set_account(cid)
+        
     elif command in ["/df", "/declinefirst"]:
         monitoring = False
         decline_first_server = False if decline_first_server else True
@@ -451,23 +468,37 @@ if not account_set_by_argument:
         verify_cookie(cookie)
 session.close()
 
-if len(config["cookies"]) > 1 and not account_set_by_argument:
-    id = float('inf')
-    while len(config["cookies"]) < id:
-        try:
-            clear()
-            print(f"{gold}[Select an Account]{end}")
-            for id in range(len(usernames)):
-                print(f"  - [ID: {id + 1}] {usernames[id]}")
-            print("")
-            id = int(input("Enter the account you want to use: ")) - 1
-        except KeyboardInterrupt:
-            exit()
-        except:
-            id = float('inf')
-            wait(0.5, "Invalid ID.")
-elif not account_set_by_argument:
-    id = 0
+def set_account(cid=None):
+    global id
+    global header
+    global account_set_by_argument
+
+    if cid != None:
+        id = cid
+        header = {
+            "Cookie": f".ROBLOSECURITY={config['cookies'][id]}"
+        }
+        return
+
+    if len(config["cookies"]) > 1 and not account_set_by_argument:
+        id = float('inf')
+        while len(config["cookies"]) < id:
+            try:
+                clear()
+                print(f"{gold}[Select an Account]{end}")
+                for id in range(len(usernames)):
+                    print(f"  - [ID: {id + 1}] {usernames[id]}")
+                print("")
+                id = int(input("Enter the account you want to use: ")) - 1
+            except KeyboardInterrupt:
+                exit()
+            except:
+                id = float('inf')
+                wait(0.5, "Invalid ID.")
+    elif not account_set_by_argument:
+        id = 0
+
+set_account()
 
 if len(config["cookies"]) > 0:
     header = {
