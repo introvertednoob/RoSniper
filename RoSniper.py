@@ -242,21 +242,34 @@ def run_command(command):
         save()
         wait(0.5, f"{nl}{underline}Delay set to {config["delay"]}s.{end}")
     elif command.startswith("/switch"):
+        serialized_users = [user.lower() for user in usernames]
+
         if arg == "":
             wait(1, f"{nl}{underline}You will be redirected to the Set Account menu.{end}")
             set_account()
-        else:
-            if not arg.isdigit():
-                wait(1, f"{nl}{underline}Invalid argument. See /cmds for proper documentation.{end}")
+        elif arg.isdigit():
+            cid = int(arg) - 1
+            if cid == id:
+                wait(0.5, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
                 return
             
-            cid = int(arg) - 1
-            if (cid + 1) > len(config["cookies"]):
-                wait(1, f"{nl}{underline}This Account ID is too high.{end}")
+            if (cid + 1) > len(config["cookies"]) or cid == -1:
+                wait(1, f"{nl}{underline}This Account ID is invalid.{end}")
                 return
             
             wait(0.5, f"{nl}{underline}Switching accounts...{end}")
             set_account(cid)
+        elif arg in serialized_users:
+            if arg == usernames[id].lower():
+                wait(0.5, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
+                return
+
+            cid = serialized_users.index(arg)           
+            wait(0.5, f"{nl}{underline}Switching to @{usernames[cid]}'s account...{end}")
+            set_account(cid)
+        else:
+            wait(1, f"{nl}{underline}Invalid argument. See /cmds for proper documentation.{end}")
+            return
         
     elif command in ["/df", "/declinefirst"]:
         monitoring = False
