@@ -43,6 +43,13 @@
         - Current: [cur_recent_users] users
         - Maximum: 99 users
 
+[underline]/switch[end] [MAX_LENGTH] ([underline]/s[end])
+    -> Switches accounts without re-authenticating with your cookie
+    -> Possible arguments:
+        - Nothing (type: None)
+        - A valid cookie ID (type: int)
+        - A valid username (type: str)
+
 [underline]/toggleTips[end]
     -> Toggles if the tips on the Main Menu are shown
         - Default: True

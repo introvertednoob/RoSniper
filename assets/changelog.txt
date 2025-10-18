@@ -2,7 +2,7 @@
 [green][bold]Version 1.8.0[end]
     - Added account switching
     - Added a new command, [underline]/switch[end]
-        - Possible arguments: None, Account ID (#)
+        - Possible arguments: Nothing, Account ID (#), Username
 
 [bold]Version 1.7.0[end]
     - Added toggle tips command ([underline]/toggletips[end])
