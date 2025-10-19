@@ -223,11 +223,11 @@ def run_command(command):
     arg = command.split(" ")[1] if len(command.split(" ")) > 1 else ""
     if command in ["/cmds", "/changelog"]:
         clear()
-        load_file = f"./assets/{command.replace("/", "")}.txt"
+        load_file = f"./assets/{"commands" if command == "/cmds" else "changelog"}.txt"
         if os.path.exists(load_file):
             print(open(load_file).read().replace("[green]", "\033[0;32m").replace("[gold]", gold).replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server)).replace("[cur_m]", str(monitoring)).replace("[cur_tips]", str(config["show_tips"])))
         else:
-            print(f"The file ./assets/{load_file} isn't present.")
+            print(f"The file {load_file} isn't present.")
         input("Press ENTER to return to the main menu. ")
     elif command.startswith("/setrecents ") or command.startswith("/set "):
         if arg.isdecimal():
@@ -590,9 +590,12 @@ while True:
         exit()
 
     # Run commands
-    if user.startswith("/"):
-        run_command(user)
-        continue
+    try:
+        if user.startswith("/"):
+            run_command(user)
+            continue
+    except KeyboardInterrupt:
+        exit()
 
     # Check if the user enters a Recent User ID
     users = user.replace(" ", "").split(",")
