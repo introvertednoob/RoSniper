@@ -250,27 +250,24 @@ def run_command(command):
         elif arg.isdigit():
             cid = int(arg) - 1
             if cid == id:
-                wait(0.5, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
+                wait(0.75, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
                 return
-            
+
             if (cid + 1) > len(config["cookies"]) or cid == -1:
-                wait(1, f"{nl}{underline}This Account ID is invalid.{end}")
+                wait(0.75, f"{nl}{underline}This Account ID is invalid.{end}")
                 return
-            
-            wait(0.5, f"{nl}{underline}Switching accounts...{end}")
+
             set_account(cid)
         elif arg in serialized_users:
             if arg == usernames[id].lower():
-                wait(0.5, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
+                wait(0.75, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
                 return
 
-            cid = serialized_users.index(arg)           
-            wait(0.5, f"{nl}{underline}Switching to @{usernames[cid]}'s account...{end}")
+            cid = serialized_users.index(arg)
             set_account(cid)
         else:
             wait(1, f"{nl}{underline}Invalid argument. See /cmds for proper documentation.{end}")
             return
-        
     elif command in ["/df", "/declinefirst"]:
         monitoring = False
         decline_first_server = False if decline_first_server else True
