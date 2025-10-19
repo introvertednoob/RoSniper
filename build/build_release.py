@@ -60,6 +60,7 @@ def build(ops):
         for delete in os.listdir("./RoSniper.app/Contents/Resources/"):
             if delete != "AppIcon.icns":
                 os.system(f"rm -rf ./RoSniper.app/Contents/Resources/{delete}")
+        os.system("rm -rf ./RoSniper.app/Contents/Frameworks/python3__dot__14")
         open("./RoSniper.app/Contents/Info.plist", "w").write(modifiedPLIST)
     os.system("rm -rf build dist *.spec")
 
