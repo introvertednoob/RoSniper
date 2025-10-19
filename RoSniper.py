@@ -182,6 +182,40 @@ def add_account(restart):
     if restart:
         os.execl(sys.executable, sys.executable, *sys.argv)
 
+def set_account(cid=None):
+    global id
+    global header
+    global account_set_by_argument
+
+    if cid != None:
+        id = cid
+        header = {
+            "Cookie": f".ROBLOSECURITY={config["cookies"][id]}"
+        }
+        return
+
+    if len(config["cookies"]) > 1 and not account_set_by_argument:
+        id = ""
+        while id not in range(0, len(config["cookies"])):
+            try:
+                clear()
+                print(f"{gold}[Account Selection]{end}")
+                for id in range(len(usernames)):
+                    print(f"  - [ID: {id + 1}] {usernames[id]}")
+
+                id = input("\nEnter the account you want to use: ").strip()
+                if not id.isdigit() or id == "0":
+                    wait(0.5, "Invalid ID.")
+                    continue
+                id = int(id) - 1
+                
+                if id >= len(config["cookies"]):
+                    wait(0.5, "Invalid ID.")
+            except KeyboardInterrupt:
+                exit()            
+    elif not account_set_by_argument:
+        id = 0
+
 def run_command(command):
     global monitoring
     global decline_first_server
@@ -481,42 +515,7 @@ if not account_set_by_argument:
         verify_cookie(cookie)
 session.close()
 
-def set_account(cid=None):
-    global id
-    global header
-    global account_set_by_argument
-
-    if cid != None:
-        id = cid
-        header = {
-            "Cookie": f".ROBLOSECURITY={config["cookies"][id]}"
-        }
-        return
-
-    if len(config["cookies"]) > 1 and not account_set_by_argument:
-        id = ""
-        while id not in range(0, len(config["cookies"])):
-            try:
-                clear()
-                print(f"{gold}[Account Selection]{end}")
-                for id in range(len(usernames)):
-                    print(f"  - [ID: {id + 1}] {usernames[id]}")
-
-                id = input("\nEnter the account you want to use: ").strip()
-                if not id.isdigit() or id == "0":
-                    wait(0.5, "Invalid ID.")
-                    continue
-                id = int(id) - 1
-                
-                if id >= len(config["cookies"]):
-                    wait(0.5, "Invalid ID.")
-            except KeyboardInterrupt:
-                exit()            
-    elif not account_set_by_argument:
-        id = 0
-
 set_account()
-
 if len(config["cookies"]) > 0:
     header = {
         "Cookie": f".ROBLOSECURITY={config["cookies"][id]}"
