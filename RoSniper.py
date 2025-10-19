@@ -560,7 +560,7 @@ while True:
 
     try:
         if len(sys.argv) == 1:
-            user = input("Enter a username, recent user ID, or command: ").lower().strip()
+            user = input(f"Enter a username, recent user ID, or command{", hax0r" if usernames[id] == "Awij126" else ""}: ").lower().strip()
             nl = "\n"
         else:
             user = " ".join(sys.argv[1:]).lower()
