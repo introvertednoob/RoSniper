@@ -4,6 +4,7 @@
     - Added a new command, [underline]/switch[end]
         - Alias: [underline]/s[end]
         - Possible arguments: Nothing, Account ID (#), Username
+    - Display an error if donations.json is missing
     - Fixed the Recent Users list not shortening if the maximum amount of recent users is decreased
     - Fixed the Account Selection menu accepting invalid CIDs and crashing in certain cases
     - Fixed CTRL+C invoking errors when running commands
