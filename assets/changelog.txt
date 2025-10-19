@@ -4,6 +4,7 @@
     - Added a new command, [underline]/switch[end]
         - Alias: [underline]/s[end]
         - Possible arguments: Nothing, Account ID (#), Username
+    - Decreased the filesize of macOS pre-built binaries
     - Removed delay and output from successful [underline]/del[end] command runs
 
 [bold]Version 1.7.0[end]
