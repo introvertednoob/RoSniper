@@ -580,7 +580,7 @@ while True:
     except KeyboardInterrupt:
         exit()
 
-    # Run commands if needed
+    # Run commands
     if user.startswith("/"):
         run_command(user)
         continue
