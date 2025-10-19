@@ -2,6 +2,7 @@
 [green][bold]Version 1.8.0[end]
     - Added account switching
     - Added a new command, [underline]/switch[end]
+        - Alias: [underline]/s[end]
         - Possible arguments: Nothing, Account ID (#), Username
 
 [bold]Version 1.7.0[end]

@@ -241,7 +241,7 @@ def run_command(command):
         config["delay"] = float(arg) if arg.replace(".", "").isnumeric() else 0.01
         save()
         wait(0.5, f"{nl}{underline}Delay set to {config["delay"]}s.{end}")
-    elif command.startswith("/switch"):
+    elif command.startswith("/switch") or command.startswith("/s"):
         serialized_users = [user.lower() for user in usernames]
 
         if arg == "":
@@ -321,7 +321,7 @@ def run_command(command):
         save()
     else:
         similar_commands = []
-        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/m", "/monitoring", "/logout", "/set", "/setrecents", "/switch", "/toggletips"]
+        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/m", "/monitoring", "/logout", "/s", "/set", "/setrecents", "/switch", "/toggletips"]
         for cmd in list_of_commands:
             if command in cmd or cmd in command:
                 similar_commands += [cmd]
