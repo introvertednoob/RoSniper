@@ -223,7 +223,7 @@ def run_command(command):
     arg = command.split(" ")[1] if len(command.split(" ")) > 1 else ""
     if command in ["/cmds", "/changelog"]:
         clear()
-        load_file = f"./assets/{"commands" if command == "/cmds" else "changelog"}.txt"
+        load_file = f"./assets/{command.replace("/", "")}.txt"
         if os.path.exists(load_file):
             print(open(load_file).read().replace("[green]", "\033[0;32m").replace("[gold]", gold).replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server)).replace("[cur_m]", str(monitoring)).replace("[cur_tips]", str(config["show_tips"])))
         else:
@@ -232,7 +232,7 @@ def run_command(command):
     elif command.startswith("/setrecents ") or command.startswith("/set "):
         if arg.isdecimal():
             config["recent_users_length"] = 99 if int(arg) > 99 else int(arg)
-            wait(1, f"{nl}{underline}Set the length of Recent Users to {"99 (max)" if config["recent_users_length"] > 99 else config["recent_users_length"]}.{end}")
+            wait(1, f"{nl}{underline}Set the length of Recent Users to {config["recent_users_length"]}{" (max)" if config["recent_users_length"] > 99 else ""}.{end}")
         else:
             wait(1, f"{nl}{underline}Invalid length.{end}")
         save()
@@ -312,36 +312,38 @@ def run_command(command):
         decline_first_server = False
         monitoring = False if monitoring else True
     elif command == "/alias":
-        if op == "Darwin":
-            clear()
-            if getattr(sys, "frozen", False):
-                snipe_alias = f'alias snipe="{sys.executable}"'
-            else:
-                snipe_alias = f'alias snipe="{sys.executable} {__file__}"'
-            print(f"{gold}[Add ZSH Alias]{end}")
-            print(f"The ZSH alias <snipe> will be created, which will point to RoSniper.")
-            print(f"See /cmds for more information on the alias.")
-            print(f"To remove the <snipe> alias, delete the entry from ~/.zshrc.")
+        if not op == "Darwin":
+            wait(1, f"{nl}{underline}You must be using macOS to run this command.{end}")
+            return
 
-            print(f"\n{bold}Full Alias Code: '{snipe_alias}'{end}")
-            input(f"Press ENTER to confirm adding the alias <{underline}snipe{end}> to your ZSH aliases. ")
-            if not os.path.exists(f"/Users/{getpass.getuser()}/.zshrc"):
-                open(f"/Users/{getpass.getuser()}/.zshrc", "w").write(f"\n{snipe_alias}")
-            else:
-                if not "alias snipe=" in open(f"/Users/{getpass.getuser()}/.zshrc").read():
-                    open(f"/Users/{getpass.getuser()}/.zshrc", "a").write(f"\n{snipe_alias}")
-                else:
-                    zshrc = open(f"/Users/{getpass.getuser()}/.zshrc").readlines()
-                    for line in range(len(zshrc)):
-                        if "alias snipe=" in zshrc[line]:
-                            zshrc[line] = snipe_alias + "\n"
+        clear()
+        if getattr(sys, "frozen", False):
+            snipe_alias = f'alias snipe="{sys.executable}"'
+        else:
+            snipe_alias = f'alias snipe="{sys.executable} {__file__}"'
 
-                    open(f"/Users/{getpass.getuser()}/.zshrc", "w").writelines(zshrc)
-                    wait(1, f"\n{underline}The <snipe> alias has been updated.{end}")
-                    return
+        print(f"{gold}[Add ZSH Alias]{end}")
+        print(f"The ZSH alias <snipe> will be created, which will point to RoSniper.")
+        print(f"See /cmds for more information on the alias.")
+        print(f"To remove the <snipe> alias, delete the entry from ~/.zshrc.")
+
+        print(f"\n{bold}Full Alias Code: '{snipe_alias}'{end}")
+        input(f"Press ENTER to confirm adding the alias <{underline}snipe{end}> to your ZSH aliases. ")
+        if not os.path.exists(f"/Users/{getpass.getuser()}/.zshrc"):
+            open(f"/Users/{getpass.getuser()}/.zshrc", "w").write(f"\n{snipe_alias}")
             wait(1, f"\n{underline}Successfully added the <snipe> alias.{end}")
         else:
-            wait(1, f"{nl}{underline}You must be using macOS to run this command.{end}")
+            if not "alias snipe=" in open(f"/Users/{getpass.getuser()}/.zshrc").read():
+                open(f"/Users/{getpass.getuser()}/.zshrc", "a").write(f"\n{snipe_alias}")
+            else:
+                zshrc = open(f"/Users/{getpass.getuser()}/.zshrc").readlines()
+                for line in range(len(zshrc)):
+                    if "alias snipe=" in zshrc[line]:
+                        zshrc[line] = snipe_alias + "\n"
+
+                open(f"/Users/{getpass.getuser()}/.zshrc", "w").writelines(zshrc)
+                wait(1, f"\n{underline}Successfully updated the <snipe> alias.{end}")
+                return
     elif command.startswith("/donate "):
         donations = json.loads(open("./assets/donations.json").read())
         if arg in donations.keys():
@@ -364,7 +366,7 @@ def run_command(command):
         elif command in list_of_commands:
             wait(2, f"{nl}{underline}This command exists, but it requires arguments.{end}\nType /cmds to see documentation on the arguments for commands.")
         else:
-            wait(2 + 0.25 * len(similar_commands), f"{nl}{underline}Invalid command: \"{command}\". Perhaps you meant \"{"\", \"".join(similar_commands)}\"?{end}\nType /cmds to see documentation on commands.")
+            wait(2 + (0.25 * len(similar_commands)), f"{nl}{underline}Invalid command: \"{command}\". Perhaps you meant \"{"\", \"".join(similar_commands)}\"?{end}\nType /cmds to see documentation on commands.")
 
 def client():
     global users
