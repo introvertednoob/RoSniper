@@ -241,8 +241,15 @@ def run_command(command):
         config["delay"] = float(arg) if arg.replace(".", "").isnumeric() else 0.01
         save()
         wait(0.5, f"{nl}{underline}Delay set to {config["delay"]}s.{end}")
-    elif command.startswith("/switch") or command.startswith("/s"):
+    elif command.startswith("/switch") or command.split(" ")[0] == "/s":
         serialized_users = [user.lower() for user in usernames]
+
+        if account_set_by_argument:
+            wait(4, f"{nl}You have selected your account using -a, which only verifies that account's cookie.\n{underline}Therefore, you cannot use the /switch command.{end}")
+            return
+        elif len(config["cookies"]) == 1:
+            wait(1.5, f"{nl}{underline}You don't have any other accounts to switch to.{end}")
+            return
 
         if arg == "":
             wait(1, f"{nl}{underline}You will be redirected to the Account Selection menu.{end}")
@@ -250,7 +257,7 @@ def run_command(command):
         elif arg.isdigit():
             cid = int(arg) - 1
             if cid == id:
-                wait(0.75, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
+                wait(1, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
                 return
 
             if (cid + 1) > len(config["cookies"]) or cid == -1:
@@ -260,7 +267,7 @@ def run_command(command):
             set_account(cid)
         elif arg in serialized_users:
             if arg == usernames[id].lower():
-                wait(0.75, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
+                wait(1, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
                 return
 
             cid = serialized_users.index(arg)
