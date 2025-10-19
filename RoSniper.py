@@ -221,9 +221,9 @@ def run_command(command):
     global decline_first_server
 
     arg = command.split(" ")[1] if len(command.split(" ")) > 1 else ""
-    if command in ["/cmds", "/changelog"]:
+    if command in ["/help", "/cmds", "/changelog"]:
         clear()
-        load_file = f"./assets/{"commands" if command == "/cmds" else "changelog"}.txt"
+        load_file = f"./assets/{"commands" if command == ["/help", "/cmds"] else "changelog"}.txt"
         if os.path.exists(load_file):
             print(open(load_file).read().replace("[green]", "\033[0;32m").replace("[gold]", gold).replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server)).replace("[cur_m]", str(monitoring)).replace("[cur_tips]", str(config["show_tips"])))
         else:
@@ -363,7 +363,7 @@ def run_command(command):
         save()
     else:
         similar_commands = []
-        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/m", "/monitoring", "/logout", "/s", "/set", "/setrecents", "/switch", "/toggletips"]
+        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/s", "/set", "/setrecents", "/switch", "/toggletips"]
         for cmd in list_of_commands:
             if command in cmd or cmd in command:
                 similar_commands += [cmd]
@@ -550,7 +550,7 @@ while True:
 
         if config["show_tips"] == True:
             print(f"{gold}\n[Tips]{end}")
-            print("  - Type /cmds to see the list of commands.")
+            print("  - Type /help or /cmds to see the list of commands.")
             print("  - Type /changelog to see the changelog.")
             print("  - Type /toggletips to hide or show these tips.")
 
