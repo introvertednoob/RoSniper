@@ -10,6 +10,7 @@
     - Fixed a bug where a file with "-a" in it would break the argument system
     - Fixed a bug where some non-integer characters were accepted as valid input
     - Fixed a bug where combining the -m and -d arguments would allow for a combination of the respective modes
+    - Fixed a bug where deleting an invalid cookie when there were >1 accounts present would crash RoSniper
     - Optimized the filesize of macOS pre-built binaries
     - Removed delay and output from successful [underline]/del[end] command runs
     - Removed the use of unnecessary try/except functions in the Account Selection menu's code

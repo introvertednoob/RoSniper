@@ -103,12 +103,12 @@ def verify_cookie(cookie):
     global display_names
 
     header = {
-        "Cookie": f".ROBLOSECURITY={config["cookies"][cookie]}"
+        "Cookie": f".ROBLOSECURITY={cookie}"
     }
     try:
         req = session.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers=header)
         if not req.ok:
-            del config["cookies"][cookie]
+            config["cookies"].remove(cookie)
             save()
             return
     except Exception as e:
@@ -131,7 +131,7 @@ def verify_cookie(cookie):
         wait(5, "RoSniper will keep trying to log you in every 5s.")
         os.execl(sys.executable, sys.executable, *sys.argv)
     else:
-        del cookie
+        config["cookies"].remove(cookie)
         save()
         return
     del header
@@ -520,7 +520,7 @@ if len(sys.argv) > 1:
 
 # Verify all .ROBLOSECURITY cookies
 if not account_set_by_argument:
-    for cookie in range(len(config["cookies"])):
+    for cookie in config["cookies"][:]:
         verify_cookie(cookie)
 session.close()
 
