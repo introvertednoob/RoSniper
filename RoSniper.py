@@ -489,25 +489,29 @@ def set_account(cid=None):
     if cid != None:
         id = cid
         header = {
-            "Cookie": f".ROBLOSECURITY={config['cookies'][id]}"
+            "Cookie": f".ROBLOSECURITY={config["cookies"][id]}"
         }
         return
 
     if len(config["cookies"]) > 1 and not account_set_by_argument:
-        id = float('inf')
-        while len(config["cookies"]) < id:
+        id = ""
+        while id not in range(0, len(config["cookies"])):
             try:
                 clear()
-                print(f"{gold}[Select an Account]{end}")
+                print(f"{gold}[Account Selection]{end}")
                 for id in range(len(usernames)):
                     print(f"  - [ID: {id + 1}] {usernames[id]}")
-                print("")
-                id = int(input("Enter the account you want to use: ")) - 1
+
+                id = input("\nEnter the account you want to use: ").strip()
+                if not id.isdigit() or id == "0":
+                    wait(0.5, "Invalid ID.")
+                    continue
+                id = int(id) - 1
+                
+                if id >= len(config["cookies"]):
+                    wait(0.5, "Invalid ID.")
             except KeyboardInterrupt:
-                exit()
-            except:
-                id = float('inf')
-                wait(0.5, "Invalid ID.")
+                exit()            
     elif not account_set_by_argument:
         id = 0
 
@@ -515,7 +519,7 @@ set_account()
 
 if len(config["cookies"]) > 0:
     header = {
-        "Cookie": f".ROBLOSECURITY={config['cookies'][id]}"
+        "Cookie": f".ROBLOSECURITY={config["cookies"][id]}"
     }
 else:
     os.execl(sys.executable, sys.executable, *sys.argv)

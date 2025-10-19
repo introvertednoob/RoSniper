@@ -4,8 +4,10 @@
     - Added a new command, [underline]/switch[end]
         - Alias: [underline]/s[end]
         - Possible arguments: Nothing, Account ID (#), Username
-    - Decreased the filesize of macOS pre-built binaries
+    - Fixed a bug where the Account Selection menu would accept invalid CIDs and crash in certain cases
+    - Optimized the filesize of macOS pre-built binaries
     - Removed delay and output from successful [underline]/del[end] command runs
+    - Removed the use of unnecessary try/except functions in the Account Selection menu's code
 
 [bold]Version 1.7.0[end]
     - Added toggle tips command ([underline]/toggletips[end])
