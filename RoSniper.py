@@ -232,8 +232,7 @@ def run_command(command):
     elif command.startswith("/setrecents ") or command.startswith("/set "):
         if arg.isdecimal():
             config["recent_users_length"] = 99 if int(arg) > 99 else int(arg)
-            while len(config["recent_users"]) > config["recent_users_length"]:
-                config["recent_users"].pop()
+            fix_recents()
             wait(1, f"{nl}{underline}Set the length of Recent Users to {config["recent_users_length"]}{" (max)" if config["recent_users_length"] > 99 else ""}.{end}")
         else:
             wait(1, f"{nl}{underline}Invalid length.{end}")
