@@ -509,7 +509,7 @@ if len(sys.argv) > 1:
             continue
     sys.argv = [arg for arg in sys.argv if not arg in ("-m", "-d") and not "-a" in arg]
 
-# Verify all .ROBLOSECURITY cookies if an account isn't set through -a
+# Verify all .ROBLOSECURITY cookies
 if not account_set_by_argument:
     for cookie in range(len(config["cookies"])):
         verify_cookie(cookie)
@@ -523,7 +523,8 @@ if len(config["cookies"]) > 0:
 else:
     os.execl(sys.executable, sys.executable, *sys.argv)
 
-# Main code loop
+# Set this to your Roblox username to see some RoSniper Legacy easter eggs!
+easter_egg_user = "Awij126"
 while True:
     clear()
     if "!close_after_restart" in sys.argv:
@@ -556,14 +557,14 @@ while True:
         if monitoring:
             print(f"{underline}Monitoring Only Mode is Active!{end}")
         
-        if usernames[id] == "Awij126":
+        if usernames[id].lower() == easter_egg_user.lower():
             print(f"\033[38;5;227mLogged in as @{usernames[id]},\033[0m \033[38;5;26mwho is N00B\033[0m \033[38;5;70m(he da best noob)\033[0m")
         else:
             print(f"Logged in as {bold}{display_names[id]} (@{usernames[id]}){end}")
 
     try:
         if len(sys.argv) == 1:
-            user = input(f"Enter a username, recent user ID, or command{", hax0r" if usernames[id] == "Awij126" else ""}: ").lower().strip()
+            user = input(f"Enter a username, recent user ID, or command{", hax0r" if usernames[id].lower() == easter_egg_user.lower() else ""}: ").lower().strip()
             nl = "\n"
         else:
             user = " ".join(sys.argv[1:]).lower()

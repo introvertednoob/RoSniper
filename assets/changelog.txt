@@ -8,6 +8,7 @@
     - Optimized the filesize of macOS pre-built binaries
     - Removed delay and output from successful [underline]/del[end] command runs
     - Removed the use of unnecessary try/except functions in the Account Selection menu's code
+    - (source) You can now set whoever sees the Legacy easter eggs through the variable [underline]easter_egg_user[end]!
 
 [bold]Version 1.7.0[end]
     - Added toggle tips command ([underline]/toggletips[end])
