@@ -245,7 +245,7 @@ def run_command(command):
         serialized_users = [user.lower() for user in usernames]
 
         if arg == "":
-            wait(1, f"{nl}{underline}You will be redirected to the Set Account menu.{end}")
+            wait(1, f"{nl}{underline}You will be redirected to the Account Selection menu.{end}")
             set_account()
         elif arg.isdigit():
             cid = int(arg) - 1
