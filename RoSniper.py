@@ -232,6 +232,8 @@ def run_command(command):
     elif command.startswith("/setrecents ") or command.startswith("/set "):
         if arg.isdecimal():
             config["recent_users_length"] = 99 if int(arg) > 99 else int(arg)
+            while len(config["recent_users"]) > config["recent_users_length"]:
+                config["recent_users"].pop()
             wait(1, f"{nl}{underline}Set the length of Recent Users to {config["recent_users_length"]}{" (max)" if config["recent_users_length"] > 99 else ""}.{end}")
         else:
             wait(1, f"{nl}{underline}Invalid length.{end}")
@@ -445,7 +447,7 @@ def client_exception(error):
     print(f"{gold}[Times Checked: {checks_since_start}]{end}")
     print(error)
 
-# If arguments are passed, close RoSniper on restart too
+# If arguments are passed, close RoSniper on restart
 clear()
 if "!close_after_restart" in sys.argv:
     exit()
@@ -466,6 +468,9 @@ for key in default_config.keys():
         config[key] = default_config[key]
     elif type(config[key]) != type(default_config[key]):
         config[key] = default_config[key]
+    if type(config[key]) in (int, float):
+        if config[key] < 0:
+            config[key] = default_config[key]
     if type(config[key]) == list:
         for item in range(len(config[key])):
             if type(config[key][item]) != str:

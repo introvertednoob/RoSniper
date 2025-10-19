@@ -4,9 +4,11 @@
     - Added a new command, [underline]/switch[end]
         - Alias: [underline]/s[end]
         - Possible arguments: Nothing, Account ID (#), Username
-    - Fixed a bug where the Account Selection menu would accept invalid CIDs and crash in certain cases
-    - Fixed a bug where some non-integer characters could be accepted as valid input
-    - Fixed a bug in which a file with "-a" in it would break the argument system
+    - Fixed the Recent Users list not shortening if the maximum amount of recent users is decreased
+    - Fixed the Account Selection menu accepting invalid CIDs and crashing in certain cases
+    - Fixed a bug where negative values could be manually edited into config.json
+    - Fixed a bug where a file with "-a" in it would break the argument system
+    - Fixed a bug where some non-integer characters were accepted as valid input
     - Fixed a bug where combining the -m and -d arguments would allow for a combination of the respective modes
     - Optimized the filesize of macOS pre-built binaries
     - Removed delay and output from successful [underline]/del[end] command runs
