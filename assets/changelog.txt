@@ -5,6 +5,7 @@
         - Alias: [underline]/s[end]
         - Possible arguments: Nothing, Account ID (#), Username
     - Fixed a bug where the Account Selection menu would accept invalid CIDs and crash in certain cases
+    - Fixed a bug where some non-integer characters could be accepted as valid input
     - Optimized the filesize of macOS pre-built binaries
     - Removed delay and output from successful [underline]/del[end] command runs
     - Removed the use of unnecessary try/except functions in the Account Selection menu's code

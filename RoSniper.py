@@ -204,7 +204,7 @@ def set_account(cid=None):
                     print(f"  - [ID: {id + 1}] {usernames[id]}")
 
                 id = input("\nEnter the account you want to use: ").strip()
-                if not id.isdigit() or id == "0":
+                if not id.isdecimal() or id == "0":
                     wait(0.5, "Invalid ID.")
                     continue
                 id = int(id) - 1
@@ -230,7 +230,7 @@ def run_command(command):
             print(f"The file ./assets/{load_file} isn't present.")
         input("Press ENTER to return to the main menu. ")
     elif command.startswith("/setrecents ") or command.startswith("/set "):
-        if arg.isnumeric():
+        if arg.isdecimal():
             config["recent_users_length"] = 99 if int(arg) > 99 else int(arg)
             wait(1, f"{nl}{underline}Set the length of Recent Users to {"99 (max)" if config["recent_users_length"] > 99 else config["recent_users_length"]}.{end}")
         else:
@@ -243,7 +243,7 @@ def run_command(command):
             config["recent_users"] = []
         elif arg in config["recent_users"]:
             config["recent_users"].remove(arg)
-        elif arg.isnumeric():
+        elif arg.isdecimal():
             if int(arg) <= len(config["recent_users"]):
                 del config["recent_users"][int(arg) - 1]
             else:
@@ -284,7 +284,7 @@ def run_command(command):
         if arg == "":
             wait(1, f"{nl}{underline}You will be redirected to the Account Selection menu.{end}")
             set_account()
-        elif arg.isdigit():
+        elif arg.isdecimal():
             cid = int(arg) - 1
             if cid == id:
                 wait(1, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
@@ -489,7 +489,7 @@ if len(sys.argv) > 1:
             monitoring = True
         elif arg == "-d":
             decline_first_server = True
-        elif "-a" in arg and arg.replace("-a", "").isnumeric():
+        elif "-a" in arg and arg.replace("-a", "").isdecimal():
             id = int(arg[2:]) - 1
             if len(config["cookies"]) < (id + 1):
                 wait(1, f"{underline}Invalid Account ID. The highest usable Account ID is {len(config["cookies"])}.{end}")
@@ -502,7 +502,7 @@ if len(sys.argv) > 1:
                 wait(1, f"{underline}The selected account has an invalid cookie.{end}")
                 exit()
             account_set_by_argument = True
-        elif "-a" in arg and not arg.replace("-a", "").isnumeric():
+        elif "-a" in arg and not arg.replace("-a", "").isdecimal():
             wait(1, f"{underline}Please enter a numeric Account ID.{end}")
             exit()
         else:
@@ -590,7 +590,7 @@ while True:
     if "" in users:
         users.remove("")
     for user in range(len(users)):
-        if len(users[user]) < 3 and users[user].isnumeric():
+        if len(users[user]) < 3 and users[user].isdecimal():
             if int(users[user]) <= len(config["recent_users"]):
                 users[user] = config["recent_users"][int(users[user]) - 1].lower()
             else:
