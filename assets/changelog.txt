@@ -7,6 +7,7 @@
     - Fixed a bug where the Account Selection menu would accept invalid CIDs and crash in certain cases
     - Fixed a bug where some non-integer characters could be accepted as valid input
     - Fixed a bug in which a file with "-a" in it would break the argument system
+    - Fixed a bug where combining the -m and -d arguments would allow for a combination of the respective modes
     - Optimized the filesize of macOS pre-built binaries
     - Removed delay and output from successful [underline]/del[end] command runs
     - Removed the use of unnecessary try/except functions in the Account Selection menu's code

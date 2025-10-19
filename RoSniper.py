@@ -487,8 +487,10 @@ if len(sys.argv) > 1:
     for arg in sys.argv[1:]:
         if arg == "-m":
             monitoring = True
+            decline_first_server = False
         elif arg == "-d":
             decline_first_server = True
+            monitoring = False
         elif arg.startswith("-a") and arg.replace("-a", "").isdecimal():
             id = int(arg[2:]) - 1
             if len(config["cookies"]) < (id + 1):
