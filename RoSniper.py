@@ -489,7 +489,7 @@ if len(sys.argv) > 1:
             monitoring = True
         elif arg == "-d":
             decline_first_server = True
-        elif "-a" in arg and arg.replace("-a", "").isdecimal():
+        elif arg.startswith("-a") and arg.replace("-a", "").isdecimal():
             id = int(arg[2:]) - 1
             if len(config["cookies"]) < (id + 1):
                 wait(1, f"{underline}Invalid Account ID. The highest usable Account ID is {len(config["cookies"])}.{end}")
@@ -507,7 +507,7 @@ if len(sys.argv) > 1:
             exit()
         else:
             continue
-    sys.argv = [arg for arg in sys.argv if not arg in ("-m", "-d") and not "-a" in arg]
+    sys.argv = [arg for arg in sys.argv if not arg in ("-m", "-d") and not arg.startswith("-a")]
 
 # Verify all .ROBLOSECURITY cookies
 if not account_set_by_argument:
