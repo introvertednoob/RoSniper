@@ -544,7 +544,7 @@ while True:
         if len(config["recent_users"]) == 0 and config["show_tips"]:
             print("No saved users! Join-snipe some users to save them to this list!")
             print(f"You can save up to {config["recent_users_length"]} users in this list{" by default. Run /set [MAX_LENGTH] to change this." if config["recent_users_length"] == 5 else "."}")
-        else:
+        elif len(config["recent_users"]) == 0:
             print("No saved users!")
 
         print("")
