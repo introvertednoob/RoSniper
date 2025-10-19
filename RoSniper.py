@@ -207,15 +207,11 @@ def run_command(command):
             wait(0.75, f"{nl}{underline}There are no Recent Users to delete.{end}")
         elif arg == "*":
             config["recent_users"] = []
-            wait(1, f"{nl}{underline}Deleted all Recent Users.{end}")
         elif arg in config["recent_users"]:
             config["recent_users"].remove(arg)
-            wait(1, f"{nl}{underline}Deleted Recent User [@{arg}].{end}")
         elif arg.isnumeric():
             if int(arg) <= len(config["recent_users"]):
-                recent_user_name = config["recent_users"][int(arg) - 1]
                 del config["recent_users"][int(arg) - 1]
-                wait(1, f"{nl}{underline}Deleted Recent User #{arg} (@{recent_user_name}).{end}")
             else:
                 wait(0.75, f"{nl}{underline}This Recent User doesn't exist.{end}")
         else:
