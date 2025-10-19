@@ -4,6 +4,7 @@
     - Added a new command, [underline]/switch[end]
         - Alias: [underline]/s[end]
         - Possible arguments: Nothing, Account ID (#), Username
+    - Removed delay and output from successful [underline]/del[end] command runs
 
 [bold]Version 1.7.0[end]
     - Added toggle tips command ([underline]/toggletips[end])
