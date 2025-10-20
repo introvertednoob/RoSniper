@@ -4,8 +4,8 @@
     - Added a new command, [underline]/switch[end]
         - Alias: [underline]/s[end]
         - Possible arguments: Nothing, Account ID (#), Username
-    - Expand the error system to cover more exceptions
-    - Re-add an alias for [underline]/cmds[end], [underline]/help[end]
+    - Expanded the error system to cover more exceptions
+    - Re-added an alias for [underline]/cmds[end], [underline]/help[end]
         - This was deleted in v1.4.1, and has returned a few months later!
     - Display an error if donations.json is missing
     - Fixed the Recent Users list not shortening if the maximum amount of recent users is decreased
