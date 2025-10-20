@@ -133,7 +133,6 @@ def verify_cookie(cookie):
     else:
         config["cookies"].remove(cookie)
         save()
-        return
     del header
 
 def add_account(restart):
@@ -200,8 +199,8 @@ def set_account(cid=None):
             try:
                 clear()
                 print(f"{gold}[Account Selection]{end}")
-                for id in range(len(usernames)):
-                    print(f"  - [ID: {id + 1}] {usernames[id]}")
+                for id, username in enumerate(usernames, start=1):
+                    print(f"  - [ID: {id}] {username}")
 
                 id = input("\nEnter the account you want to use: ").strip()
                 if not id.isdecimal() or id == "0":
@@ -226,9 +225,9 @@ def run_command(command):
         load_file = f"./assets/{"commands" if command == ["/help", "/cmds"] else "changelog"}.txt"
         if os.path.exists(load_file):
             print(open(load_file).read().replace("[green]", "\033[0;32m").replace("[gold]", gold).replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server)).replace("[cur_m]", str(monitoring)).replace("[cur_tips]", str(config["show_tips"])))
+            input("Press ENTER to return to the main menu. ")
         else:
-            print(f"The file {load_file} isn't present.")
-        input("Press ENTER to return to the main menu. ")
+            wait(1, f"The file {load_file} isn't present.")
     elif command.startswith("/setrecents ") or command.startswith("/set "):
         if arg.isdecimal():
             config["recent_users_length"] = 99 if int(arg) > 99 else int(arg)
@@ -266,7 +265,7 @@ def run_command(command):
         wait(1.5, f"{bold}RoSniper will restart now.{end}")
         os.execl(sys.executable, sys.executable, *sys.argv)
     elif command in ["/addaccount", "/add"]:
-        wait(1, f"{nl}{underline}You will be redirected to the Save Cookie menu.{end}")
+        wait(1, f"{nl}{underline}You will be redirected to the Add Account menu.{end}")
         add_account(True)
     elif command.startswith("/delay "):
         config["delay"] = float(arg) if arg.replace(".", "").isnumeric() else 0.01
@@ -394,14 +393,14 @@ def client():
         print(f"{bold}You're currently using Decline First Server.{end}")
         print(f"The first server the priority user (@{users[current_user]}) joins will be declined.\n")
 
-    for _ in range(len(users)):
-        status = online_data["userPresences"][_]["userPresenceType"]
-        place_id = online_data["userPresences"][_]["placeId"]
-        server_id = online_data["userPresences"][_]["gameId"]
-        user_label = f"{bold + "[Priority] " + end if _ == current_user and not monitoring else ""}{users[_]}"
+    for i, user in enumerate(users):
+        status = online_data["userPresences"][i]["userPresenceType"]
+        place_id = online_data["userPresences"][i]["placeId"]
+        server_id = online_data["userPresences"][i]["gameId"]
+        user_label = f"{bold + "[Priority] " + end if i == current_user and not monitoring else ""}{user}"
 
         if status == 1:
-            if _ == current_user and prepare_roblox and not monitoring:
+            if i == current_user and prepare_roblox and not monitoring:
                 if op == "Darwin":
                     open_link("roblox://")
                 else:
@@ -411,33 +410,33 @@ def client():
             print(f"{user_label} is on the Roblox website!")
         elif status == 2 and place_id == server_id == None:
             print(f"{user_label} has their joins off, or you aren't following them.")
-            print(f"   -> Follow them @ https://roblox.com/users/{data["userIDs"][_]}/profile")
+            print(f"   -> Follow them @ https://roblox.com/users/{data["userIDs"][i]}/profile")
             print("   -> This screen will automatically update when you follow/friend the user.")
         elif status == 2 and current_server != server_id:
-            if decline_first_server and _ == current_user:
+            if decline_first_server and i == current_user:
                 declined_servers += [server_id]
                 decline_first_server = False
 
             if server_id in declined_servers:
                 print(f"{user_label} is in a server you declined (roblox://experiences/start?placeId={place_id}&gameInstanceId={server_id}).")
                 continue
-            elif current_user != _ and not monitoring:
-                if input(f"\n{users[_]} is in a game, but you are focusing on {users[current_user]}.\nPress ENTER to focus on {users[_]}, or type 'q' to decline. ").lower().strip().startswith("q"):
-                    print(f"Declined to join {users[_]}. RoSniper will still check for {users[_]}, but won't show you that server.")
+            elif current_user != i and not monitoring:
+                if input(f"\n{user} is in a game, but you are focusing on {users[current_user]}.\nPress ENTER to focus on {user}, or type 'q' to decline. ").lower().strip().startswith("q"):
+                    print(f"Declined to join {user}. RoSniper will still check for {user}, but won't show you that server.")
                     declined_servers += [server_id]
 
-                    if input(f"   -> Would you like to focus on {users[_]}, so you can join them next time (y/n)? ").lower().strip().startswith("y"):
-                        current_user = _
+                    if input(f"   -> Would you like to focus on {user}, so you can join them next time (y/n)? ").lower().strip().startswith("y"):
+                        current_user = i
 
             if not server_id in declined_servers:
                 if not monitoring:
                     open_link(f'roblox://experiences/start?placeId={place_id}&gameInstanceId={server_id}')
                 print(f"{user_label} is in a game: {underline}roblox://experiences/start?placeId={place_id}&gameInstanceId={server_id}{end}")
-                current_user = _
+                current_user = i
                 prepare_roblox = True
                 current_server = server_id
         elif status in [0, 3]:
-            if not prepare_roblox and current_user == _:
+            if not prepare_roblox and current_user == i:
                 prepare_roblox = True
             print(f"{user_label} is {"offline" if status == 0 else "in Roblox Studio"}.")
         elif current_server == server_id:
@@ -469,15 +468,14 @@ else:
 for key in default_config.keys():
     if not key in config.keys():
         config[key] = default_config[key]
-    elif type(config[key]) != type(default_config[key]):
+    elif not isinstance(config[key], type(default_config[key])):
         config[key] = default_config[key]
-    if type(config[key]) in (int, float):
+    
+    if isinstance(config[key], (int, float)):
         if config[key] < 0:
             config[key] = default_config[key]
-    if type(config[key]) == list:
-        for item in range(len(config[key])):
-            if type(config[key][item]) != str:
-                del config[key][item]
+    elif isinstance(config[key], list):
+        config[key] = [item for item in config[key] if isinstance(item, str)]
 fix_recents()
 save()
 
@@ -604,18 +602,18 @@ while True:
     users = user.replace(" ", "").split(",")
     if "" in users:
         users.remove("")
-    for user in range(len(users)):
-        if len(users[user]) < 3 and users[user].isdecimal():
-            if int(users[user]) <= len(config["recent_users"]):
-                users[user] = config["recent_users"][int(users[user]) - 1].lower()
+    for i, user in enumerate(users):
+        if len(user) < 3 and user.isdecimal():
+            if int(user) <= len(config["recent_users"]):
+                users[i] = config["recent_users"][int(user) - 1].lower()
             else:
                 del users
                 wait(0.75, f"{underline}{nl}Recent user not avaliable.{end}")
                 break
 
-        if users[user] == usernames[id].lower() and not monitoring:
+        if user == usernames[id].lower() and not monitoring:
             wait(1.5, f"{underline}{nl}You can't RoSnipe yourself unless you're using the Monitoring mode.{end}")
-            delete_recent_user(users[user])
+            delete_recent_user(user)
             del users
             break
 

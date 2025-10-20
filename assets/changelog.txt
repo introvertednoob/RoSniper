@@ -15,8 +15,10 @@
     - Fixed a bug where a file with "-a" in it would break the argument system
     - Fixed a bug where some non-integer characters were accepted as valid input
     - Fixed a bug where combining the -m and -d arguments would allow for a combination of the respective modes
-    - Fixed a bug where deleting an invalid cookie when there were >1 accounts present would crash RoSniper
+    - Fixed a bug where deleting an invalid cookie would crash RoSniper in some cases
+    - Fixed a bug where deleting a non-string item from a list in config.json would crash RoSniper in some cases
     - Optimized the filesize of macOS pre-built binaries
+    - Optimized the speed of certain functions using enumerate() (albeit very, very slightly)
     - Removed delay and output from successful [underline]/del[end] command runs
     - Removed the use of unnecessary try/except functions in the Account Selection menu's code
     - (source) You can now set whoever sees the Legacy easter eggs through the variable [underline]easter_egg_user[end]!
