@@ -113,12 +113,15 @@ def verify_cookie(cookie):
             return
     except Exception as e:
         err = f"{type(e).__module__}.{type(e).__name__}"
+        
+        clear()
+        print(f"{gold}[RoSniper has encountered an error!]{end}")
         if err in errors.keys():
-            clear()
-            print(f"{gold}[RoSniper has encountered an error!]{end}")
             print(errors[err])
             print(f"{bold}There is likely an issue with your network or Roblox's servers.{end}")
-            input(f"\nFull Error:\n{str(e)}")
+        else:
+            print(f"An error has occured: {err}")
+        input(f"\nFull Error:\n{str(e)}")
         exit()
 
     if req.ok:
@@ -176,6 +179,9 @@ def add_account(restart):
         err = f"{type(e).__module__}.{type(e).__name__}"
         if err in errors.keys():
             input(f"\n{errors[err]} ")
+        else:
+            clear()
+            input(f"\nAn error has occured: {err} ")
         exit()
 
     if restart:
@@ -648,6 +654,8 @@ while True:
         if err in errors.keys():
             wait(1.5, f"{underline}{errors[err]}{end}")
             exit()
+        else:
+            wait(1.5, f"{underline}An error has occured: {err}{end}")
 
     # Save usernames to Recent Users
     if len(sys.argv) == 1:
@@ -689,7 +697,8 @@ while True:
                     pass
             break
         except Exception as e:
-            client_exception(errors[f"{type(e).__module__}.{type(e).__name__}"] if f"{type(e).__module__}.{type(e).__name__}" in errors.keys() else f"An error occured: {e} ")
+            err = f"{type(e).__module__}.{type(e).__name__}"
+            client_exception(errors[err] if err in errors.keys() else f"An error has occured: {err}")
             input("Press ENTER to return to the main menu. ")
             break
     session.close()
