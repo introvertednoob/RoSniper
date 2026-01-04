@@ -1,5 +1,6 @@
 {gold}[Changelog]{end}
 {green}{bold}Version 2.0.0{end}
+    NOTE: Cookie verification related features are still under development and WILL change before the final release of v2.0.0.
     - You can now run RoSniper without verifying your .ROBLOSECURITY cookies.
         - This is done through the command {underline}/toggleVerify{end} ({underline}/tv{end})
         - This may improve startup times on configurations with lots of cookies.
