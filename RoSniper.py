@@ -21,7 +21,7 @@ if getattr(sys, 'frozen', False):
     if len(sys.argv) >= 2 and sys.argv[0] == sys.argv[1]:
         sys.argv.pop(1)
 
-version = "1.8.0"
+version = "2.0.0"
 os.chdir(os.path.dirname(__file__))
 
 config_dir = Path(user_config_dir("RoSniper", "introvertednoob"))
@@ -44,6 +44,7 @@ default_config = {
     "recent_users_length": 5,
     "delay": 0.01,
     "show_tips": True,
+    "verify_cookies": True,
     "recent_users": [],
     "cookies": []
 }
@@ -102,15 +103,27 @@ def verify_cookie(cookie):
     global usernames
     global display_names
 
+    id = config["cookies"].index(cookie)
     header = {
-        "Cookie": f".ROBLOSECURITY={cookie}"
+        "Cookie": f".ROBLOSECURITY={cookie["cookie"]}"
     }
     try:
         req = session.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers=header)
         if not req.ok:
-            config["cookies"].remove(cookie)
+            clear()
+            print(f"{gold}[Invalid Cookie]{end}")
+            print(f"The cookie associated with {bold}the account @{cookie["username"]}{end} is invalid.")
+            print(f"\n{underline}To resolve this issue, you can:{end}")
+            print("    - Type 'y' to replace the old cookie while keeping it in the same position")
+            print("    - Press ENTER to remove the cookie and continue with verification\n")
+            readd_account = input("Choose an option: ").lower().strip().startswith("y")
+            if readd_account:
+                add_account(cookie, mode="replace", cid=id)
+                config["cookies"].remove(cookie)
             save()
             return
+    except KeyboardInterrupt:
+        exit()
     except Exception as e:
         err = f"{type(e).__module__}.{type(e).__name__}"
         
@@ -138,9 +151,9 @@ def verify_cookie(cookie):
         save()
     del header
 
-def add_account(restart):
+def add_account(restart, mode="add", cid=None):
     clear()
-    print(f"{gold}[Add Account]{end}")
+    print(f"{gold}{"[Add Account]" if mode == "add" else "[Replace Cookie]"}{end}")
     print(f"{bold}Copy a .ROBLOSECURITY cookie to your clipboard.{end}")
     print("This can be found in the Storage/Application section of your browser's console.")
     print("Login to your Roblox account here: https://roblox.com/")    
@@ -160,18 +173,33 @@ def add_account(restart):
     else:
         cookie = pyperclip.paste()
 
-    if cookie in config["cookies"]:
-        pyperclip.copy("")
-        input("\nThis cookie already exists. ")
-        return
-
     try:
         req = requests.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers={"Cookie": f".ROBLOSECURITY={cookie}"})
         if not req.ok:
             pyperclip.copy("")
             input("\nInvalid cookie. Restart RoSniper to try again. ")
             exit()
-        config["cookies"] += [cookie]
+
+        cookie_dict = {
+            "cookie": cookie,
+            "username": json.loads(req.text)["name"],
+            "display_name": json.loads(req.text)["displayName"]
+        }
+
+        if cookie_dict in config["cookies"] and mode == "add":
+            pyperclip.copy("")
+            input("\nThis cookie already exists. ")
+            return
+
+        if mode == "add":
+            config["cookies"] += [cookie_dict]
+        else:
+            if cookie_dict["username"] == config["cookies"][cid]["username"]:
+                config["cookies"][cid] = cookie_dict
+            else:
+                input("\nThis cookie doesn't match the right account. Restart RoSniper to try again. ")
+                exit()
+
         save()
         pyperclip.copy("")
         input(f"\nCookie saved successfully. Welcome, {json.loads(req.text)["name"]}! ")
@@ -181,7 +209,7 @@ def add_account(restart):
             input(f"\n{errors[err]} ")
         else:
             clear()
-            input(f"\nAn error has occured: {err} ")
+            input(f"An error has occured: {err} ")
         exit()
 
     if restart:
@@ -195,11 +223,11 @@ def set_account(cid=None):
     if cid != None:
         id = cid
         header = {
-            "Cookie": f".ROBLOSECURITY={config["cookies"][id]}"
+            "Cookie": f".ROBLOSECURITY={config["cookies"][id]["cookie"]}"
         }
         return
 
-    if len(config["cookies"]) > 1 and not account_set_by_argument:
+    if len(config["cookies"]) > 1 and (not account_set_by_argument or not (account_set_by_argument and config["verify_cookies"])):
         id = ""
         while id not in range(0, len(config["cookies"])):
             try:
@@ -228,9 +256,21 @@ def run_command(command):
     arg = command.split(" ")[1] if len(command.split(" ")) > 1 else ""
     if command in ["/help", "/cmds", "/changelog"]:
         clear()
-        load_file = f"./assets/{"commands" if command == ["/help", "/cmds"] else "changelog"}.txt"
+        load_file = f"./assets/{"commands" if command in ["/help", "/cmds"] else "changelog"}.txt"
         if os.path.exists(load_file):
-            print(open(load_file).read().replace("[green]", "\033[0;32m").replace("[gold]", gold).replace("[bold]", bold).replace("[underline]", underline).replace("[end]", end).replace("[cur_recent_users]", str(config["recent_users_length"])).replace("[cur_delay]", str(config["delay"])).replace("[cur_df]", str(decline_first_server)).replace("[cur_m]", str(monitoring)).replace("[cur_tips]", str(config["show_tips"])))
+            print(open(load_file).read().format(
+                green="\033[0;32m",
+                gold=gold,
+                bold=bold,
+                underline=underline,
+                end=end,
+                cur_recent_users=config["recent_users_length"],
+                cur_delay=config["delay"],
+                cur_df=decline_first_server,
+                cur_m=monitoring,
+                cur_tips=config["show_tips"],
+                cur_verify=config["verify_cookies"]
+            ))
             input("Press ENTER to return to the main menu. ")
         else:
             wait(1, f"The file {load_file} isn't present.")
@@ -280,8 +320,8 @@ def run_command(command):
     elif command.startswith("/switch") or command.split(" ")[0] == "/s":
         serialized_users = [user.lower() for user in usernames]
 
-        if account_set_by_argument:
-            wait(4, f"{nl}You have selected your account using -a, which only verifies that account's cookie.\n{underline}Therefore, you cannot use the /switch command.{end}")
+        if account_set_by_argument and config["verify_cookies"]:
+            wait(4, f"{nl}You have selected your account using -a, which only verifies that account's cookie.\n{underline}Therefore, you cannot use the /switch command. Run /toggleVerify (/tv) to bypass this.{end}")
             return
         elif len(config["cookies"]) == 1:
             wait(1.5, f"{nl}{underline}You don't have any other accounts to switch to.{end}")
@@ -365,9 +405,12 @@ def run_command(command):
     elif command == "/toggletips":
         config["show_tips"] = False if config["show_tips"] else True
         save()
+    elif command in ["/toggleverify", "/tv"]:
+        config["verify_cookies"] = False if config["verify_cookies"] else True
+        save()
     else:
         similar_commands = []
-        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/s", "/set", "/setrecents", "/switch", "/toggletips"]
+        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/s", "/set", "/setrecents", "/switch", "/toggletips", "/toggleverify", "/tv"]
         for cmd in list_of_commands:
             if command in cmd or cmd in command:
                 similar_commands += [cmd]
@@ -480,8 +523,10 @@ for key in default_config.keys():
     if isinstance(config[key], (int, float)):
         if config[key] < 0:
             config[key] = default_config[key]
-    elif isinstance(config[key], list):
+    elif isinstance(config[key], list) and key == "recent_users":
         config[key] = [item for item in config[key] if isinstance(item, str)]
+    elif isinstance(config[key], list) and key == "cookies":
+        config[key] = [item for item in config[key] if isinstance(item, object)]
 fix_recents()
 save()
 
@@ -510,14 +555,19 @@ if len(sys.argv) > 1:
             if len(config["cookies"]) < (id + 1):
                 wait(1, f"{underline}Invalid Account ID. The highest usable Account ID is {len(config["cookies"])}.{end}")
                 exit()
-            while len(usernames) < id:
-                display_names += [""]
-                usernames += [""]
-            verify_cookie(id)
-            if len(usernames) < (id + 1):
-                wait(1, f"{underline}The selected account has an invalid cookie.{end}")
-                exit()
+            
+            for i, cookie in enumerate(config["cookies"]):
+                if i == id:
+                    verify_cookie(config["cookies"][id])
+                    if len(usernames) < (id + 1):
+                        wait(1, f"{underline}The selected account has an invalid cookie.{end}")
+                        exit()
+                else:
+                    display_names += [config["cookies"][i]["display_name"]]
+                    usernames += [config["cookies"][i]["username"]]
+
             account_set_by_argument = True
+            set_account(id)
         elif "-a" in arg and not arg.replace("-a", "").isdecimal():
             wait(1, f"{underline}Please enter a numeric Account ID.{end}")
             exit()
@@ -525,16 +575,19 @@ if len(sys.argv) > 1:
             continue
     sys.argv = [arg for arg in sys.argv if not arg in ("-m", "-d") and not arg.startswith("-a")]
 
-# Verify all .ROBLOSECURITY cookies
 if not account_set_by_argument:
     for cookie in config["cookies"][:]:
-        verify_cookie(cookie)
+        if config["verify_cookies"]:
+            verify_cookie(cookie)
+        else:
+            display_names += [cookie["display_name"]]
+            usernames += [cookie["username"]]
+    set_account()
 session.close()
 
-set_account()
 if len(config["cookies"]) > 0:
     header = {
-        "Cookie": f".ROBLOSECURITY={config["cookies"][id]}"
+        "Cookie": f".ROBLOSECURITY={config["cookies"][id]["cookie"]}"
     }
 else:
     os.execl(sys.executable, sys.executable, *sys.argv)
@@ -550,6 +603,7 @@ while True:
         print(f"{gold}{bold}[RoSniper]{end}")
         print(f"Version {version} ({"binary" if getattr(sys, 'frozen', False) else "source"})")
         print("Join-snipes accounts that the logged-in user can join!")
+        print(f"Cookie verification is {"enabled" if config["verify_cookies"] else "disabled. Things may break"}.")
 
         if config["show_tips"] == True:
             print(f"{gold}\n[Tips]{end}")
