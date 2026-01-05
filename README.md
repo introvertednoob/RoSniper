@@ -8,7 +8,7 @@ A simple Roblox stream sniper that evolved into something much bigger.<br>
 <br>
 RoSniper uses Roblox's Presence API to check if a given user is online. If so, then it will attempt to join that user.<br>
 **DISCLAIMER: You can ONLY join users that let you join them (ex: you're friended/following them, or the user being sniped has their joins on). RoSniper is NOT a RoSearcher clone or an injectable exploit.**<br>
-Tested on macOS 15+ and Python 3.13+, mainly because I like having software on the latest version.<br>
+Tested on macOS 15+ and Python 3.13+<br>
 RoSniper likely also works on previous versions of these programs/operating systems.
 
 ## Current Features:
