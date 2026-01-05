@@ -600,17 +600,17 @@ if len(sys.argv) > 1:
 
 # verify cookies depending on the method chosen
 for i, cookie in enumerate(config["cookies"][:]):
-    if config["verify_method"] == "all":
+    if account_set_by_argument and i == id:
+        if not check_cookie(config["cookies"][i]):
+            wait(1, f"{underline}The selected account has an invalid cookie.{end}")
+            exit()
+    if config["verify_method"] == "all" and not account_set_by_argument:
         if check_cookie(cookie):
             display_names += [cookie["display_name"]]
             usernames += [cookie["username"]]
         else:
             replace_cookie(i)
     else:
-        if account_set_by_argument and i == id:
-            if not check_cookie(config["cookies"][i]):
-                wait(1, f"{underline}The selected account has an invalid cookie.{end}")
-                exit()
         display_names += [cookie["display_name"]]
         usernames += [cookie["username"]]
 if not account_set_by_argument:
