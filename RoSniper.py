@@ -158,7 +158,7 @@ def add_account(mode="add", cid=None):
 
     clear()
     print(f"{gold}{"[Add Account]" if mode == "add" else "[Replace Cookie]"}{end}")
-    print(f"{bold}Copy a .ROBLOSECURITY cookie to your clipboard.{end}")
+    print(f"{bold}Copy a .ROBLOSECURITY cookie to your clipboard.{f" It must belong to @{config["cookies"][cid]["username"]}." if mode == "replace" else ""}{end}")
     print("This can be found in the Storage/Application section of your browser's console.")
     print("Login to your Roblox account here: https://roblox.com/")    
 
