@@ -349,7 +349,7 @@ def run_command(command):
     elif command.startswith("/switch") or command.split(" ")[0] == "/s":
         serialized_users = [user.lower() for user in usernames]
 
-        if account_set_by_argument and config["verify_method"] in ["prog", "all"]:
+        if account_set_by_argument and config["verify_method"] == "all":
             wait(4, f"{nl}You have selected your account using -a, which only verifies that account's cookie.\n{underline}Therefore, you cannot use the /switch command.{end}\nRun /setVerify prog OR /setVerify none to bypass this.")
             return
         elif len(config["cookies"]) == 1:
