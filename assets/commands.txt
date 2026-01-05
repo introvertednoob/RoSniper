@@ -59,10 +59,11 @@
     -> Sets the cookie verification method that RoSniper uses
     -> Possible arguments:
         - "prog": Verify cookies progressively, such as when an account is added or switched to
+        - "prog-nocache": Same as the progressive verification method, but no known valid user cache is stored in memory
         - "all": Verify all cookies at startup and never authenticate again
         - "none": Don't verify cookies at all
-    -> Regardless of setting, cookies are still verified when an account is added.
-    -> You shouldn't disable cookie verification unless you know what you're doing.
+    -> Regardless of setting, cookies are still verified when an account is added
+    -> You shouldn't disable cookie verification unless you know what you're doing
         - Default: prog (progressive)
         - Current Verification Method: {cur_method}
 

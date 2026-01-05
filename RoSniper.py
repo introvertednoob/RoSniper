@@ -100,6 +100,10 @@ def get_cookie(browser):
 
 def check_cookie(cookie):
     global session
+    global valid_accounts
+
+    if cookie["username"] in valid_accounts and config["verify_method"] == "prog":
+        return True
 
     id = config["cookies"].index(cookie)
     header = {
@@ -125,6 +129,8 @@ def check_cookie(cookie):
         exit()
 
     if req.ok:
+        if config["verify_method"] == "prog":
+            valid_accounts += [cookie["username"]]
         return True
     elif req.status_code == 429:
         clear()
@@ -224,7 +230,7 @@ def set_account(cid=None):
     global account_set_by_argument
 
     if cid != None:
-        if config["verify_method"] == "prog" and not account_set_by_argument:
+        if config["verify_method"].startswith("prog") and not account_set_by_argument:
             if not check_cookie(config["cookies"][cid]):
                 replace_cookie(cid)
 
@@ -252,7 +258,7 @@ def set_account(cid=None):
                 if id >= len(config["cookies"]):
                     wait(0.5, "Invalid ID.")
 
-                if config["verify_method"] == "prog":
+                if config["verify_method"].startswith("prog"):
                     if not check_cookie(config["cookies"][id]):
                         replace_cookie(id)
             except KeyboardInterrupt:
@@ -428,7 +434,7 @@ def run_command(command):
         config["show_tips"] = False if config["show_tips"] else True
         save()
     elif command.startswith("/setverify") or command.startswith("/sv"):
-        if arg in ["prog", "none", "all"]:
+        if arg in ["prog", "prog-nocache", "none", "all"]:
             config["verify_method"] = arg
         else:
             wait(1, f"{nl}{underline}Invalid cookie verification method. See /cmds for valid arguments.{end}")
@@ -523,12 +529,12 @@ def client_exception(error):
     print(f"{gold}[Times Checked: {checks_since_start}]{end}")
     print(error)
 
-# If arguments are passed, close RoSniper on restart
+# if arguments are passed, close RoSniper on restart
 clear()
 if "!close_after_restart" in sys.argv:
     exit()
 
-# Save/load config file and verify it
+# save/load config file and verify it
 if os.path.exists(config_path):
     try:
         config = json.loads(open(config_path).read())
@@ -563,17 +569,18 @@ for key in default_config.keys():
 fix_recents()
 save()
 
-# Save or add a .ROBLOSECURITY cookie
+# save or add a .ROBLOSECURITY cookie
 if len(config["cookies"]) == 0:
     add_account()
 
-# Process args
 usernames = []
 display_names = []
+valid_accounts = []
 monitoring = False
 decline_first_server = False
 account_set_by_argument = False
 
+# process args
 session = requests.Session()
 if len(sys.argv) > 1:
     for arg in sys.argv[1:]:
