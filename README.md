@@ -4,20 +4,23 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/introvertednoob/RoSniper)
 ![GitHub License](https://img.shields.io/github/license/introvertednoob/RoSniper)
 
-A simple stream sniper that evolved into something much bigger.<br>
+A simple Roblox stream sniper that evolved into something much bigger.<br>
 <br>
 RoSniper uses Roblox's Presence API to check if a given user is online. If so, then it will attempt to join that user.<br>
 **DISCLAIMER: You can ONLY join users that let you join them (ex: you're friended/following them, or the user being sniped has their joins on). RoSniper is NOT a RoSearcher clone or an injectable exploit.**<br>
-Tested on all macOS versions 15.0-26.x and Windows 11 with Python 3.14.x! RoSniper likely also works on previous versions.
+Tested on macOS 15+ and Python 3.13+, mainly because I like having software on the latest version.<br>
+RoSniper likely also works on previous versions of these programs/operating systems.
 
 ## Current Features:
-- Snipe users you recently tried to join for easier access to them
-- Customize your experience through commands or by modifying config.json
+- Snipe users you recently tried to join for easier access
+- Switch between multiple accounts with ease
 - Check for multiple user statuses at the same time
-- Decline the first server which is detected, just in case it's already full
 - Monitor a set of users without join-sniping them
+- Decline the first server which is detected, just in case it's already full
+- Customize your experience through commands or by modifying config.json
 - Set a ZSH alias (macOS only) for easier access to RoSniper from the terminal
 - Build RoSniper into an executable which anyone can run
+- Progressive cookie validation for much faster startup times, especially with lots of accounts (coming soon™, planned for v2.0.0)
 
 ## How do I build this from source?
 There is a build script in ./build/ that can be used to build RoSniper for macOS and Windows.<br>
@@ -34,7 +37,7 @@ The source code for the revamped trailer can be found in ./trailer/!<br>
 https://github.com/user-attachments/assets/bf9bcbfa-9228-4432-aef2-9baa2bb00024
 
 # Streamer Showcase
-I have join-sniped multiple streamers using RoSniper!<br>
+I have stream-sniped multiple streamers using RoSniper!<br>
 So can you, as long as the streamer has their joins on. **Again, this program only works on people you are able to join NORMALLY.**<br>
 
 ### For example, I was the only other person in KreekCraft's game on a Dandy's World stream with 4k+ people.<br>
