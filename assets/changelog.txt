@@ -3,7 +3,7 @@
     - Added different cookie verification modes
         - .ROBLOSECURITY cookies are now progressively verified by default
         - Switching accounts will require a verification check with the progressive mode
-            - This MIGHT be added before 2.0.0's final release: Per-session account verification cache to lessen API requests if RoSniper already knows the cookie is valid (?)
+            - A temporary cache (expires on next session) is used to store valid cookies. This can be disabled by changing the validation mode to "prog-nocache".
         - You can change your verification mode by running {underline}/setVerify{end} ({underline}/sv{end})
             - To switch back to the legacy verification method, run "{underline}/setVerify all{end}"
     - Fixed a bug where {underline}/cmds{end} would open the changelog instead of the command documentation
