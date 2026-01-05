@@ -44,7 +44,7 @@ default_config = {
     "recent_users_length": 5,
     "delay": 0.01,
     "show_tips": True,
-    "verify_cookies": True,
+    "verify_method": "prog",
     "recent_users": [],
     "cookies": []
 }
@@ -98,10 +98,8 @@ def get_cookie(browser):
         print(f"Error reading cookies: {e}")
         return None
 
-def verify_cookie(cookie):
+def check_cookie(cookie):
     global session
-    global usernames
-    global display_names
 
     id = config["cookies"].index(cookie)
     header = {
@@ -110,18 +108,7 @@ def verify_cookie(cookie):
     try:
         req = session.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers=header)
         if not req.ok:
-            clear()
-            print(f"{gold}[Invalid Cookie]{end}")
-            print(f"The cookie associated with {bold}the account @{cookie["username"]}{end} is invalid.")
-            print(f"\n{underline}To resolve this issue, you can:{end}")
-            print("    - Type 'y' to replace the old cookie while keeping it in the same position")
-            print("    - Press ENTER to remove the cookie and continue with verification\n")
-            readd_account = input("Choose an option: ").lower().strip().startswith("y")
-            if readd_account:
-                add_account(cookie, mode="replace", cid=id)
-                config["cookies"].remove(cookie)
-            save()
-            return
+            return False
     except KeyboardInterrupt:
         exit()
     except Exception as e:
@@ -138,8 +125,7 @@ def verify_cookie(cookie):
         exit()
 
     if req.ok:
-        usernames += [json.loads(req.text)["name"]]
-        display_names += [json.loads(req.text)["displayName"]]
+        return True
     elif req.status_code == 429:
         clear()
         print(f"{gold}[Network Error / Too Many Requests]{end}")
@@ -147,11 +133,29 @@ def verify_cookie(cookie):
         wait(5, "RoSniper will keep trying to log you in every 5s.")
         os.execl(sys.executable, sys.executable, *sys.argv)
     else:
-        config["cookies"].remove(cookie)
-        save()
+        return False
     del header
 
-def add_account(restart, mode="add", cid=None):
+def replace_cookie(cid):
+    clear()
+    print(f"{gold}[Invalid Cookie]{end}")
+    print(f"The cookie associated with {bold}the account @{config["cookies"][cid]["username"]}{end} is invalid.")
+    print(f"\n{underline}To resolve this issue, you can:{end}")
+    print("    - Type 'y' to replace the old cookie while keeping it in the same position")
+    print("    - Press ENTER to remove the cookie\n")
+    readd_account = input("Choose an option: ").lower().strip().startswith("y")
+
+    if readd_account:
+        add_account(mode="replace", cid=cid)
+    else:
+        config["cookies"].remove(config["cookies"][i])
+        save()
+        set_account()
+
+def add_account(mode="add", cid=None):
+    global usernames
+    global display_names
+
     clear()
     print(f"{gold}{"[Add Account]" if mode == "add" else "[Replace Cookie]"}{end}")
     print(f"{bold}Copy a .ROBLOSECURITY cookie to your clipboard.{end}")
@@ -193,6 +197,8 @@ def add_account(restart, mode="add", cid=None):
 
         if mode == "add":
             config["cookies"] += [cookie_dict]
+            usernames += [cookie_dict["username"]]
+            display_names += [cookie_dict["display_name"]]
         else:
             if cookie_dict["username"] == config["cookies"][cid]["username"]:
                 config["cookies"][cid] = cookie_dict
@@ -212,22 +218,23 @@ def add_account(restart, mode="add", cid=None):
             input(f"An error has occured: {err} ")
         exit()
 
-    if restart:
-        os.execl(sys.executable, sys.executable, *sys.argv)
-
 def set_account(cid=None):
     global id
     global header
     global account_set_by_argument
 
     if cid != None:
+        if config["verify_method"] == "prog" and not account_set_by_argument:
+            if not check_cookie(config["cookies"][cid]):
+                replace_cookie(cid)
+
         id = cid
         header = {
             "Cookie": f".ROBLOSECURITY={config["cookies"][id]["cookie"]}"
         }
         return
 
-    if len(config["cookies"]) > 1 and (not account_set_by_argument or not (account_set_by_argument and config["verify_cookies"])):
+    if len(config["cookies"]) > 1 and (not account_set_by_argument or not (account_set_by_argument and config["verify_method"] == "none")):
         id = ""
         while id not in range(0, len(config["cookies"])):
             try:
@@ -241,15 +248,21 @@ def set_account(cid=None):
                     wait(0.5, "Invalid ID.")
                     continue
                 id = int(id) - 1
-                
+
                 if id >= len(config["cookies"]):
                     wait(0.5, "Invalid ID.")
+
+                if config["verify_method"] == "prog":
+                    if not check_cookie(config["cookies"][id]):
+                        replace_cookie(id)
             except KeyboardInterrupt:
                 exit()            
     elif not account_set_by_argument:
         id = 0
 
 def run_command(command):
+    global usernames
+    global display_names
     global monitoring
     global decline_first_server
 
@@ -269,7 +282,7 @@ def run_command(command):
                 cur_df=decline_first_server,
                 cur_m=monitoring,
                 cur_tips=config["show_tips"],
-                cur_verify=config["verify_cookies"]
+                cur_method=config["verify_method"]
             ))
             input("Press ENTER to return to the main menu. ")
         else:
@@ -300,19 +313,29 @@ def run_command(command):
     elif command.startswith("/logout"):
         if arg == "":
             del config["cookies"][id]
+            del usernames[id]
+            del display_names[id]
             print(f"{nl}{underline}Deleted this account's cookie from config.json.{end}")
         elif arg == "*":
             config["cookies"] = []
+            usernames = []
+            display_names = []
             print(f"{nl}{underline}Removed all cookies from config.json.{end}")
         else:
             wait(2, f"{nl}{underline}Invalid argument. See /cmds for proper documentation.{end}")
             return
+
         save()
-        wait(1.5, f"{bold}RoSniper will restart now.{end}")
-        os.execl(sys.executable, sys.executable, *sys.argv)
+        if len(config["cookies"]) == 0:
+            wait(1.5, f"{bold}You'll be redirected to the Add Account menu.{end}")
+            add_account()
+        else:
+            wait(1.5, f"{bold}You'll be redirected to the Set Account menu.{end}")
+            set_account()
     elif command in ["/addaccount", "/add"]:
         wait(1, f"{nl}{underline}You will be redirected to the Add Account menu.{end}")
-        add_account(True)
+        add_account()
+        set_account()
     elif command.startswith("/delay "):
         config["delay"] = float(arg) if arg.replace(".", "").isnumeric() else 0.01
         save()
@@ -320,8 +343,8 @@ def run_command(command):
     elif command.startswith("/switch") or command.split(" ")[0] == "/s":
         serialized_users = [user.lower() for user in usernames]
 
-        if account_set_by_argument and config["verify_cookies"]:
-            wait(4, f"{nl}You have selected your account using -a, which only verifies that account's cookie.\n{underline}Therefore, you cannot use the /switch command. Run /toggleVerify (/tv) to bypass this.{end}")
+        if account_set_by_argument and config["verify_method"] in ["prog", "all"]:
+            wait(4, f"{nl}You have selected your account using -a, which only verifies that account's cookie.\n{underline}Therefore, you cannot use the /switch command.{end}\nRun /setVerify prog OR /setVerify none to bypass this.")
             return
         elif len(config["cookies"]) == 1:
             wait(1.5, f"{nl}{underline}You don't have any other accounts to switch to.{end}")
@@ -346,7 +369,6 @@ def run_command(command):
                 wait(1, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
                 return
 
-            cid = serialized_users.index(arg)
             set_account(cid)
         else:
             wait(1, f"{nl}{underline}Invalid argument. See /cmds for proper documentation.{end}")
@@ -405,12 +427,15 @@ def run_command(command):
     elif command == "/toggletips":
         config["show_tips"] = False if config["show_tips"] else True
         save()
-    elif command in ["/toggleverify", "/tv"]:
-        config["verify_cookies"] = False if config["verify_cookies"] else True
+    elif command.startswith("/setverify") or command.startswith("/sv"):
+        if arg in ["prog", "none", "all"]:
+            config["verify_method"] = arg
+        else:
+            wait(1, f"{nl}{underline}Invalid cookie verification method. See /cmds for valid arguments.{end}")
         save()
     else:
         similar_commands = []
-        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/s", "/set", "/setrecents", "/switch", "/toggletips", "/toggleverify", "/tv"]
+        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/s", "/set", "/setrecents", "/setverify", "/sv", "/switch", "/toggletips"]
         for cmd in list_of_commands:
             if command in cmd or cmd in command:
                 similar_commands += [cmd]
@@ -527,12 +552,20 @@ for key in default_config.keys():
         config[key] = [item for item in config[key] if isinstance(item, str)]
     elif isinstance(config[key], list) and key == "cookies":
         config[key] = [item for item in config[key] if isinstance(item, object)]
+        required = {"cookie", "username", "display_name"}
+
+        marked_for_deletion = []
+        for cookie in config[key]:
+            if not required.issubset(cookie):
+                marked_for_deletion.append(cookie)
+        for cookie in marked_for_deletion:
+            del config[key][config[key].index(cookie)]
 fix_recents()
 save()
 
 # Save or add a .ROBLOSECURITY cookie
 if len(config["cookies"]) == 0:
-    add_account(False)
+    add_account()
 
 # Process args
 usernames = []
@@ -555,16 +588,6 @@ if len(sys.argv) > 1:
             if len(config["cookies"]) < (id + 1):
                 wait(1, f"{underline}Invalid Account ID. The highest usable Account ID is {len(config["cookies"])}.{end}")
                 exit()
-            
-            for i, cookie in enumerate(config["cookies"]):
-                if i == id:
-                    verify_cookie(config["cookies"][id])
-                    if len(usernames) < (id + 1):
-                        wait(1, f"{underline}The selected account has an invalid cookie.{end}")
-                        exit()
-                else:
-                    display_names += [config["cookies"][i]["display_name"]]
-                    usernames += [config["cookies"][i]["username"]]
 
             account_set_by_argument = True
             set_account(id)
@@ -575,13 +598,22 @@ if len(sys.argv) > 1:
             continue
     sys.argv = [arg for arg in sys.argv if not arg in ("-m", "-d") and not arg.startswith("-a")]
 
-if not account_set_by_argument:
-    for cookie in config["cookies"][:]:
-        if config["verify_cookies"]:
-            verify_cookie(cookie)
-        else:
+# verify cookies depending on the method chosen
+for i, cookie in enumerate(config["cookies"][:]):
+    if config["verify_method"] == "all":
+        if check_cookie(cookie):
             display_names += [cookie["display_name"]]
             usernames += [cookie["username"]]
+        else:
+            replace_cookie(i)
+    else:
+        if account_set_by_argument and i == id:
+            if not check_cookie(config["cookies"][i]):
+                wait(1, f"{underline}The selected account has an invalid cookie.{end}")
+                exit()
+        display_names += [cookie["display_name"]]
+        usernames += [cookie["username"]]
+if not account_set_by_argument:
     set_account()
 session.close()
 
@@ -590,9 +622,9 @@ if len(config["cookies"]) > 0:
         "Cookie": f".ROBLOSECURITY={config["cookies"][id]["cookie"]}"
     }
 else:
-    os.execl(sys.executable, sys.executable, *sys.argv)
+    add_account()
 
-# Set this to your Roblox username to see some RoSniper Legacy easter eggs!
+# set this to your Roblox username to see some easter eggs!
 easter_egg_user = "Awij126"
 while True:
     clear()
@@ -603,7 +635,7 @@ while True:
         print(f"{gold}{bold}[RoSniper]{end}")
         print(f"Version {version} ({"binary" if getattr(sys, 'frozen', False) else "source"})")
         print("Join-snipes accounts that the logged-in user can join!")
-        print(f"Cookie verification is {"enabled" if config["verify_cookies"] else "disabled. Things may break"}.")
+        print(f"Cookie verification method: {config["verify_method"].replace("prog", "progressive")}")
 
         if config["show_tips"] == True:
             print(f"{gold}\n[Tips]{end}")
@@ -650,7 +682,7 @@ while True:
     except KeyboardInterrupt:
         exit()
 
-    # Run commands
+    # run commands
     try:
         if user.startswith("/"):
             run_command(user)
@@ -658,7 +690,7 @@ while True:
     except KeyboardInterrupt:
         exit()
 
-    # Check if the user enters a Recent User ID
+    # check if the user enters a recent User ID
     users = user.replace(" ", "").split(",")
     if "" in users:
         users.remove("")
@@ -680,7 +712,7 @@ while True:
     if not "users" in globals():
         continue
 
-    # Validate usernames
+    # validate usernames
     try:
         data = {
             "usernames": users
@@ -711,14 +743,14 @@ while True:
         else:
             wait(1.5, f"{underline}An error has occured: {err}{end}")
 
-    # Save usernames to Recent Users
+    # save usernames to Recent Users
     if len(sys.argv) == 1:
         for user in users:
             delete_recent_user(user)
             config["recent_users"].insert(0, user.lower())
         fix_recents()
 
-    # Start the RoSniper client
+    # start the RoSniper client
     clear()
     current_user = 0
     current_server = ""

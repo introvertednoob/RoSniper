@@ -1,17 +1,16 @@
 {gold}[Changelog]{end}
 {green}{bold}Version 2.0.0{end}
-    NOTE: Cookie verification related features are still under development and WILL change before the final release of v2.0.0.
-    - You can now run RoSniper without verifying your .ROBLOSECURITY cookies.
-        - This is done through the command {underline}/toggleVerify{end} ({underline}/tv{end})
-        - This may improve startup times on configurations with lots of cookies.
-        - You'll have to re-add your accounts because of the way cookies are stored now.
-        - If cookie verification is disabled, you can switch your accounts while passing -a.
-        - Here are some exceptions to the toggle:
-            - Accounts passed into -a are always verified
-            - Cookies are still verified when adding new accounts
-        - {bold}Only disable cookie verification if you know what you are doing.{end}
+    - Added different cookie verification modes
+        - .ROBLOSECURITY cookies are now progressively verified by default
+        - Switching accounts will require a verification check with the progressive mode
+            - This MIGHT be added before 2.0.0's final release: Per-session account verification cache to lessen API requests if RoSniper already knows the cookie is valid (?)
+        - You can change your verification mode by running {underline}/setVerify{end} ({underline}/sv{end})
+            - To switch back to the legacy verification method, run "{underline}/setVerify all{end}"
     - Fixed a bug where {underline}/cmds{end} would open the changelog instead of the command documentation
     - Optimized loading commands.txt and changelog.txt a bit
+    - Removed restarting as much as possible after adding/removing accounts
+There is also an option to disable cookie verification. Only use this if you know what you are doing.
+For most users, progressive cookie verification can achieve the same startup speed improvements with less risk.
 
 {bold}Version 1.8.0{end}
     - Added account switching

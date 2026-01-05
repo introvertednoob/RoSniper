@@ -55,13 +55,16 @@
         - Default: True
         - Tips Shown: {cur_tips}
 
-{underline}/toggleVerify{end} ({underline}/tv{end})
-    -> Toggles if cookies are verified at startup
-        - Default: True
-        - Verification enabled: {cur_verify}
-
-{underline}/verify{end}
-    -> Verifies all cookies (WIP, command doesn't exist yet!)
+{underline}/setVerify{end} ({underline}/sv{end})
+    -> Sets the cookie verification method that RoSniper uses
+    -> Possible arguments:
+        - "prog": Verify cookies progressively, such as when an account is added or switched to
+        - "all": Verify all cookies at startup and never authenticate again
+        - "none": Don't verify cookies at all
+    -> Regardless of setting, cookies are still verified when an account is added.
+    -> You shouldn't disable cookie verification unless you know what you're doing.
+        - Default: prog (progressive)
+        - Current Verification Method: {cur_method}
 
 {gold}[Temporary Commands]{end}
 The effects of these commands only last for one sniping session.
