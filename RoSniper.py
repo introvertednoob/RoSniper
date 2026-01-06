@@ -105,7 +105,6 @@ def check_cookie(cookie):
     if cookie["username"] in valid_accounts and config["verify_method"] == "prog":
         return True
 
-    id = config["cookies"].index(cookie)
     header = {
         "Cookie": f".ROBLOSECURITY={cookie["cookie"]}"
     }
@@ -434,11 +433,14 @@ def run_command(command):
         config["show_tips"] = False if config["show_tips"] else True
         save()
     elif command.startswith("/setverify") or command.startswith("/sv"):
-        if arg in ["prog", "prog-nocache", "none", "all"]:
+        if arg == config["verify_method"]:
+            wait(0.75, f"{nl}{underline}This verification method is already being used.{end}")
+        elif arg in ["prog", "prog-nocache", "all", "none"]:
             config["verify_method"] = arg
+            save()
+            wait(0.75, f"{nl}{underline}Successfully changed the cookie verification method.{end}")
         else:
             wait(1, f"{nl}{underline}Invalid cookie verification method. See /cmds for valid arguments.{end}")
-        save()
     else:
         similar_commands = []
         list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/s", "/set", "/setrecents", "/setverify", "/sv", "/switch", "/toggletips"]
