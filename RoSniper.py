@@ -139,7 +139,6 @@ def check_cookie(cookie):
                 usernames[cid] = config["cookies"][cid]["username"]
                 display_names[cid] = config["cookies"][cid]["display_name"]
             save()
-            input("uname changed :3")
 
         return True
     elif req.status_code == 429:
