@@ -131,10 +131,12 @@ def check_cookie(cookie):
         if config["verify_method"] == "prog":
             valid_accounts += [cookie["username"]]
 
+        correct_uname = json.loads(req.text)["name"]
+        correct_dname = json.loads(req.text)["displayName"]
         cid = config["cookies"].index(cookie)
-        if config["cookies"][cid]["username"] != json.loads(req.text)["name"] or config["cookies"][cid]["display_name"] != json.loads(req.text)["displayName"]:
-            config["cookies"][cid]["username"] = json.loads(req.text)["name"]
-            config["cookies"][cid]["display_name"] = json.loads(req.text)["displayName"]
+        if config["cookies"][cid]["username"] != correct_uname or config["cookies"][cid]["display_name"] != correct_dname:
+            config["cookies"][cid]["username"] = correct_uname
+            config["cookies"][cid]["display_name"] = correct_dname
             if config["verify_method"] != "all":
                 usernames[cid] = config["cookies"][cid]["username"]
                 display_names[cid] = config["cookies"][cid]["display_name"]
