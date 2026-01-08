@@ -130,6 +130,17 @@ def check_cookie(cookie):
     if req.ok:
         if config["verify_method"] == "prog":
             valid_accounts += [cookie["username"]]
+
+        cid = config["cookies"].index(cookie)
+        if config["cookies"][cid]["username"] != json.loads(req.text)["name"] or config["cookies"][cid]["display_name"] != json.loads(req.text)["displayName"]:
+            config["cookies"][cid]["username"] = json.loads(req.text)["name"]
+            config["cookies"][cid]["display_name"] = json.loads(req.text)["displayName"]
+            if config["verify_method"] != "all":
+                usernames[cid] = config["cookies"][cid]["username"]
+                display_names[cid] = config["cookies"][cid]["display_name"]
+            save()
+            input("uname changed :3")
+
         return True
     elif req.status_code == 429:
         clear()
