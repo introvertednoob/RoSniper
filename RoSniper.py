@@ -108,50 +108,56 @@ def check_cookie(cookie):
     header = {
         "Cookie": f".ROBLOSECURITY={cookie["cookie"]}"
     }
-    try:
-        req = session.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers=header)
-        if not req.ok:
-            return False
-    except KeyboardInterrupt:
-        exit()
-    except Exception as e:
-        err = f"{type(e).__module__}.{type(e).__name__}"
-        
-        clear()
-        print(f"{gold}[RoSniper has encountered an error!]{end}")
-        if err in errors.keys():
-            print(errors[err])
-            print(f"{bold}There is likely an issue with your network or Roblox's servers.{end}")
-        else:
-            print(f"An error has occured: {err}")
-        input(f"\nFull Error:\n{str(e)}")
-        exit()
 
-    if req.ok:
-        if config["verify_method"] == "prog":
-            valid_accounts += [cookie["username"]]
+    times_verified = 0
+    while True:
+        try:
+            req = session.get("https://users.roblox.com/v1/users/authenticated", timeout=5, headers=header)
+            if not req.ok:
+                return False
+        except KeyboardInterrupt:
+            exit()
+        except Exception as e:
+            err = f"{type(e).__module__}.{type(e).__name__}"
+            
+            clear()
+            print(f"{gold}[RoSniper has encountered an error!]{end}")
+            if err in errors.keys():
+                print(errors[err])
+                print(f"{bold}There is likely an issue with your network or Roblox's servers.{end}")
+            else:
+                print(f"An error has occured: {err}")
+            input(f"\nFull Error:\n{str(e)}")
+            exit()
 
-        correct_uname = json.loads(req.text)["name"]
-        correct_dname = json.loads(req.text)["displayName"]
         cid = config["cookies"].index(cookie)
-        if config["cookies"][cid]["username"] != correct_uname or config["cookies"][cid]["display_name"] != correct_dname:
-            config["cookies"][cid]["username"] = correct_uname
-            config["cookies"][cid]["display_name"] = correct_dname
-            if config["verify_method"] != "all":
-                usernames[cid] = config["cookies"][cid]["username"]
-                display_names[cid] = config["cookies"][cid]["display_name"]
-            save()
+        if req.ok:
+            if config["verify_method"] == "prog":
+                valid_accounts += [cookie["username"]]
 
-        return True
-    elif req.status_code == 429:
-        clear()
-        print(f"{gold}[Network Error / Too Many Requests]{end}")
-        print(f"Couldn't contact the Roblox servers to authenticate you.")
-        wait(5, "RoSniper will keep trying to log you in every 5s.")
-        os.execl(sys.executable, sys.executable, *sys.argv)
-    else:
-        return False
-    del header
+            correct_uname = json.loads(req.text)["name"]
+            correct_dname = json.loads(req.text)["displayName"]
+            if config["cookies"][cid]["username"] != correct_uname or config["cookies"][cid]["display_name"] != correct_dname:
+                config["cookies"][cid]["username"] = correct_uname
+                config["cookies"][cid]["display_name"] = correct_dname
+                if config["verify_method"] != "all":
+                    usernames[cid] = config["cookies"][cid]["username"]
+                    display_names[cid] = config["cookies"][cid]["display_name"]
+                save()
+
+            return True
+        elif req.status_code == 429:
+            clear()
+            print(f"{gold}[Network Error - Too Many Requests]{end}")
+            print(f"Couldn't contact the Roblox servers to authenticate you.")
+            print("RoSniper will keep trying to verify your account every 5 seconds.")
+            print(f"\nAttempted to verify this account {times_verified} time(s)")
+            print("This only counts the attempts after this error was received.")
+            print(f"\nCurrently trying to verify account: @{config["cookies"][cid]["username"]}")
+            wait(5, f"Account ID: {cid + 1} (of {len(config["cookies"])})")
+            times_verified += 1
+        else:
+            return False
 
 def replace_cookie(cid):
     clear()

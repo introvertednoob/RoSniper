@@ -7,6 +7,8 @@
         - You can change your verification mode by running {underline}/setVerify{end} ({underline}/sv{end})
             - To switch back to the legacy verification method, run "{underline}/setVerify all{end}"
     - Fixed a bug where {underline}/cmds{end} would open the changelog instead of the command documentation
+    - Fixed Too Many Requests functionality from not working properly
+        - Instead of restarting every 5 seconds, the cookie will now be re-verified.
     - Optimized loading commands.txt and changelog.txt a bit
     - Removed restarting as much as possible after adding/removing accounts
 There is also an option to disable cookie verification. Only use this if you know what you are doing.
