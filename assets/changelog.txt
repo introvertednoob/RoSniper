@@ -3,14 +3,16 @@
     - Added different cookie verification modes
         - .ROBLOSECURITY cookies are now progressively verified by default
         - Switching accounts will require a verification check with the progressive mode
-            - A temporary cache (expires on next session) is used to store valid cookies. This can be disabled by changing the validation mode to "prog-nocache".
+            - A temporary cache (expires on future sessions) is used to store valid cookies. This can be disabled by changing the validation mode to "prog-nocache".
         - You can change your verification mode by running {underline}/setVerify{end} ({underline}/sv{end})
             - To switch back to the legacy verification method, run "{underline}/setVerify all{end}"
     - Fixed a bug where {underline}/cmds{end} would open the changelog instead of the command documentation
     - Fixed Too Many Requests functionality from not working properly
         - Instead of restarting every 5 seconds, the cookie will now be re-verified.
+        - However, with the new authentication changes, you'll encounter this screen much less often if you have a lot of accounts.
     - Optimized loading commands.txt and changelog.txt a bit
     - Removed restarting as much as possible after adding/removing accounts
+    - The current account and amount of times verified is now shown on the Too Many Requests screen
 There is also an option to disable cookie verification. Only use this if you know what you are doing.
 For most users, progressive cookie verification can achieve the same startup speed improvements with less risk.
 
