@@ -76,7 +76,7 @@ def wait(secs, text=False):
         exit()
 
 def delete_recent_user(user):
-    if user.lower() in config["recent_users"]:
+    while user.lower() in config["recent_users"]:
         config["recent_users"].remove(user.lower())
     save()
 

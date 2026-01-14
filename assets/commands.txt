@@ -18,7 +18,7 @@
 {underline}/changelog{end}
     -> Shows the RoSniper changelog
 
-{underline}/cmds{end}
+{underline}/cmds{end} ({underline}/help{end})
     -> Shows this window
 
 {underline}/del{end} [RECENT_USER] | [RECENT_USER_INDEX] | *

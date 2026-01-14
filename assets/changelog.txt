@@ -6,6 +6,7 @@
             - A temporary cache (expires on future sessions) is used to store valid cookies. This can be disabled by changing the validation mode to "prog-nocache".
         - You can change your verification mode by running {underline}/setVerify{end} ({underline}/sv{end})
             - To switch back to the legacy verification method, run "{underline}/setVerify all{end}"
+    - Added {underline}/cmds{end} alias ({underline}/help{end}) to Command Docs
     - Fixed a bug where {underline}/cmds{end} would open the changelog instead of the command documentation
     - Fixed Too Many Requests functionality from not working properly
         - Instead of restarting every 5 seconds, the cookie will now be re-verified.
@@ -13,6 +14,7 @@
     - Optimized loading commands.txt and changelog.txt a bit
     - Removed restarting as much as possible after adding/removing accounts
     - The current account and amount of times verified is now shown on the Too Many Requests screen
+    - When adding or sniping a recent user, all duplicate entries are removed instead of one
 There is also an option to disable cookie verification. Only use this if you know what you are doing.
 For most users, progressive cookie verification can achieve the same startup speed improvements with less risk.
 
