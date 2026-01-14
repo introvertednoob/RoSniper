@@ -392,7 +392,7 @@ def run_command(command):
                 wait(1, f"{nl}{underline}You are already using the @{usernames[id]} account.{end}")
                 return
 
-            set_account(cid)
+            set_account(serialized_users.index(arg))
         else:
             wait(1, f"{nl}{underline}Invalid argument. See /cmds for proper documentation.{end}")
             return
