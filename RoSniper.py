@@ -213,12 +213,11 @@ def add_account(mode="add", cid=None):
             "display_name": json.loads(req.text)["displayName"]
         }
 
-        if cookie_dict in config["cookies"] and mode == "add":
-            pyperclip.copy("")
-            input("\nThis cookie already exists. ")
-            return
-
         if mode == "add":
+            if cookie_dict in config["cookies"]:
+                pyperclip.copy("")
+                input("\nThis cookie already exists. ")
+                return
             config["cookies"] += [cookie_dict]
             usernames += [cookie_dict["username"]]
             display_names += [cookie_dict["display_name"]]
@@ -730,9 +729,9 @@ while True:
                 wait(0.75, f"{underline}{nl}Recent user not avaliable.{end}")
                 break
 
-        if user == usernames[id].lower() and not monitoring:
+        if users[i] == usernames[id].lower() and not monitoring:
             wait(1.5, f"{underline}{nl}You can't RoSnipe yourself unless you're using the Monitoring mode.{end}")
-            delete_recent_user(user)
+            delete_recent_user(users[i])
             del users
             break
 
