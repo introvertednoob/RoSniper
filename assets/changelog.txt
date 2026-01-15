@@ -3,7 +3,8 @@
     - Added different cookie verification modes
         - .ROBLOSECURITY cookies are now progressively verified by default
         - Switching accounts will require a verification check with the progressive mode
-            - A temporary cache (expires on future sessions) is used to store valid cookies. This can be disabled by changing the validation mode to "prog-nocache".
+            - A temporary cache (expires on future sessions) is used to store valid cookies.
+              This can be disabled by changing the validation mode to "prog-nocache".
         - You can change your verification mode by running {underline}/setVerify{end} ({underline}/sv{end})
             - To switch back to the legacy verification method, run "{underline}/setVerify all{end}"
     - Added {underline}/cmds{end} alias ({underline}/help{end}) to Command Docs
@@ -274,5 +275,5 @@ First true overhaul since May!
     - Increased the default delay from 0.0075s -> 0.01s
     - Other minor improvements
 
-Development on RoSniper started in May 2024.
-{bold}There are a lot of undocumented changes from May to v2024.11.{end}
+Development on RoSniper started in May 2024, and some changes haven't been documented.
+{bold}You may need to expand your terminal window to view this document better.{end}
