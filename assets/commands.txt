@@ -4,7 +4,7 @@
 
 {underline}/alias{end}
     -> Adds the ZSH alias <{underline}snipe{end}> to access RoSniper through the terminal
-    -> Possible arguments for <{underline}snipe{end}> {bold}(or RoSniper in general, this alias is NOT needed!){end}:
+    -> Possible arguments for <{underline}snipe{end}> {bold}(or RoSniper in general, this alias is not needed!){end}:
         - No arguments to open the RoSniper menu
         - One user to snipe a singular user
         - Multiple users, seperated by commas (no spaces) to snipe multiple users
@@ -62,8 +62,8 @@
         - "prog-nocache": Same as the progressive verification method, but no known valid user cache is stored in memory
         - "all": Verify all cookies at startup and never authenticate again
         - "none": Don't verify cookies at all
-    -> Regardless of setting, cookies are still verified when an account is added
-    -> You shouldn't disable cookie verification unless you know what you're doing
+    -> Regardless of setting, cookies are verified when an account is added
+    -> Only disable cookie verification if you know what you're doing
         - Default: prog (progressive)
         - Current Verification Method: {cur_method}
 
