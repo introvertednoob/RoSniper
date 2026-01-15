@@ -589,16 +589,16 @@ for key in default_config.keys():
 fix_recents()
 save()
 
-# save or add a .ROBLOSECURITY cookie
-if len(config["cookies"]) == 0:
-    add_account()
-
 usernames = []
 display_names = []
 valid_accounts = []
 monitoring = False
 decline_first_server = False
 account_set_by_argument = False
+
+# save or add a .ROBLOSECURITY cookie
+if len(config["cookies"]) == 0:
+    add_account()
 
 # process args
 session = requests.Session()
