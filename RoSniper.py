@@ -273,6 +273,7 @@ def set_account(cid=None):
 
                 if id >= len(config["cookies"]):
                     wait(0.5, "Invalid ID.")
+                    continue
 
                 if config["verify_method"].startswith("prog"):
                     if not check_cookie(config["cookies"][id]):

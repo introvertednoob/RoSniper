@@ -16,6 +16,7 @@
     - Optimized loading commands.txt and changelog.txt a bit
     - Removed restarting as much as possible after adding/removing accounts
     - The current account and amount of times verified is now shown on the Too Many Requests screen
+    - Update pre-built binaries to use Python 3.14.2 and Pyinstaller 6.18.0
     - When adding or sniping a recent user, all duplicate entries are removed instead of one
 There is also an option to disable cookie verification. Only use this if you know what you are doing.
 For most users, progressive cookie verification can achieve the same startup speed improvements with less risk.
