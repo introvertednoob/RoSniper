@@ -9,6 +9,7 @@
             - To switch back to the legacy verification method, run "{underline}/setVerify all{end}"
     - Added {underline}/cmds{end} alias ({underline}/help{end}) to Command Docs
     - Fixed a bug where {underline}/cmds{end} would open the changelog instead of the command documentation
+    - Fixed a bug where inputting multiple zeros in Account Selection would verify the last cookie instead of rejecting the input
     - Fixed a bug where selecting the current account to join-snipe through Recent Users (ID) would let the user snipe the account
     - Fixed Too Many Requests functionality from not working properly
         - Instead of restarting every 5 seconds, the cookie will now be re-verified.

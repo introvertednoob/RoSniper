@@ -266,12 +266,12 @@ def set_account(cid=None):
                     print(f"  - [ID: {id}] {username}")
 
                 id = input("\nEnter the account you want to use: ").strip()
-                if not id.isdecimal() or id == "0":
+                if not id.isdecimal():
                     wait(0.5, "Invalid ID.")
                     continue
                 id = int(id) - 1
 
-                if id >= len(config["cookies"]):
+                if id == -1 or id >= len(config["cookies"]):
                     wait(0.5, "Invalid ID.")
                     continue
 
