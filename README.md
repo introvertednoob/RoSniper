@@ -19,7 +19,7 @@ Tested on macOS 15+ and Python 3.13+, but RoSniper likely also works on previous
 - Customize your experience through commands or by modifying config.json
 - Set a ZSH alias (macOS only) for easier access to RoSniper from the terminal
 - Build RoSniper into an executable which anyone can run
-- Progressive cookie validation for much faster startup times, especially with lots of accounts (coming soon™, planned for v2.0.0)
+- Progressive cookie validation for much faster startup times, especially with lots of accounts
 
 ## How do I build this from source?
 There is a build script in ./build/ that can be used to build RoSniper for macOS and Windows.<br>
