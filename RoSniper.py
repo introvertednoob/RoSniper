@@ -304,7 +304,7 @@ def run_command(command):
                 cur_tips=config["show_tips"],
                 cur_method=config["verify_method"]
             ))
-            input("Press ENTER to return to the main menu. ")
+            input("\nPress ENTER to return to the main menu. ")
         else:
             wait(1, f"The file {load_file} isn't present.")
     elif command.startswith("/setrecents ") or command.startswith("/set "):

@@ -81,4 +81,5 @@ The effects of these commands only last for one sniping session.
         - Current: {cur_m}
 
 Commands in parentheses represent aliases.
-Words in brackets represent values (ex: {bold}[SECONDS]{end} means {bold}the # of seconds{end})
+Words in brackets represent values (ex: {bold}[SECONDS]{end} means {bold}the # of seconds{end}).
+{bold}You may need to expand your terminal window to view this document better.{end}
