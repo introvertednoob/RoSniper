@@ -1,5 +1,9 @@
 {gold}[Changelog]{end}
-{green}{bold}Version 2.0.0{end}
+{green}{bold}Version 2.1.0{end}
+    - The screen now properly clears on macOS!
+        - This is a bug that has existed for a LONG time!!
+
+{bold}Version 2.0.0{end}
     - Added different cookie verification modes
         - .ROBLOSECURITY cookies are now progressively verified by default
         - Switching accounts will require a verification check with the progressive mode

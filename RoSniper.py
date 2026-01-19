@@ -21,7 +21,7 @@ if getattr(sys, 'frozen', False):
     if len(sys.argv) >= 2 and sys.argv[0] == sys.argv[1]:
         sys.argv.pop(1)
 
-version = "2.0.0"
+version = "2.1.0"
 os.chdir(os.path.dirname(__file__))
 
 config_dir = Path(user_config_dir("RoSniper", "introvertednoob"))
