@@ -182,6 +182,61 @@ def replace_cookie(cid):
         save()
         set_account()
 
+default_config2 = {
+    "recent_users_length": 5,
+    "delay": 0.01,
+    "show_tips": True,
+    "verify_method": "prog",
+    "resize_terminal": True,
+    "recent_users": [],
+    "cookies": []
+}
+
+# to do: add /set, which changes settings using this function BUT without any extra input
+def change_settings():
+    keys = ("resize_terminal", "show_tips", "verify_method", "delay", "recent_users_length")
+    toggles = (1, 2)
+    inputs = (3, 4, 5)
+
+    while True:
+        clear()
+        print(f"{gold}[RoSniper Settings]{end}")
+        print("Change your settings here!")
+
+        print(f"\n{gold}[Toggles]{end}")
+        print(f"[1] Resize Terminal ({"ON" if config["resize_terminal"] else "OFF"})")
+        print(f"[2] Show Tips ({"ON" if config["show_tips"] else "OFF"})")
+
+        print(f"\n{gold}[Other Settings]{end}")
+        print(f"[3] Verify Method ({config["verify_method"]})")
+        print(f"[4] Delay ({config["delay"]}s)")
+        print(f"[5] Recent Users Length ({config["recent_users_length"]} users)")
+        
+        print(f"\nType '' to return to the main menu.")
+        setting_id = input("Enter a number to change the respective setting: ").strip()
+
+        if setting_id == "":
+            return
+        elif not setting_id.isdecimal():
+            continue
+        else:
+            setting_id = int(setting_id) - 1
+
+        if setting_id + 1 in toggles:
+            config[keys[setting_id]] = False if config[keys[setting_id]] else True
+        elif setting_id + 1 in inputs:
+            value = None
+            while not isinstance(value, type(default_config[keys[setting_id]])):
+                value = input("Enter a new value for the setting (type '' to cancel): ")
+                if isinstance(default_config[keys[setting_id]], (float)) and (value.count('.') == 1 and all(part.isdigit() for part in value.split('.'))):
+                    value = float(value)
+                elif isinstance(default_config[keys[setting_id]], (int)) and value.isdecimal():
+                    value = int(value)
+                elif value == "":
+                    break
+            config[keys[setting_id]] = value if value != "" else config[keys[setting_id]]
+            save()
+
 def add_account(mode="add", cid=None):
     global usernames
     global display_names
@@ -459,9 +514,8 @@ def run_command(command):
     elif command == "/toggletips":
         config["show_tips"] = False if config["show_tips"] else True
         save()
-    elif command == "/resizeterminal":
-        config["resize_terminal"] = False if config["resize_terminal"] else True
-        save()
+    elif command in ["/settings"]:
+        change_settings()
     elif command.startswith("/setverify") or command.startswith("/sv"):
         if arg == config["verify_method"]:
             wait(0.75, f"{nl}{underline}This verification method is already being used.{end}")
