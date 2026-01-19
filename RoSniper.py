@@ -56,11 +56,8 @@ def open_link(url):
         webbrowser.open(url)
 
 clear_cmd = "clear" if op == "Darwin" else "cls"
-def clear(definite=True):
-    if op == "Darwin" and definite:
-        os.system("clear; clear")
-    else:
-        os.system(clear_cmd)
+def clear():
+    print("\033[2J\033[3J\033[H", end='')
 
 def save():
     with open(config_path, "w", encoding="utf-8") as cfg:
@@ -484,7 +481,7 @@ def client():
     global monitoring
     global decline_first_server
 
-    clear(False)
+    clear()
     print(f"{gold}[Times Checked: {checks_since_start}] [Account: @{usernames[id]}]{end}")
     if monitoring:
         print(f"{bold}You're currently in Monitoring Only Mode. Join-sniping is disabled.{end}")
@@ -545,7 +542,7 @@ def client():
 def client_exception(error):
     global checks_since_start
 
-    clear(False)
+    clear()
     print(f"{gold}[Times Checked: {checks_since_start}]{end}")
     print(error)
 
