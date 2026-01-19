@@ -45,6 +45,7 @@ default_config = {
     "delay": 0.01,
     "show_tips": True,
     "verify_method": "prog",
+    "resize_terminal": True,
     "recent_users": [],
     "cookies": []
 }
@@ -71,6 +72,15 @@ def wait(secs, text=False):
     except KeyboardInterrupt:
         save()
         exit()
+
+def change_terminal_size(rows, cols):
+    if not config["resize_terminal"]:
+        return
+
+    if op == "Darwin":
+        os.system(f"printf '\\e[8;{rows};{cols}t'")
+    else:
+        os.system(f"mode con: cols={cols} lines={rows}")
 
 def delete_recent_user(user):
     while user.lower() in config["recent_users"]:
@@ -291,6 +301,7 @@ def run_command(command):
         clear()
         load_file = f"./assets/{"commands" if command in ["/help", "/cmds"] else "changelog"}.txt"
         if os.path.exists(load_file):
+            change_terminal_size(50, 140)
             print(open(load_file).read().format(
                 green="\033[0;32m",
                 gold=gold,
@@ -305,6 +316,7 @@ def run_command(command):
                 cur_method=config["verify_method"]
             ))
             input("\nPress ENTER to return to the main menu. ")
+            change_terminal_size(terminal_size.lines, terminal_size.columns)
         else:
             wait(1, f"The file {load_file} isn't present.")
     elif command.startswith("/setrecents ") or command.startswith("/set "):
@@ -447,6 +459,9 @@ def run_command(command):
     elif command == "/toggletips":
         config["show_tips"] = False if config["show_tips"] else True
         save()
+    elif command == "/resizeterminal":
+        config["resize_terminal"] = False if config["resize_terminal"] else True
+        save()
     elif command.startswith("/setverify") or command.startswith("/sv"):
         if arg == config["verify_method"]:
             wait(0.75, f"{nl}{underline}This verification method is already being used.{end}")
@@ -458,7 +473,7 @@ def run_command(command):
             wait(1, f"{nl}{underline}Invalid cookie verification method. See /cmds for valid arguments.{end}")
     else:
         similar_commands = []
-        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/s", "/set", "/setrecents", "/setverify", "/sv", "/switch", "/toggletips"]
+        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/resizeTerminal", "/s", "/set", "/setrecents", "/setverify", "/sv", "/switch", "/toggletips"]
         for cmd in list_of_commands:
             if command in cmd or cmd in command:
                 similar_commands += [cmd]
@@ -708,10 +723,12 @@ while True:
 
     # run commands
     try:
+        terminal_size = os.get_terminal_size()
         if user.startswith("/"):
             run_command(user)
             continue
     except KeyboardInterrupt:
+        change_terminal_size(terminal_size.lines, terminal_size.columns)
         exit()
 
     # check if the user enters a recent User ID

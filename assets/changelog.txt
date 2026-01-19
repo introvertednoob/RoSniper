@@ -1,7 +1,12 @@
 {gold}[Changelog]{end}
 {green}{bold}Version 2.1.0{end}
+    - Added a new command, {underline}/resizeTerminal{end}
     - Added notice to expand terminal in both the changelog and Command Docs
-    - The screen (finally) clears properly on macOS! This is a bug that has existed for a LONG time!!
+    - The screen (finally) clears properly on macOS!
+    - Due to the clear screen changes, macOS now has proper support for:
+        - Switching between the fullscreen and windowed modes
+        - Resizing the RoSniper window
+        - Copying text from Sniping Status as RoSniper is running
 
 {bold}Version 2.0.0{end}
     - Added different cookie verification modes
