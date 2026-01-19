@@ -182,17 +182,15 @@ def replace_cookie(cid):
         save()
         set_account()
 
-default_config2 = {
-    "recent_users_length": 5,
-    "delay": 0.01,
-    "show_tips": True,
-    "verify_method": "prog",
-    "resize_terminal": True,
-    "recent_users": [],
-    "cookies": []
-}
-
-# to do: add /set, which changes settings using this function BUT without any extra input
+# to-do: add /set, which changes settings using this function BUT without any extra input (no guarantees)
+# i'll probably be adding more settings to complement this update, such as:
+# - hide snipe attempt count when in the Sniping Status screen
+# - hide the sniper's username when in the Sniping Status screen
+# - set the RS Legacy easter egg username
+# - enable/disable the RS Legacy easter egg
+# - show/hide Recent Users (you can technically already do this by setting the max Recent Users to 0, but there is still space taken due to this)
+# commands for these potential settings won't be created, and existing commands are subject to be removed in future commits
+# note that commands for temporary settings (such as monitoring mode and decline first server) will not be affected by this update
 def change_settings():
     keys = ("resize_terminal", "show_tips", "verify_method", "delay", "recent_users_length")
     toggles = (1, 2)
@@ -204,12 +202,12 @@ def change_settings():
         print("Change your settings here!")
 
         print(f"\n{gold}[Toggles]{end}")
-        print(f"[1] Resize Terminal ({"ON" if config["resize_terminal"] else "OFF"})")
+        print(f"[1] Resize Terminal Automatically ({"ON" if config["resize_terminal"] else "OFF"})")
         print(f"[2] Show Tips ({"ON" if config["show_tips"] else "OFF"})")
 
         print(f"\n{gold}[Other Settings]{end}")
-        print(f"[3] Verify Method ({config["verify_method"]})")
-        print(f"[4] Delay ({config["delay"]}s)")
+        print(f"[3] Cookie Verify Method ({config["verify_method"]})")
+        print(f"[4] Request Delay ({config["delay"]}s)")
         print(f"[5] Recent Users Length ({config["recent_users_length"]} users)")
         
         print(f"\nType '' to return to the main menu.")
