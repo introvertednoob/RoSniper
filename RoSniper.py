@@ -57,13 +57,10 @@ def open_link(url):
 
 clear_cmd = "clear" if op == "Darwin" else "cls"
 def clear(definite=True):
-    for i in range(0, 2 if definite else 1):
-        sys.stdout.write("\033[H\033[J")
-        sys.stdout.flush()
-    #if op == "Darwin" and definite:
-    #    os.system("clear; clear")
-    #else:
-    #    os.system(clear_cmd)
+    if op == "Darwin" and definite:
+        os.system("clear; clear")
+    else:
+        os.system(clear_cmd)
 
 def save():
     with open(config_path, "w", encoding="utf-8") as cfg:
