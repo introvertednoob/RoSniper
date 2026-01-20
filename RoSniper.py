@@ -187,14 +187,6 @@ def replace_cookie(cid):
         set_account()
 
 # to-do: add /set, which changes settings using this function BUT without any extra input (no guarantees)
-# i'll probably be adding more settings to complement this update, such as:
-# - hide snipe attempt count when in the Sniping Status screen
-# - hide the sniper's username when in the Sniping Status screen
-# - set the RS Legacy easter egg username
-# - enable/disable the RS Legacy easter egg
-# - show/hide Recent Users (you can technically already do this by setting the max Recent Users to 0, but there is still space taken due to this)
-# commands for these potential settings won't be created, and existing commands are subject to be removed in future commits
-# note that commands for temporary settings (such as monitoring mode and decline first server) will not be affected by this update
 def change_settings():
     keys = ("delay", "show_sniping_information", "verify_method", "recent_users_length", "show_recent_users", "show_tips", "resize_terminal", "easter_egg_enabled", "easter_egg_user")
     toggles = (2, 5, 6, 7, 8)
