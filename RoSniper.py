@@ -46,6 +46,10 @@ default_config = {
     "show_tips": True,
     "verify_method": "prog",
     "resize_terminal": True,
+    "easter_egg_enabled": False,
+    "easter_egg_user": "None",
+    "show_recent_users": True,
+    "show_sniping_information": True,
     "recent_users": [],
     "cookies": []
 }
@@ -192,23 +196,35 @@ def replace_cookie(cid):
 # commands for these potential settings won't be created, and existing commands are subject to be removed in future commits
 # note that commands for temporary settings (such as monitoring mode and decline first server) will not be affected by this update
 def change_settings():
-    keys = ("resize_terminal", "show_tips", "verify_method", "delay", "recent_users_length")
-    toggles = (1, 2)
-    inputs = (3, 4, 5)
+    keys = ("delay", "show_sniping_information", "verify_method", "recent_users_length", "show_recent_users", "show_tips", "resize_terminal", "easter_egg_enabled", "easter_egg_user")
+    toggles = (2, 5, 6, 7, 8)
+    inputs = (1, 3, 4, 9)
+
+    accepted_values = {
+        "verify_method": ("prog", "prog-nocache", "all", "none"),
+        "recent_users_length": range(0, 100)
+    }
 
     while True:
         clear()
         print(f"{gold}[RoSniper Settings]{end}")
         print("Change your settings here!")
 
-        print(f"\n{gold}[Toggles]{end}")
-        print(f"[1] Resize Terminal Automatically ({"ON" if config["resize_terminal"] else "OFF"})")
-        print(f"[2] Show Tips ({"ON" if config["show_tips"] else "OFF"})")
+        print(f"\n{gold}[Sniping]{end}")
+        print(f"[1] Request Delay ({config["delay"]}s)")
+        print(f"[2] Show Sniper's Username + Attempt Count ({"ON" if config["show_sniping_information"] else "OFF"})")
+        print(f"[3] Cookie Verification Method ({config["verify_method"]})")
+        print(f"    - possible settings: prog, prog-nocache, all, none")
 
-        print(f"\n{gold}[Other Settings]{end}")
-        print(f"[3] Cookie Verify Method ({config["verify_method"]})")
-        print(f"[4] Request Delay ({config["delay"]}s)")
-        print(f"[5] Recent Users Length ({config["recent_users_length"]} users)")
+        print(f"\n{gold}[Recent Users]{end}")
+        print(f"[4] Recent Users Length ({config["recent_users_length"]} users)")
+        print(f"[5] Show Recent Users ({"ON" if config["show_recent_users"] else "OFF"})")
+
+        print(f"\n{gold}[Other]{end}")
+        print(f"[6] Show Tips ({"ON" if config["show_tips"] else "OFF"})")
+        print(f"[7] Resize Terminal Automatically ({"ON" if config["resize_terminal"] else "OFF"})")
+        print(f"[8] Easter Egg Enabled ({"ON" if config["easter_egg_enabled"] else "OFF"})")
+        print(f"[9] Easter Egg Username (@{config["easter_egg_user"]})")
         
         print(f"\nType '' to return to the main menu.")
         setting_id = input("Enter a number to change the respective setting: ").strip()
@@ -224,16 +240,22 @@ def change_settings():
             config[keys[setting_id]] = False if config[keys[setting_id]] else True
         elif setting_id + 1 in inputs:
             value = None
-            while not isinstance(value, type(default_config[keys[setting_id]])):
+            is_accepted = False
+            while not isinstance(value, type(default_config[keys[setting_id]])) or not is_accepted:
                 value = input("Enter a new value for the setting (type '' to cancel): ")
-                if isinstance(default_config[keys[setting_id]], (float)) and (value.count('.') == 1 and all(part.isdigit() for part in value.split('.'))):
+                if isinstance(default_config[keys[setting_id]], (float)) and ((value.count('.') == 1 and all(part.isdigit() for part in value.split('.'))) or value.isdecimal()):
                     value = float(value)
                 elif isinstance(default_config[keys[setting_id]], (int)) and value.isdecimal():
                     value = int(value)
                 elif value == "":
                     break
+                
+                if keys[setting_id] in list(accepted_values.keys()):
+                    if not value in accepted_values[keys[setting_id]]:
+                        continue
+                is_accepted = True
             config[keys[setting_id]] = value if value != "" else config[keys[setting_id]]
-            save()
+        save()
 
 def add_account(mode="add", cid=None):
     global usernames
@@ -372,14 +394,6 @@ def run_command(command):
             change_terminal_size(terminal_size.lines, terminal_size.columns)
         else:
             wait(1, f"The file {load_file} isn't present.")
-    elif command.startswith("/setrecents ") or command.startswith("/set "):
-        if arg.isdecimal():
-            config["recent_users_length"] = 99 if int(arg) > 99 else int(arg)
-            fix_recents()
-            wait(1, f"{nl}{underline}Set the length of Recent Users to {config["recent_users_length"]}{" (max)" if config["recent_users_length"] > 99 else ""}.{end}")
-        else:
-            wait(1, f"{nl}{underline}Invalid length.{end}")
-        save()
     elif command.startswith("/del "):
         if config["recent_users"] == []:
             wait(0.75, f"{nl}{underline}There are no Recent Users to delete.{end}")
@@ -421,10 +435,6 @@ def run_command(command):
         wait(1, f"{nl}{underline}You will be redirected to the Add Account menu.{end}")
         add_account()
         set_account()
-    elif command.startswith("/delay "):
-        config["delay"] = float(arg) if arg.replace(".", "").isnumeric() else 0.01
-        save()
-        wait(0.5, f"{nl}{underline}Delay set to {config["delay"]}s.{end}")
     elif command.startswith("/switch") or command.split(" ")[0] == "/s":
         serialized_users = [user.lower() for user in usernames]
 
@@ -509,23 +519,11 @@ def run_command(command):
             webbrowser.open(f"https://www.roblox.com/game-pass/{donations[arg]}")
         else:
             wait(1, f"{nl}{underline}Invalid donation amount. See /cmds for valid donation amounts.{end}")
-    elif command == "/toggletips":
-        config["show_tips"] = False if config["show_tips"] else True
-        save()
     elif command in ["/settings"]:
         change_settings()
-    elif command.startswith("/setverify") or command.startswith("/sv"):
-        if arg == config["verify_method"]:
-            wait(0.75, f"{nl}{underline}This verification method is already being used.{end}")
-        elif arg in ["prog", "prog-nocache", "all", "none"]:
-            config["verify_method"] = arg
-            save()
-            wait(0.75, f"{nl}{underline}Successfully changed the cookie verification method.{end}")
-        else:
-            wait(1, f"{nl}{underline}Invalid cookie verification method. See /cmds for valid arguments.{end}")
     else:
         similar_commands = []
-        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/delay", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/resizeTerminal", "/s", "/set", "/setrecents", "/setverify", "/sv", "/switch", "/toggletips"]
+        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/s", "/setrecents", "/switch"]
         for cmd in list_of_commands:
             if command in cmd or cmd in command:
                 similar_commands += [cmd]
@@ -549,13 +547,16 @@ def client():
     global decline_first_server
 
     clear()
-    print(f"{gold}[Times Checked: {checks_since_start}] [Account: @{usernames[id]}]{end}")
-    if monitoring:
-        print(f"{bold}You're currently in Monitoring Only Mode. Join-sniping is disabled.{end}")
-        print("Press CTRL+C at any time to copy information.\n")
-    elif decline_first_server:
-        print(f"{bold}You're currently using Decline First Server.{end}")
-        print(f"The first server the priority user (@{users[current_user]}) joins will be declined.\n")
+    if config["show_sniping_information"]:
+        print(f"{gold}[Times Checked: {checks_since_start}] [Account: @{usernames[id]}]{end}")
+        if monitoring:
+            print(f"{bold}You're currently in Monitoring Only Mode. Join-sniping is disabled.{end}")
+            print("Press CTRL+C at any time to copy information.\n")
+        elif decline_first_server:
+            print(f"{bold}You're currently using Decline First Server.{end}")
+            print(f"The first server the priority user (@{users[current_user]}) joins will be declined.\n")
+    else:
+        print(f"{gold}[Some information has been hidden.]{end}")
 
     for i, user in enumerate(users):
         status = online_data["userPresences"][i]["userPresenceType"]
@@ -715,8 +716,6 @@ if len(config["cookies"]) > 0:
 else:
     add_account()
 
-# set this to your Roblox username to see some easter eggs!
-easter_egg_user = "Awij126"
 while True:
     clear()
     if "!close_after_restart" in sys.argv:
@@ -734,15 +733,16 @@ while True:
             print("  - Type /changelog to see the changelog.")
             print("  - Type /toggletips to hide or show these tips.")
 
-        print(f"\n{gold}[Recent Users]{end}")
-        for user in range(len(config["recent_users"])):
-            print(f"[{user + 1}] {bold}{config["recent_users"][user]}{end}")
-        
-        if len(config["recent_users"]) == 0 and config["show_tips"]:
-            print("No saved users! Join-snipe some users to save them to this list!")
-            print(f"You can save up to {config["recent_users_length"]} users in this list{" by default. Run /set [MAX_LENGTH] to change this." if config["recent_users_length"] == 5 else "."}")
-        elif len(config["recent_users"]) == 0:
-            print("No saved users!")
+        if config["show_recent_users"]:
+            print(f"\n{gold}[Recent Users]{end}")
+            for user in range(len(config["recent_users"])):
+                print(f"[{user + 1}] {bold}{config["recent_users"][user]}{end}")
+            
+            if len(config["recent_users"]) == 0 and config["show_tips"]:
+                print("No saved users! Join-snipe some users to save them to this list!")
+                print(f"You can save up to {config["recent_users_length"]} users in this list{" by default. Run /set [MAX_LENGTH] to change this." if config["recent_users_length"] == 5 else "."}")
+            elif len(config["recent_users"]) == 0:
+                print("No saved users!")
 
         print("")
         if decline_first_server:
@@ -750,14 +750,14 @@ while True:
         if monitoring:
             print(f"{underline}Monitoring Only Mode is Active!{end}")
         
-        if usernames[id].lower() == easter_egg_user.lower():
+        if usernames[id].lower() == config["easter_egg_user"].lower() and config["easter_egg_enabled"]:
             print(f"\033[38;5;227mLogged in as @{usernames[id]},\033[0m \033[38;5;26mwho is N00B\033[0m \033[38;5;70m(he da best noob)\033[0m")
         else:
             print(f"Logged in as {bold}{display_names[id]} (@{usernames[id]}){end}")
 
     try:
         if len(sys.argv) == 1:
-            user = input(f"Enter a username, recent user ID, or command{", hax0r" if usernames[id].lower() == easter_egg_user.lower() else ""}: ").lower().strip()
+            user = input(f"Enter a username, recent user ID, or command{", hax0r" if usernames[id].lower() == config["easter_egg_user"].lower() else ""}: ").lower().strip()
             nl = "\n"
         else:
             user = " ".join(sys.argv[1:]).lower()
