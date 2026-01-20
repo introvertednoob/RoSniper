@@ -431,7 +431,7 @@ def run_command(command):
         serialized_users = [user.lower() for user in usernames]
 
         if account_set_by_argument and config["verify_method"] == "all":
-            wait(4, f"{nl}You have selected your account using -a, which only verifies that account's cookie.\n{underline}Therefore, you cannot use the /switch command.{end}\nRun /setVerify prog OR /setVerify none to bypass this.")
+            wait(4, f"{nl}You have selected your account using -a, which only verifies that account's cookie.\n{underline}Therefore, you cannot use the /switch command.{end}\nChange the cookie verification mode in /settings to bypass this.")
             return
         elif len(config["cookies"]) == 1:
             wait(1.5, f"{nl}{underline}You don't have any other accounts to switch to.{end}")
