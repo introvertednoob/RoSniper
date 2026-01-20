@@ -24,11 +24,6 @@
 {underline}/del{end} [RECENT_USER] | [RECENT_USER_INDEX] | *
     -> Deletes a specific user or all users from the Recent Users list
 
-{underline}/delay{end} [SECONDS]
-    -> Sets the delay between requests
-        - Default: 0.01s
-        - Current: {cur_delay}s
-
 {underline}/donate{end}
     -> Opens a Roblox gamepass in your browser
     -> Possible arguments: 10, 50, 100, 200, 500, 1000, 2000, 5000, 10000
@@ -37,12 +32,6 @@
 {underline}/logout{end} (*)
     -> Removes current account or all accounts from config.json
 
-{underline}/setRecents{end} [MAX_LENGTH] ({underline}/set{end})
-    -> Sets the max length of Recent Users
-        - Default: 5 users
-        - Current: {cur_recent_users} users
-        - Maximum: 99 users
-
 {underline}/switch{end} [MAX_LENGTH] ({underline}/s{end})
     -> Switches accounts without re-authenticating with your cookie
     -> Possible arguments:
@@ -50,11 +39,7 @@
         - A valid cookie ID (type: int)
         - A valid username (type: str)
 
-{underline}/toggleTips{end}
-    -> Toggles if the tips on the Main Menu are shown
-        - Default: True
-        - Tips Shown: {cur_tips}
-
+{bold}The command below doesn't exist anymore.{end}
 {underline}/setVerify{end} ({underline}/sv{end})
     -> Sets the cookie verification method that RoSniper uses
     -> Possible arguments:
