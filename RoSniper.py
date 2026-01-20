@@ -515,7 +515,7 @@ def run_command(command):
         change_settings()
     else:
         similar_commands = []
-        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/s", "/setrecents", "/switch"]
+        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/s", "/switch"]
         for cmd in list_of_commands:
             if command in cmd or cmd in command:
                 similar_commands += [cmd]
