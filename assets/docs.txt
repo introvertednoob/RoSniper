@@ -1,4 +1,4 @@
-{gold}[Command Docs]{end}
+{gold}[RoSniper Docs]{end}
 {underline}/addAccount{end} ({underline}/add{end})
     -> Adds a new account to config.json and restarts RoSniper
 
@@ -39,19 +39,6 @@
         - A valid cookie ID (type: int)
         - A valid username (type: str)
 
-{bold}The command below doesn't exist anymore.{end}
-{underline}/setVerify{end} ({underline}/sv{end})
-    -> Sets the cookie verification method that RoSniper uses
-    -> Possible arguments:
-        - "prog": Verify cookies progressively, such as when an account is added or switched to
-        - "prog-nocache": Same as the progressive verification method, but no known valid user cache is stored in memory
-        - "all": Verify all cookies at startup and never authenticate again
-        - "none": Don't verify cookies at all
-    -> Regardless of setting, cookies are verified when an account is added
-    -> Only disable cookie verification if you know what you're doing
-        - Default: prog (progressive)
-        - Current Verification Method: {cur_method}
-
 {gold}[Temporary Commands]{end}
 The effects of these commands only last for one sniping session.
 
@@ -64,6 +51,19 @@ The effects of these commands only last for one sniping session.
     -> Monitors the status of a set of users without sniping them
         - Default: False
         - Current: {cur_m}
+
+{gold}[Settings]{end}
+{underline}Cookie Verification Method{end}
+    -> Sets the cookie verification method that RoSniper uses
+    -> Possible values:
+        - "prog": Verify cookies progressively, such as when an account is added or switched to
+        - "prog-nocache": Same as the progressive verification method, but no known valid user cache is stored in memory
+        - "all": Verify all cookies at startup and never authenticate again
+        - "none": Don't verify cookies at all
+    -> Regardless of setting, cookies are verified when an account is added
+    -> Only disable cookie verification if you know what you're doing
+        - Default: prog (progressive)
+        - Current Verification Method: {cur_method}
 
 Commands in parentheses represent aliases.
 Words in brackets represent values (ex: {bold}[SECONDS]{end} means {bold}the # of seconds{end}).

@@ -186,7 +186,16 @@ def replace_cookie(cid):
         save()
         set_account()
 
-# to-do: add /set, which changes settings using this function BUT without any extra input (no guarantees)
+def is_accepted_value(key, value):
+    accepted_values = {
+        "verify_method": ("prog", "prog-nocache", "all", "none"),
+        "recent_users_length": range(0, 100)
+    }
+    if key in list(accepted_values.keys()):
+        if not value in accepted_values[key]:
+            return False
+    return True
+
 def change_settings():
     keys = ("delay", "show_sniping_information", "verify_method", "recent_users_length", "show_recent_users", "show_tips", "resize_terminal", "easter_egg_enabled", "easter_egg_user")
     toggles = (2, 5, 6, 7, 8)
@@ -203,22 +212,22 @@ def change_settings():
         print("Change your settings here!")
 
         print(f"\n{gold}[Sniping]{end}")
-        print(f"[1] Request Delay ({config["delay"]}s)")
-        print(f"[2] Show Sniper's Username + Attempt Count ({"ON" if config["show_sniping_information"] else "OFF"})")
-        print(f"[3] Cookie Verification Method ({config["verify_method"]})")
-        print(f"    - possible settings: prog, prog-nocache, all, none")
+        print(f"[1] Request Delay ({bold}{config["delay"]}s{end})")
+        print(f"[2] Show Sniper's Username + Attempt Count ({bold}{"ON" if config["show_sniping_information"] else "OFF"}{end})")
+        print(f"[3] Cookie Verification Method ({bold}{config["verify_method"]}{end})")
+        print(f"    - Possible options: prog, prog-nocache, all, none")
 
         print(f"\n{gold}[Recent Users]{end}")
-        print(f"[4] Recent Users Length ({config["recent_users_length"]} users)")
-        print(f"[5] Show Recent Users ({"ON" if config["show_recent_users"] else "OFF"})")
+        print(f"[4] Recent Users Length ({bold}{config["recent_users_length"]} users{end})")
+        print(f"[5] Show Recent Users ({bold}{"ON" if config["show_recent_users"] else "OFF"}{end})")
 
         print(f"\n{gold}[Other]{end}")
-        print(f"[6] Show Tips ({"ON" if config["show_tips"] else "OFF"})")
-        print(f"[7] Resize Terminal Automatically ({"ON" if config["resize_terminal"] else "OFF"})")
-        print(f"[8] Easter Egg Enabled ({"ON" if config["easter_egg_enabled"] else "OFF"})")
-        print(f"[9] Easter Egg Username (@{config["easter_egg_user"]})")
+        print(f"[6] Show Tips ({bold}{"ON" if config["show_tips"] else "OFF"}{end})")
+        print(f"[7] Resize Terminal Automatically ({bold}{"ON" if config["resize_terminal"] else "OFF"}{end})")
+        print(f"[8] Easter Egg Enabled ({bold}{"ON" if config["easter_egg_enabled"] else "OFF"}{end})")
+        print(f"[9] Easter Egg Username ({bold}@{config["easter_egg_user"]}{end})")
         
-        print(f"\nType '' to return to the main menu.")
+        print(f"\nType '' to return to the main menu or to cancel any changes.")
         setting_id = input("Enter a number to change the respective setting: ").strip()
 
         if setting_id == "":
@@ -232,9 +241,8 @@ def change_settings():
             config[keys[setting_id]] = False if config[keys[setting_id]] else True
         elif setting_id + 1 in inputs:
             value = None
-            is_accepted = False
-            while not isinstance(value, type(default_config[keys[setting_id]])) or not is_accepted:
-                value = input("Enter a new value for the setting (type '' to cancel): ")
+            while not isinstance(value, type(default_config[keys[setting_id]])) or not is_accepted_value(keys[setting_id], value):
+                value = input(f"Enter a new value for [{setting_id + 1}]: ")
                 if isinstance(default_config[keys[setting_id]], (float)) and ((value.count('.') == 1 and all(part.isdigit() for part in value.split('.'))) or value.isdecimal()):
                     value = float(value)
                 elif isinstance(default_config[keys[setting_id]], (int)) and value.isdecimal():
@@ -245,7 +253,6 @@ def change_settings():
                 if keys[setting_id] in list(accepted_values.keys()):
                     if not value in accepted_values[keys[setting_id]]:
                         continue
-                is_accepted = True
             config[keys[setting_id]] = value if value != "" else config[keys[setting_id]]
         save()
 
@@ -364,9 +371,9 @@ def run_command(command):
     global decline_first_server
 
     arg = command.split(" ")[1] if len(command.split(" ")) > 1 else ""
-    if command in ["/help", "/cmds", "/changelog"]:
+    if command in ["/help", "/docs", "/changelog"]:
         clear()
-        load_file = f"./assets/{"commands" if command in ["/help", "/cmds"] else "changelog"}.txt"
+        load_file = f"./assets/{"docs" if command in ["/help", "/docs"] else "changelog"}.txt"
         if os.path.exists(load_file):
             change_terminal_size(50, 140)
             print(open(load_file).read().format(
@@ -413,7 +420,7 @@ def run_command(command):
             display_names = []
             print(f"{nl}{underline}Removed all cookies from config.json.{end}")
         else:
-            wait(2, f"{nl}{underline}Invalid argument. See /cmds for proper documentation.{end}")
+            wait(2, f"{nl}{underline}Invalid argument. See /docs for proper documentation.{end}")
             return
 
         save()
@@ -458,7 +465,7 @@ def run_command(command):
 
             set_account(serialized_users.index(arg))
         else:
-            wait(1, f"{nl}{underline}Invalid argument. See /cmds for proper documentation.{end}")
+            wait(1, f"{nl}{underline}Invalid argument. See /docs for proper documentation.{end}")
             return
     elif command in ["/df", "/declinefirst"]:
         monitoring = False
@@ -479,7 +486,7 @@ def run_command(command):
 
         print(f"{gold}[Add ZSH Alias]{end}")
         print(f"The ZSH alias <snipe> will be created, which will point to RoSniper.")
-        print(f"See /cmds for more information on the alias.")
+        print(f"See /docs for more information on the alias.")
         print(f"To remove the <snipe> alias, delete the entry from ~/.zshrc.")
 
         print(f"\n{bold}Full Alias Code: '{snipe_alias}'{end}")
@@ -510,21 +517,21 @@ def run_command(command):
             wait(3, f"A gamepass for {bold}{arg} Robux{end} will open shortly.")
             webbrowser.open(f"https://www.roblox.com/game-pass/{donations[arg]}")
         else:
-            wait(1, f"{nl}{underline}Invalid donation amount. See /cmds for valid donation amounts.{end}")
+            wait(1, f"{nl}{underline}Invalid donation amount. See /docs for valid donation amounts.{end}")
     elif command in ["/settings"]:
         change_settings()
     else:
         similar_commands = []
-        list_of_commands = ["/add", "/addaccount", "/alias", "/cmds", "/changelog", "/del", "/df", "/declinefirst", "/donate", "/help", "/m", "/monitoring", "/logout", "/s", "/switch"]
+        list_of_commands = ["/add", "/addaccount", "/alias", "/changelog", "/del", "/df", "/declinefirst", "/docs", "/donate", "/help", "/m", "/monitoring", "/logout", "/s", "/switch"]
         for cmd in list_of_commands:
             if command in cmd or cmd in command:
                 similar_commands += [cmd]
         if len(similar_commands) == 0 or similar_commands == list_of_commands:
-            wait(2, f"{nl}{underline}Invalid command: \"{command}\"{end}\nType /cmds to see documentation on commands.")
+            wait(2, f"{nl}{underline}Invalid command: \"{command}\"{end}\nType /docs to see documentation on commands.")
         elif command in list_of_commands:
-            wait(2, f"{nl}{underline}This command exists, but it requires arguments.{end}\nType /cmds to see documentation on the arguments for commands.")
+            wait(2, f"{nl}{underline}This command exists, but it requires arguments.{end}\nType /docs to see documentation on the arguments for commands.")
         else:
-            wait(2 + (0.25 * len(similar_commands)), f"{nl}{underline}Invalid command: \"{command}\". Perhaps you meant \"{"\", \"".join(similar_commands)}\"?{end}\nType /cmds to see documentation on commands.")
+            wait(2 + (0.25 * len(similar_commands)), f"{nl}{underline}Invalid command: \"{command}\". Perhaps you meant \"{"\", \"".join(similar_commands)}\"?{end}\nType /docs to see documentation on commands.")
 
 def client():
     global users
@@ -721,9 +728,9 @@ while True:
 
         if config["show_tips"] == True:
             print(f"{gold}\n[Tips]{end}")
-            print("  - Type /help or /cmds to see the list of commands.")
-            print("  - Type /changelog to see the changelog.")
-            print("  - Type /toggletips to hide or show these tips.")
+            print("  - Type /changelog to view RoSniper's latest updates.")
+            print("  - Type /help or /docs if you're confused by a command/setting.")
+            print("  - Type /settings to change any of RoSniper's settings!")
 
         if config["show_recent_users"]:
             print(f"\n{gold}[Recent Users]{end}")
