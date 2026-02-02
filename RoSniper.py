@@ -41,17 +41,18 @@ errors = {
 }
 
 default_config = {
-    "recent_users_length": 5,
+    "config_version": 1,
+    "cookies": [],
     "delay": 0.01,
-    "show_tips": True,
-    "verify_method": "prog",
-    "resize_terminal": True,
     "easter_egg_enabled": False,
-    "easter_egg_user": "None",
+    "easter_egg_user": "",
+    "recent_users": [],
+    "recent_users_length": 5,
+    "resize_terminal": True,
     "show_recent_users": True,
     "show_sniping_information": True,
-    "recent_users": [],
-    "cookies": []
+    "show_tips": True,
+    "verify_method": "prog",
 }
 
 def open_link(url):

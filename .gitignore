@@ -3,6 +3,7 @@
 *.zip
 *.spec
 *.DS_Store
+*.vscode
 RoSniper-*
 config.json
 launcher

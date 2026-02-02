@@ -2,6 +2,8 @@
 {green}{bold}Version 2.1.0{end}
     - Added a new command, {underline}/resizeTerminal{end}
     - Added notice to expand terminal in both the changelog and Command Docs
+    - config.json now stores a config version number
+        - This will be used to migrate config files if the config format is updated
     - The screen (finally) clears properly on macOS!
     - Due to the clear screen changes, macOS now has proper support for:
         - Switching between the fullscreen and windowed modes

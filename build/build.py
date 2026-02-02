@@ -23,7 +23,7 @@ if op in ["Darwin", "Windows"]:
         print("    - AppIcon(.icns/.ico), launcher.py, and Info.plist in ./Resources/")
         print("    - Any version of RoSniper (MacOS) or RoSniper v1.0.0+ (Windows)")
         print(f"\n{bold}If you're running Option 1 for a complete install:{end}")
-        print("    - ./assets/ with commands.txt, changelog.txt, and donations.json in the (parent) directory of the build script")
+        print("    - ./assets/ with docs.txt, changelog.txt, and donations.json in the (parent) directory of the build script")
 
         if os.path.exists("../RoSniper.py"):
             RoSniperPath = "../RoSniper.py"
