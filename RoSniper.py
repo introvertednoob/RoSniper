@@ -209,7 +209,7 @@ def change_settings():
 
     while True:
         clear()
-        print(f"{gold}[RoSniper Settings]{end}")
+        print(f"{gold}{bold}[RoSniper Settings]{end}")
         print("Change your settings here!")
 
         print(f"\n{gold}[Sniping]{end}")

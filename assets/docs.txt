@@ -1,4 +1,4 @@
-{gold}[RoSniper Docs]{end}
+{gold}{bold}[RoSniper Docs]{end}
 {underline}/addAccount{end} ({underline}/add{end})
     -> Adds a new account to config.json and restarts RoSniper
 
